@@ -45,3 +45,7 @@ PASS DO DAN:
 - 16: dandjggpsucpg
 - 29: danfffxcqpfxt
 - Y: 
+
+FINAL SECRET:
+- 16: monkeytigeroaktape
+- 29: niceeaglewonderfulboat
