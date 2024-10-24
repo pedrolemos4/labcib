@@ -14,22 +14,25 @@ while arduino.in_waiting == 0:
 	pass
 txt = arduino.readall()
 print(txt)
-listTries = [123]
 
-while listTries != []:
-	for item in listTries:
-		arduino.write(bytes(f"{item}\n", 'utf-8'))
+firstTry=100
+arduino.write(bytes(f"{firstTry}\n", 'utf-8'))
+while arduino.in_waiting == 0:
+    pass
+txt = arduino.readall()
+print(txt)
+stringTxt = txt.decode("utf-8")
+# means the first attempt was wrong
+if "Incorrect" in stringTxt:
+	optExpected = re.search(r'expecting (\d+)', stringTxt).group(1)
+    # a partir daqui é sempre estourar o que ele tava a espera
+	guess=False
+	while guess is False:
+		arduino.write(bytes(f"{optExpected}\n", 'utf-8'))
 		while arduino.in_waiting == 0:
 			pass
 		txt = arduino.readall()
 		print(txt)
 		stringTxt = txt.decode("utf-8")
-		if "Incorrect" in stringTxt:
-			optExpected = re.search(r'expecting (\d+)', stringTxt).group(1)
-			if optExpected not in listTries:
-				listTries.append(optExpected)
-				print(listTries)
-		else:
+		if "Incorrect" not in stringTxt:
 			break
-	
-        
