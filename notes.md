@@ -22,7 +22,11 @@ cat rainbow.table | grep c2af16f5bd21ac77ec01c7e81a9be0eb
 cncvdmwhcuabfafahvqfntetnyavetaqpyancathfmiwihbefngkx c2af16f5bd21ac77ec01c7e81a9be0eb
 portanto a password do c&c é: cncvdmwhcuabfafahvqfntetnyavetaqpyancathfmiwihbefngkx
 
+
+para a vending machine n29
 password do alan: alanqyxcyqnqeerixzcgocmrcsyhimdskcuscddfgkdityzzzbkuda
 password do dan: danfffxcqpfxt
 
 esta pass funciona pra entrar no c&c, falta o otp
+
+para o otp é correr o crackOTP.py e aguardar. ele pega no primeiro "expected" e vai tentando ate o ciclo de numeros esperados repetir do 0
