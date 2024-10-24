@@ -15,3 +15,14 @@ openssl rsautl -decrypt -inkey key.bin -in sig.bin -out decrypted_hash
 isto vai dar o hash codificado no ficheiro decrypted_hash:
 
 {"hash": "c2af16f5bd21ac77ec01c7e81a9be0eb"}
+
+com a rainbow table:
+
+cat rainbow.table | grep c2af16f5bd21ac77ec01c7e81a9be0eb
+cncvdmwhcuabfafahvqfntetnyavetaqpyancathfmiwihbefngkx c2af16f5bd21ac77ec01c7e81a9be0eb
+portanto a password do c&c é: cncvdmwhcuabfafahvqfntetnyavetaqpyancathfmiwihbefngkx
+
+password do alan: alanqyxcyqnqeerixzcgocmrcsyhimdskcuscddfgkdityzzzbkuda
+password do dan: danfffxcqpfxt
+
+esta pass funciona pra entrar no c&c, falta o otp
