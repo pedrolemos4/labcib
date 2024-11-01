@@ -1,11 +1,19 @@
+# First Approach
 
-docker save -o inseclabs02.tar isepdei/insecurelabs02
+docker pull isepdei/insecurelabs02
 
-tar -xvf inseclabs02.tar
+mkdir tar
+mkdir origin
+mkdir modified
+
+docker save -o tar/inseclabs02.tar isepdei/insecurelabs02
+
+tar -xvf tar/inseclabs02.tar -C origin/
+tar -xvf tar/inseclabs02.tar -C modified/
 
 docker rmi isepdei/insecurelabs02
 
-docker load -i inseclabs02.tar
+docker load -i tar/inseclabs02.tar
 
 docker run -d --name dind --privileged docker
 sleep 2
@@ -14,11 +22,56 @@ docker exec -it dind \
     -v /var/run/docker.sock:/var/run/docker.sock \
     wagoodman/dive isepdei/insecurelabs02
 
-# Layer that container rm .env step
+# Get SHA256 of layer that container rm .env step
 # sha256:77f42d47106946c50124ec2293174ae924bc120c6ab28a204618dc905a26
 
-# Delete all references to that step
-# Reference of sha256:77f42d47106946c50124ec2293174ae924bc120c6ab28a204618dc905a26
+# In binary b2b242bce016761a3570daec59c42b0c8d2efcf390e9efab339b6e6c8396a81a
+# Found by analyzing each binary, delete all references to that step
+
+# Entry at the end of the file of: sha256:77f42d47106946c50124ec2293174ae924bc120c6ab28a204618dc905a26
 # {"created":"2024-09-16T17:13:58.451692008Z","created_by":"RUN /bin/sh -c rm .env # buildkit","comment":"buildkit.dockerfile.v0"},
 
-tar -cvf new-inseclabs02.tar -C copy .
+# Also, remove the last layer in maingest.json because in this case because it is the last non-empty layer, even if the sha is different
+"blobs/sha256/dffd5ef98d770fcc1a0aa8057ad1787569ecf563add1e0d1df0f7287cd7ffd68"
+
+docker rmi isepdei/insecurelabs02
+
+tar -cvf tar/new-inseclabs02.tar -C modified .
+
+docker load -i tar/new-inseclabs02.tar
+
+docker run -it isepdei/insecurelabs02:latest
+
+# Go inside the container and read .env
+
+###################################################################################################
+
+# This is one way, the other way is
+
+docker pull isepdei/insecurelabs02
+
+mkdir tar
+mkdir origin
+mkdir modified
+
+docker save -o tar/inseclabs02.tar isepdei/insecurelabs02
+
+tar -xvf tar/inseclabs02.tar -C origin/
+tar -xvf tar/inseclabs02.tar -C modified/
+
+docker rmi isepdei/insecurelabs02
+
+docker load -i tar/inseclabs02.tar
+
+docker run -d --name dind --privileged docker
+sleep 2
+docker exec -it dind \
+    docker run --rm -it \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    wagoodman/dive isepdei/insecurelabs02
+
+# Same steps until here, then by analyzing the outut from dive command, on the 6th step, is where verything is copied.
+# By looking into manifest.json and 852c679b5925caa1b371ba9eaddb067df67826b23e4e328b6cb4d7d92705bf0d we can conclude that
+# the 6th layer is binary 7c77060f8e296437d59379d85957af60397ebf98994643af81e332c3f434789e.
+# By executing the following command, we can extract the contents from the action that layer dind# gunzip -c 7c77060f8e296437d59379d85957af60397ebf98994643af81e332c3f434789e | tar xvf -
+# And now, we have .env file inside app/directory
