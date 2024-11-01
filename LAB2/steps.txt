@@ -1,0 +1,24 @@
+
+docker save -o inseclabs02.tar isepdei/insecurelabs02
+
+tar -xvf inseclabs02.tar
+
+docker rmi isepdei/insecurelabs02
+
+docker load -i inseclabs02.tar
+
+docker run -d --name dind --privileged docker
+sleep 2
+docker exec -it dind \
+    docker run --rm -it \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    wagoodman/dive isepdei/insecurelabs02
+
+# Layer that container rm .env step
+# sha256:77f42d47106946c50124ec2293174ae924bc120c6ab28a204618dc905a26
+
+# Delete all references to that step
+# Reference of sha256:77f42d47106946c50124ec2293174ae924bc120c6ab28a204618dc905a26
+# {"created":"2024-09-16T17:13:58.451692008Z","created_by":"RUN /bin/sh -c rm .env # buildkit","comment":"buildkit.dockerfile.v0"},
+
+tar -cvf new-inseclabs02.tar -C copy .

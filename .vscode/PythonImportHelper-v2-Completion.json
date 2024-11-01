@@ -1,0 +1,290 @@
+[
+    {
+        "label": "serial",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "serial",
+        "description": "serial",
+        "detail": "serial",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "string",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "string",
+        "description": "string",
+        "detail": "string",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "arduino",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=0.1)\ntime.sleep(5)\nprint(arduino.readline())\narduino.write(bytes(\"alanqyxcyqnqeerixzcgocmrcsyhimdskcuscddfgkdityzzzbkuda\\n\", 'utf-8'))\ntxt = arduino.readall()\nprint(txt)\narduino.write(bytes(\"cncvdmwhcuabfafahvqfntetnyavetaqpyancathfmiwihbefngkx\\n\", 'utf-8'))\nwhile arduino.in_waiting == 0:\n\tpass\ntxt = arduino.readall()",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "txt",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "txt = arduino.readall()\nprint(txt)\narduino.write(bytes(\"cncvdmwhcuabfafahvqfntetnyavetaqpyancathfmiwihbefngkx\\n\", 'utf-8'))\nwhile arduino.in_waiting == 0:\n\tpass\ntxt = arduino.readall()\nprint(txt)\nfirstTry=100\narduino.write(bytes(f\"{firstTry}\\n\", 'utf-8'))\nwhile arduino.in_waiting == 0:",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "txt",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "txt = arduino.readall()\nprint(txt)\nfirstTry=100\narduino.write(bytes(f\"{firstTry}\\n\", 'utf-8'))\nwhile arduino.in_waiting == 0:\n    pass\ntxt = arduino.readall()\nprint(txt)\nstringTxt = txt.decode(\"utf-8\")\n# means the first attempt was wrong",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "txt",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "txt = arduino.readall()\nprint(txt)\nstringTxt = txt.decode(\"utf-8\")\n# means the first attempt was wrong\nif \"Incorrect\" in stringTxt:\n\toptExpected = re.search(r'expecting (\\d+)', stringTxt).group(1)\n    # a partir daqui é sempre estourar o que ele tava a espera\n\tguess=False\n\twhile guess is False:\n\t\tarduino.write(bytes(f\"{optExpected}\\n\", 'utf-8'))",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "stringTxt",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "stringTxt = txt.decode(\"utf-8\")\n# means the first attempt was wrong\nif \"Incorrect\" in stringTxt:\n\toptExpected = re.search(r'expecting (\\d+)', stringTxt).group(1)\n    # a partir daqui é sempre estourar o que ele tava a espera\n\tguess=False\n\twhile guess is False:\n\t\tarduino.write(bytes(f\"{optExpected}\\n\", 'utf-8'))\n\t\twhile arduino.in_waiting == 0:\n\t\t\tpass",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "\toptExpected",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "\toptExpected = re.search(r'expecting (\\d+)', stringTxt).group(1)\n    # a partir daqui é sempre estourar o que ele tava a espera\n\tguess=False\n\twhile guess is False:\n\t\tarduino.write(bytes(f\"{optExpected}\\n\", 'utf-8'))\n\t\twhile arduino.in_waiting == 0:\n\t\t\tpass\n\t\ttxt = arduino.readall()\n\t\tprint(txt)\n\t\tstringTxt = txt.decode(\"utf-8\")",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "\t\ttxt",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "\t\ttxt = arduino.readall()\n\t\tprint(txt)\n\t\tstringTxt = txt.decode(\"utf-8\")\n\t\tif \"Incorrect\" not in stringTxt:\n\t\t\tbreak",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tstringTxt",
+        "kind": 5,
+        "importPath": "crackOTP",
+        "description": "crackOTP",
+        "peekOfCode": "\t\tstringTxt = txt.decode(\"utf-8\")\n\t\tif \"Incorrect\" not in stringTxt:\n\t\t\tbreak",
+        "detail": "crackOTP",
+        "documentation": {}
+    },
+    {
+        "label": "arduino",
+        "kind": 5,
+        "importPath": "dump",
+        "description": "dump",
+        "peekOfCode": "arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=0.1)\ntime.sleep(5)\nprint(arduino.readline())\narduino.write(bytes(\"danfffxcqpfxt\\n\", 'utf-8'))\ntxt = arduino.readall()\nprint(txt)\ncountOpt = 0\nwhile countOpt < 3:\n\tarduino.write(bytes(\"1\\n\", 'utf-8')) # instruct to dump \n\ttxt = arduino.readall()",
+        "detail": "dump",
+        "documentation": {}
+    },
+    {
+        "label": "txt",
+        "kind": 5,
+        "importPath": "dump",
+        "description": "dump",
+        "peekOfCode": "txt = arduino.readall()\nprint(txt)\ncountOpt = 0\nwhile countOpt < 3:\n\tarduino.write(bytes(\"1\\n\", 'utf-8')) # instruct to dump \n\ttxt = arduino.readall()\n\tprint(txt)\n\tarduino.write(bytes(f\"{countOpt}\\n\", 'utf-8')) # choose what to dump\n\ttxt = arduino.readall()\n\tprint(txt)",
+        "detail": "dump",
+        "documentation": {}
+    },
+    {
+        "label": "countOpt",
+        "kind": 5,
+        "importPath": "dump",
+        "description": "dump",
+        "peekOfCode": "countOpt = 0\nwhile countOpt < 3:\n\tarduino.write(bytes(\"1\\n\", 'utf-8')) # instruct to dump \n\ttxt = arduino.readall()\n\tprint(txt)\n\tarduino.write(bytes(f\"{countOpt}\\n\", 'utf-8')) # choose what to dump\n\ttxt = arduino.readall()\n\tprint(txt)\n\tprint(\"========================================================\\n\\n\")\n\twith open(f'firmware_dump{countOpt}',\"wb\") as fbin:",
+        "detail": "dump",
+        "documentation": {}
+    },
+    {
+        "label": "\ttxt",
+        "kind": 5,
+        "importPath": "dump",
+        "description": "dump",
+        "peekOfCode": "\ttxt = arduino.readall()\n\tprint(txt)\n\tarduino.write(bytes(f\"{countOpt}\\n\", 'utf-8')) # choose what to dump\n\ttxt = arduino.readall()\n\tprint(txt)\n\tprint(\"========================================================\\n\\n\")\n\twith open(f'firmware_dump{countOpt}',\"wb\") as fbin:\n\t\tfbin.write(txt)\n\tcountOpt+=1",
+        "detail": "dump",
+        "documentation": {}
+    },
+    {
+        "label": "\ttxt",
+        "kind": 5,
+        "importPath": "dump",
+        "description": "dump",
+        "peekOfCode": "\ttxt = arduino.readall()\n\tprint(txt)\n\tprint(\"========================================================\\n\\n\")\n\twith open(f'firmware_dump{countOpt}',\"wb\") as fbin:\n\t\tfbin.write(txt)\n\tcountOpt+=1",
+        "detail": "dump",
+        "documentation": {}
+    },
+    {
+        "label": "write_read",
+        "kind": 2,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "def write_read(x): \n\tarduino.write(bytes(x, 'utf-8'))\n\tinitTime = time.time()\n\t# arduino.flush() \n\t# time.sleep(0.1) \n\twhile arduino.in_waiting == 0:\n\t\tpass\n\tendTime = time.time()\n\tdelta = endTime - initTime\n\tdata = arduino.readline()",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "arduino",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=0.1)\ntime.sleep(5)\ndef write_read(x): \n\tarduino.write(bytes(x, 'utf-8'))\n\tinitTime = time.time()\n\t# arduino.flush() \n\t# time.sleep(0.1) \n\twhile arduino.in_waiting == 0:\n\t\tpass\n\tendTime = time.time()",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "\tinitTime",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "\tinitTime = time.time()\n\t# arduino.flush() \n\t# time.sleep(0.1) \n\twhile arduino.in_waiting == 0:\n\t\tpass\n\tendTime = time.time()\n\tdelta = endTime - initTime\n\tdata = arduino.readline()\n\treturn (data,delta)\n# def timing_attack():",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "\tendTime",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "\tendTime = time.time()\n\tdelta = endTime - initTime\n\tdata = arduino.readline()\n\treturn (data,delta)\n# def timing_attack():\n#     password = \"\"\n#     possible_char = string.ascii_lowercase\n#     for i in range(13):\n#         biggest_time = 0\n#         next_char = ''",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "\tdelta",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "\tdelta = endTime - initTime\n\tdata = arduino.readline()\n\treturn (data,delta)\n# def timing_attack():\n#     password = \"\"\n#     possible_char = string.ascii_lowercase\n#     for i in range(13):\n#         biggest_time = 0\n#         next_char = ''\n#         for char in possible_char:",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "\tdata",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "\tdata = arduino.readline()\n\treturn (data,delta)\n# def timing_attack():\n#     password = \"\"\n#     possible_char = string.ascii_lowercase\n#     for i in range(13):\n#         biggest_time = 0\n#         next_char = ''\n#         for char in possible_char:\n#             tentativa = password + char",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "passwd",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "passwd = \"a\"\nstrlen = []\nwhile len(passwd) < 21:\n\tprint(arduino.readline())\n\tresp = write_read(passwd + \"\\n\")\n\tprint(resp[0])\n\tstrlen.append({\"length\": len(passwd), \"time\": resp[1]})\n\tpasswd += \"a\"\nprint(str(strlen) + \"\\n\\n\\n\\n\\n\\n\\n\\n\")\nnumList = []",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "strlen",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "strlen = []\nwhile len(passwd) < 21:\n\tprint(arduino.readline())\n\tresp = write_read(passwd + \"\\n\")\n\tprint(resp[0])\n\tstrlen.append({\"length\": len(passwd), \"time\": resp[1]})\n\tpasswd += \"a\"\nprint(str(strlen) + \"\\n\\n\\n\\n\\n\\n\\n\\n\")\nnumList = []\ntimesList = []",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "\tresp",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "\tresp = write_read(passwd + \"\\n\")\n\tprint(resp[0])\n\tstrlen.append({\"length\": len(passwd), \"time\": resp[1]})\n\tpasswd += \"a\"\nprint(str(strlen) + \"\\n\\n\\n\\n\\n\\n\\n\\n\")\nnumList = []\ntimesList = []\nfor item in strlen:\n\tprint(f\"Number of chars: { item['length'] }\\nTime: {item['time']}\\n\\n\")\n\tnumList.append(item['length'])",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "numList",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "numList = []\ntimesList = []\nfor item in strlen:\n\tprint(f\"Number of chars: { item['length'] }\\nTime: {item['time']}\\n\\n\")\n\tnumList.append(item['length'])\n\ttimesList.append(item['time'])\nplt.plot(numList,timesList)\nplt.xlabel('Number of chars')\nplt.ylabel('Time')\nplt.show()",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "timesList",
+        "kind": 5,
+        "importPath": "m2",
+        "description": "m2",
+        "peekOfCode": "timesList = []\nfor item in strlen:\n\tprint(f\"Number of chars: { item['length'] }\\nTime: {item['time']}\\n\\n\")\n\tnumList.append(item['length'])\n\ttimesList.append(item['time'])\nplt.plot(numList,timesList)\nplt.xlabel('Number of chars')\nplt.ylabel('Time')\nplt.show()",
+        "detail": "m2",
+        "documentation": {}
+    },
+    {
+        "label": "arduino",
+        "kind": 5,
+        "importPath": "timingAttack",
+        "description": "timingAttack",
+        "peekOfCode": "arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=0.1)\ntime.sleep(5)\nattempt = \"aaaaaaaaaaaaa\"\npossible_char = string.ascii_lowercase\nfor i in range(13):\n    biggest_time = 0\n    for char in possible_char:\n        attemptAsList = list(attempt)\n        attemptAsList[i] = char\n        attempt = ''.join(attemptAsList) ",
+        "detail": "timingAttack",
+        "documentation": {}
+    },
+    {
+        "label": "attempt",
+        "kind": 5,
+        "importPath": "timingAttack",
+        "description": "timingAttack",
+        "peekOfCode": "attempt = \"aaaaaaaaaaaaa\"\npossible_char = string.ascii_lowercase\nfor i in range(13):\n    biggest_time = 0\n    for char in possible_char:\n        attemptAsList = list(attempt)\n        attemptAsList[i] = char\n        attempt = ''.join(attemptAsList) \n        print(attempt)\n        print(arduino.readline())",
+        "detail": "timingAttack",
+        "documentation": {}
+    },
+    {
+        "label": "possible_char",
+        "kind": 5,
+        "importPath": "timingAttack",
+        "description": "timingAttack",
+        "peekOfCode": "possible_char = string.ascii_lowercase\nfor i in range(13):\n    biggest_time = 0\n    for char in possible_char:\n        attemptAsList = list(attempt)\n        attemptAsList[i] = char\n        attempt = ''.join(attemptAsList) \n        print(attempt)\n        print(arduino.readline())\n        #print(arduino.in_waiting)",
+        "detail": "timingAttack",
+        "documentation": {}
+    }
+]
