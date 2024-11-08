@@ -21,12 +21,9 @@ for i in range(13):
         print(attempt)
         print(arduino.readline())
 
-        #print(arduino.in_waiting)
-
         arduino.write(bytes(attempt+"\n", 'utf-8'))
         initTime = time.time()
-        # arduino.flush() 
-        # time.sleep(0.1) 
+
         while arduino.in_waiting == 0:
             pass
 
