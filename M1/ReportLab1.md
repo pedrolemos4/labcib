@@ -1,3 +1,29 @@
+# Lab 1 - Embedded
+
+# Introduction
+
+This file documents all of the work that was developed in the scope of the [Lab 1 project](https://github.com/labcib/lab-embedded) for the LABCIB course unit.
+
+As requested, this introduction describes all files that are delivered, as well as execution instructions for each of them where applicable. We have also compiled the requested [TARGETS folder](./TARGETS/), whose contents will be expanded further on this report.
+
+The included files and directories are the following:
+- [findLength.py](findLength.py): script used in Target 1 to obtain the length of the developer's password.
+    - Before executing, it's necessary to verify to which port the Arduino is connected, and on Linux systems it's also necessary to grant execution permissions on that device. The path used for all of the scripts was `/dev/ttyUSB0`, but this can be different on other computers. 
+    - To execute, grant the permissions specified above, install the requirements found in [requirements.txt](./requirements.txt) and execute it through python:
+
+```
+sudo chmod 777 /dev/ttyUSB0 
+pip install -r requirements.txt 
+python3 findLength.py
+```
+
+- [timingAttack.py](timingAttack.py): script used in Target 1 to crack the developer's password, having obtained its length with the previous script. Execution instructions are the same.
+- [dump.py](dump.py): script used in Target 2 to dump the firmware of the vending machine. Execution instructions are the same as the previously presented, with the note that the developer password is statically specified in the code, so for a different vending machine it'd have to be changed.
+- [¢rackOTP.py](crackOTP.py): script used to crack the OTP generator in Target 6. Same execution instructions as above with the note that, as with the script above, the admin and C&C passwords are statically used in the code.
+- [secrets.csv](./TARGETS/secrets.csv): The requested file that contains Dans' password; Alans' password; c&c password; and the Final secret.
+- [firmwares directory](./TARGETS/firmwares/): Contains all of the memory regions that were dumped from the vending machine.
+- [keysSigs directory](./TARGETS/keysSigs/): Contains the cryptographic assets that were extracted and identified, as well as the resulting decrypted message. Each will be described in the appropriate section.
+
 # PART 1: Initial targets
 
 ## Development password
@@ -38,13 +64,13 @@ DAN's Password for each Nano:
 
 **TARGET 2: The dumped firmware in a binary file**
 
-For this stage, the [dump.py](dump.py) was developed. What it does is login into the console with the developer password (discovered in the previous step), and then use the console to dump the firmwares. Firstly, we programatically input "1" on the console to instruct that we want to dump a region of memory. Then, a prompt that asks us what memory region we want to access is answered with a number from 0 to 2. We do this on a loop so that we can dump all available memory regions. The dumped firmwares can be seen in the folder [Firmwares](firmwares)
+For this stage, the [dump.py](dump.py) was developed. What it does is login into the console with the developer password (discovered in the previous step), and then use the console to dump the firmwares. Firstly, we programatically input "1" on the console to instruct that we want to dump a region of memory. Then, a prompt that asks us what memory region we want to access is answered with a number from 0 to 2. We do this on a loop so that we can dump all available memory regions. The dumped firmwares can be seen in the folder [Firmwares](firmwares).
 
 ## Confidential Information
 
 **TARGET 3: Confidential strings**
 
-By using the `strings` command with the dumped firmware, we located two strings that could be important.
+By using the `strings` command with the dumped firmware (`strings ./TARGETS/firmwares/vendingMachine6/firmware_dump0`), we located two strings that could be important.
 
 First string : 
 ```
@@ -200,7 +226,7 @@ Obtained hashes:
 - 29 : {"hash": "c2af16f5bd21ac77ec01c7e81a9be0eb"}
 - 6 : {"hash": "6ae39cd257a906859040b930551c1cb2"}
 
-Using the provided rainbow table to match the hashes, we extracted the C&C passwords (using the command ***cat rainbow.table | grep 'HASH'***) as follows:
+Using the provided rainbow table (not included in this folder due to its size) to match the hashes, we extracted the C&C passwords (using the command `cat rainbow.table | grep 'HASH'`) as follows:
 
 C&C password : 
 - 16: cncyrkfptyydqqzykjqkpzhexhsrrcjjfztkvponwrblpfgwxcsdc
