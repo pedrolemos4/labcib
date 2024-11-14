@@ -1,6 +1,12 @@
 # Lab 1 - Embedded
 
-# Introduction
+## Students
+
+- 1190830: Luís Correia
+- 1191526: Pedro Torres
+- 1190974: Pedro Lemos
+
+## Introduction
 
 This file documents all of the work that was developed in the scope of the [Lab 1 project](https://github.com/labcib/lab-embedded) for the LABCIB course unit.
 
