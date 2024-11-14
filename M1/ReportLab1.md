@@ -6,6 +6,8 @@ This file documents all of the work that was developed in the scope of the [Lab 
 
 As requested, this introduction describes all files that are delivered, as well as execution instructions for each of them where applicable. We have also compiled the requested [TARGETS folder](./TARGETS/), whose contents will be expanded further on this report.
 
+Before proceeding any further, the vending machine used in this assignment is **Vending Machine 6**.
+
 The included files and directories are the following:
 - [findLength.py](findLength.py): script used in Target 1 to obtain the length of the developer's password.
     - Before executing, it's necessary to verify to which port the Arduino is connected, and on Linux systems it's also necessary to grant execution permissions on that device. The path used for all of the scripts was `/dev/ttyUSB0`, but this can be different on other computers. 
@@ -53,12 +55,7 @@ For demonstration purposes, we also plotted relevant information for the first t
 
 ![thirdCharTimes.png](./images/thirdCharTimes.png)
 
-From these plots, we can infer that Dan's password for vending machine 6 starts with "dan", which is indeed true, since our script led us to the password "danoazojnoird". Testing this password interactively through the serial interface leads us past the login stage, confirming the validity of our findings.
-
-DAN's Password for each Nano:
-- 16: dandjggpsucpg
-- 29: danfffxcqpfxt
-- 6: danoazojnoird
+From these plots, we can infer that Dan's password for vending machine 6 starts with "dan", which is indeed true, since our script led us to the password "`danoazojnoird`". Testing this password interactively through the serial interface leads us past the login stage, confirming the validity of our findings.
 
 ## Firmware
 
@@ -70,18 +67,18 @@ For this stage, the [dump.py](dump.py) was developed. What it does is login into
 
 **TARGET 3: Confidential strings**
 
-By using the `strings` command with the dumped firmware (`strings ./TARGETS/firmwares/vendingMachine6/firmware_dump0`), we located two strings that could be important.
+By using the `strings` command with the dumped firmware (`strings ./TARGETS/firmwares/firmware_dump0`), we located two strings that could be important.
 
 First string : 
 ```
-"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"
+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
 ```
 Second string : 
 ```
-rPNQEzD6kXTQCyqoofQsdj4aCcVbe9T8gzo5WRdoCeDV7f+tCZDoAayci4bi8hGJ8Zbv6EOIeKtL8Se3bvA5Q1CS/YxHZHAYLNiu5AiVeoguHURZoORlxDxhdcD1hSL0QpQwnzvaSqajOztOEUnvt8QmcEReJOjTXGkJEeDray670Y6Yb9jm6CpOXE5xsEtL+s8kzpGBlKLBzPXheUpKGB9N4hWAWjLrc67Mw4zUscpZn58abTiGcZZhImKd7tge0OknalQZpP/vQpCJ3C0tWC+maqeJcctuugqyhIDx5I4bxRTHFuxHQE7MmZlfGUgBKRUBbCTtPBi1RItV3HJLPg==
+ksIK1+Q31rnBZbDVkxSqgKPC32KuzGpE0UmnZRAYUS0Xh8q9sOnB1h/d02UIFs6EcXLLJtMJTXQ4ySF1G2lz5UxlBF3b7WJpRzFKLUHyLz9R57qgpbEMDCBJEGmPTArDYsn6i7bRDUNL+NDH95o2LTapA+KIG1fUgAZMlYik5Jjn7nkTFCKHi8i8DxRV+HeJlUUSYIz+k/LPJLuxCuy3Fz/RzlNDtOKh8cd0FoWmYOxi+lKBOLbWGpMFaDp02Ozk5KPBm2JgIqdd0Hnqy+48YnOUaL/44RF3HYPbCW4tMxjAsItim0ULfCM1k1xa1220N8178A7IeoO/pvdTd4m2Sw==
 ```
 
-The relevance of these strings will be discussed in the next part, as they pertain to cryptographic assets. Aditionally, we're able to locate the password for Admin Alan in these firmwares, which is "`alanqyxcyqnqeerixzcgocmrcsyhimdskcuscddfgkdityzzzbkuda`".
+The relevance of these strings will be discussed in the next part, as they pertain to cryptographic assets. Aditionally, we're able to locate the password for Admin Alan in these firmwares, which is "`alancqoclrkwjejwvkuxguwpgxckjumvdgiyyzzvvevwsnwpcpcwrs`".
 
 # PART 2: Final Boss
 
@@ -117,94 +114,94 @@ After some attempts with the openssl command, we were able to conclude that the 
 $ openssl rsa -in key.bin -check -noout -text
 Private-Key: (2048 bit, 2 primes)
 modulus:
-    00:b7:af:b0:1c:f3:66:a5:07:49:cc:de:5e:78:db:
-    c5:21:3c:30:7f:c0:fc:d4:c3:7c:ac:fa:7c:75:f3:
-    fa:b3:d1:d3:55:90:af:82:64:70:c2:fc:3b:c3:08:
-    32:5b:20:eb:01:f8:06:53:fb:df:cc:53:31:5e:da:
-    3a:7c:03:65:10:f3:91:8a:79:64:80:4c:50:8d:5f:
-    97:36:0f:92:1e:73:42:77:bd:85:b5:2d:3d:50:03:
-    07:ba:51:56:f6:fa:51:2d:54:c1:14:0c:8f:ee:da:
-    63:6f:3f:5c:57:fd:13:6a:4f:e9:23:d9:4c:e7:c6:
-    87:78:9a:ec:1f:d2:05:b9:b5:e8:04:9f:a8:74:d1:
-    25:92:27:96:54:66:5d:07:43:f4:f4:0a:d7:7b:6c:
-    13:3b:8a:c5:fe:bc:64:96:bf:23:bf:84:d0:99:50:
-    21:d5:3c:a2:a9:a3:46:67:67:ed:2d:2a:de:ec:72:
-    b5:17:d2:95:17:16:1e:47:bb:c2:bd:bf:fd:ba:4e:
-    08:90:04:e9:0b:c7:05:41:89:1e:b3:26:1e:44:2a:
-    33:84:ee:89:d7:a9:cf:a6:7f:d0:f0:68:a3:50:5d:
-    63:1f:c2:29:cf:d9:f9:a0:9f:c2:bc:79:05:29:52:
-    d2:fb:c6:7c:4e:30:c7:e8:64:2a:c7:ab:9f:a5:c5:
-    08:9f
+    00:ac:29:ad:26:a2:f1:90:dd:bf:15:a7:9a:98:0d:
+    49:e4:7b:6e:65:cb:86:5b:d7:8e:e6:bf:66:1a:bb:
+    2b:ea:f8:10:d8:9a:91:76:ed:77:33:3c:5a:8f:f9:
+    16:ae:fb:24:f7:8c:7a:8d:cc:06:3f:20:b9:74:0b:
+    9c:46:f1:29:34:b4:05:03:80:e6:e0:89:53:26:18:
+    b6:2e:5f:67:9d:08:b7:ff:fd:ab:a3:32:30:25:9d:
+    fa:68:31:b5:ae:8a:09:f2:47:e1:a7:4d:7e:5b:71:
+    b0:9e:aa:5c:5f:73:08:bc:27:1d:e2:a7:25:ae:5d:
+    52:84:e8:bd:03:20:b9:8d:94:9d:3c:57:dd:56:9b:
+    06:ee:57:3c:67:cf:d3:84:d3:c6:ca:72:4b:45:63:
+    df:ea:a0:ec:fa:c9:64:e1:82:a4:85:a0:ed:5a:8e:
+    78:64:e4:95:7e:fe:a6:51:e1:44:02:16:65:a3:04:
+    1a:bd:f5:02:7a:3a:98:45:a8:8f:ec:22:6b:cb:b7:
+    f4:3b:df:b5:01:62:2f:cd:2d:13:a7:73:99:c8:4b:
+    1d:f9:82:8d:cd:82:92:92:1a:1f:dd:c4:eb:ef:e3:
+    aa:aa:95:0a:8b:25:b8:c4:78:a2:c8:73:99:82:6b:
+    8e:4c:ff:a2:45:f7:d8:3b:89:a7:2a:ff:bf:33:33:
+    6e:8d
 publicExponent: 65537 (0x10001)
 privateExponent:
-    04:c6:c3:42:c5:76:31:00:0d:af:0f:9b:3a:48:fb:
-    5e:75:5f:b7:7a:ba:63:02:a0:53:d3:d6:f7:ae:e6:
-    a1:2a:be:c9:95:fa:67:b4:1a:95:df:69:8d:bf:eb:
-    fb:4a:fc:56:c5:44:78:db:99:ad:5e:53:c5:7e:7c:
-    3b:2c:50:17:a4:40:6f:c4:34:aa:52:11:b2:d3:69:
-    03:05:5d:a1:d5:67:c5:90:53:e6:95:ac:bc:a4:ba:
-    31:e1:ef:eb:cf:da:30:de:68:2a:3a:cc:ba:ae:75:
-    71:22:49:d1:99:e9:99:7f:f1:75:36:af:2a:c4:67:
-    fd:14:08:e4:27:99:c6:d8:9a:3b:3a:be:3e:93:92:
-    ae:b1:88:00:20:33:d4:9e:7a:7d:2c:b6:6f:ca:a2:
-    6b:22:1e:a3:dd:43:aa:31:51:0b:9a:d4:7a:b6:dc:
-    e2:9f:d8:0c:9f:83:05:35:7c:45:44:c5:50:8b:13:
-    e0:6a:11:1c:58:4f:db:ef:fd:35:3e:e6:82:0c:74:
-    c7:0f:59:dd:a0:77:e4:0c:86:fd:b2:49:d9:60:da:
-    16:17:86:c0:69:4e:1e:36:79:00:4e:2d:9e:0d:63:
-    dc:a5:ea:ef:9d:c8:8c:ab:49:84:02:2e:4a:cf:ec:
-    f1:4d:7f:ba:b5:2d:fe:a4:63:3b:94:32:3a:c3:76:
-    39
+    24:e7:4a:16:5e:17:29:d6:5e:7f:65:cd:dd:89:fb:
+    ac:de:48:6b:c9:94:a3:5b:31:66:84:e0:7e:1a:60:
+    ef:9c:fc:ff:71:22:7d:3b:a9:b1:71:de:77:be:0c:
+    fe:b5:16:d7:79:65:4b:bf:d0:16:f8:0c:c8:b3:34:
+    6c:80:85:34:a6:e1:ec:3e:55:3f:0c:30:a6:99:e5:
+    73:4b:40:0a:89:33:e7:cb:98:5f:03:03:0f:0d:2d:
+    ff:e7:a7:ea:21:ec:bf:e2:68:9c:54:20:21:b9:dd:
+    02:25:c2:67:33:61:4b:f3:96:94:5e:ff:d4:c0:6c:
+    4f:d1:13:b2:f7:f0:ce:48:12:4e:67:47:de:a5:37:
+    0c:5d:8d:26:0a:01:4f:8b:66:bd:fb:93:42:4f:2d:
+    92:3a:25:5f:ca:02:a7:af:a5:70:e0:71:c8:6c:70:
+    a1:62:ab:06:8d:0c:5d:af:4f:84:c1:eb:f3:20:90:
+    de:52:cf:11:3c:5d:75:0b:7c:71:fc:ff:9a:b6:47:
+    08:ec:3b:59:1e:ad:61:49:e8:c1:ab:e7:76:3b:58:
+    49:36:1f:57:ba:9e:a1:14:fa:0f:11:8e:b9:23:a8:
+    57:dd:39:93:c7:f7:62:91:60:53:02:ca:38:8c:f7:
+    14:5e:0a:04:84:01:ad:a9:d8:72:d9:37:ca:0a:64:
+    81
 prime1:
-    00:f3:c0:70:5e:3c:d1:b6:06:b0:87:93:19:53:c1:
-    1c:04:a9:8b:a6:44:82:67:1b:ad:88:64:d3:2a:62:
-    cc:2c:8f:64:96:7f:eb:17:ce:8e:9c:cc:60:57:ee:
-    db:8a:59:07:a5:bf:ef:77:0e:08:c9:7b:61:61:84:
-    9f:c5:65:32:9e:41:aa:1d:f4:6c:bc:ce:36:7c:8a:
-    c5:57:f4:cd:d5:69:9d:d6:df:e8:07:42:07:6d:3c:
-    e1:f5:83:94:a2:1e:d6:f6:c4:3c:84:a4:4e:cd:f0:
-    06:8a:24:dd:bf:3c:be:23:70:cd:7b:23:e6:00:54:
-    18:a0:5f:35:b7:24:35:39:79
+    00:eb:ef:b1:ff:4e:4b:90:cd:5a:3d:51:49:0a:70:
+    1e:35:38:f2:91:06:c4:a5:62:cd:3c:16:40:a1:7d:
+    bd:66:1a:c1:4d:a6:bd:5c:c1:55:31:05:33:61:89:
+    3c:41:b1:bf:23:69:ac:47:bc:38:33:1c:1f:81:32:
+    a5:7d:9b:b6:59:0d:67:46:63:13:14:30:2f:c2:b1:
+    8b:45:af:57:2d:79:1f:93:35:b9:6b:ac:74:b6:cd:
+    92:d4:cc:fa:26:c2:df:b5:97:bd:9e:59:bd:04:3d:
+    ee:c8:ee:38:b8:72:a6:ce:1a:16:ec:71:17:cd:fa:
+    bf:de:49:69:f6:fb:af:04:f7
 prime2:
-    00:c0:ea:95:11:63:36:a7:1c:78:6e:38:ab:9b:36:
-    ef:f7:27:30:9c:45:4c:55:db:a2:30:28:af:3c:f0:
-    3a:48:cb:58:d2:7d:a3:e4:2c:2c:e1:f7:77:36:2a:
-    f5:77:d2:40:ed:ea:a1:df:cd:28:6e:22:70:a1:c9:
-    04:08:60:78:fa:e1:ac:ae:2a:b5:b3:c4:6f:e2:31:
-    41:a7:9d:47:8d:a1:22:4f:d5:94:64:33:08:07:66:
-    cc:84:b4:d4:ea:e6:b6:e1:d2:e7:ad:1a:02:92:18:
-    d3:60:e8:2b:8a:13:34:68:0d:cc:4f:2c:68:ab:03:
-    a0:35:5d:0d:f5:ae:72:e4:d7
+    00:ba:cd:a3:b6:45:4d:51:12:08:c7:0a:71:13:41:
+    f6:79:7d:0b:f3:6e:65:35:41:b5:85:44:78:f9:4c:
+    b1:c2:c8:11:b9:c8:42:5d:48:3c:f1:6d:b1:44:01:
+    49:cc:4c:86:30:58:9a:d0:1c:7e:c0:b7:1e:52:3c:
+    d5:d9:cb:95:bd:2c:21:69:a2:37:43:ff:f5:13:e3:
+    39:d2:6c:5c:fc:4e:89:29:e1:43:70:04:97:12:a9:
+    58:ba:f4:96:e9:22:c4:5e:1e:fc:6d:0c:a4:90:c3:
+    06:97:4b:4d:97:16:58:00:52:03:90:76:bb:c5:b4:
+    0a:66:f9:2c:0a:0d:7d:bb:9b
 exponent1:
-    00:c6:36:6d:e9:e4:11:30:b1:3d:e9:f1:6f:7e:11:
-    21:a4:94:ee:af:b5:34:49:7e:53:5d:ff:87:4c:07:
-    6d:3a:ab:1c:43:da:1f:a5:8b:5d:a3:19:fb:1a:66:
-    6c:f6:92:b1:4a:52:ca:fb:08:59:92:e6:16:e9:42:
-    fc:dd:7b:0e:6f:6c:bc:56:81:85:ce:fe:ed:85:d7:
-    1e:e5:08:78:3d:1c:16:b3:3d:fe:a3:b0:48:f3:c6:
-    b7:84:7b:8c:69:4d:24:c7:24:0a:86:5e:4a:8a:e2:
-    ad:9e:b6:9d:ef:be:08:6c:2f:75:98:b6:37:79:7a:
-    e9:4f:b8:3c:a9:01:f3:9a:19
+    00:d2:f5:8c:db:72:3f:80:e7:0c:c3:fc:f5:69:3e:
+    dc:d3:cb:ea:a0:20:44:1e:79:1c:77:98:92:0b:93:
+    a9:91:2d:65:20:30:71:eb:08:f7:4a:90:92:e3:a8:
+    58:d7:88:be:16:44:fb:85:5c:d7:87:63:a3:0b:db:
+    a4:3b:8e:ca:5a:0f:f1:02:ef:bd:74:74:ad:8f:d1:
+    3e:6d:7d:9d:5e:8c:89:de:0f:d0:8e:65:32:2a:ed:
+    df:57:25:3c:9b:01:ee:13:a9:ed:23:34:ac:1c:a9:
+    df:e3:8b:95:ed:de:9e:25:75:10:80:33:93:0c:5b:
+    23:c9:f7:2c:a7:69:5d:91:fb
 exponent2:
-    00:91:6a:41:a3:31:9d:e8:a9:55:3e:00:09:9a:9d:
-    f6:93:de:3e:8e:0c:ce:55:89:90:df:ac:4b:2b:2c:
-    09:43:05:c4:96:25:8e:7c:57:b0:1d:44:63:df:b8:
-    d1:fe:d7:c5:89:90:eb:23:bf:89:52:3b:33:9b:3f:
-    e2:82:4d:f5:e3:66:68:bb:80:06:26:d3:53:62:b4:
-    ae:40:a2:15:65:74:a8:60:75:25:bd:c1:99:b3:ba:
-    91:3f:16:ef:c7:80:d1:29:b7:c8:5a:7a:d8:a5:37:
-    81:5d:f2:a3:9f:18:8a:d0:44:56:54:f7:ac:8d:fb:
-    d5:af:63:cd:39:fb:9d:2f:51
+    18:fd:ea:29:38:9c:5f:7c:4a:30:56:f5:49:de:49:
+    5b:77:9f:61:b2:23:58:3c:b2:4c:62:1c:cd:3d:b5:
+    8a:99:b9:c5:61:45:7f:b5:6a:71:e2:7b:14:de:17:
+    41:7d:fb:75:fc:64:b9:f3:16:02:32:7d:9c:03:07:
+    99:5b:e3:6c:ab:ba:cc:a7:27:3d:b1:c0:d8:28:4e:
+    54:18:ab:58:16:29:c3:b0:9f:95:1d:08:19:37:0e:
+    e7:f4:51:3c:5f:aa:65:ed:3f:58:57:98:ac:c5:6a:
+    dc:52:f6:ce:7f:ee:c6:1c:32:dd:e1:04:be:2e:98:
+    35:ae:a0:75:b7:d8:5a:81
 coefficient:
-    3b:66:80:03:f9:01:02:3b:c5:a5:fd:6a:c6:97:af:
-    2d:8d:5a:5c:69:06:09:33:79:d1:b9:bc:48:bf:3c:
-    8c:b4:c0:ea:59:b2:22:d1:1b:20:a7:7a:80:a5:3c:
-    63:69:c8:ac:23:6d:c9:37:e6:c0:b6:c3:ae:6b:65:
-    05:45:0e:13:93:46:8b:dc:3a:b6:fb:53:e8:05:94:
-    71:7e:d7:59:b9:39:0a:99:bb:46:05:b9:cf:b2:83:
-    09:8b:6e:8c:26:0f:6d:75:ce:59:6b:14:7e:43:88:
-    cf:2a:44:13:02:8a:cd:a0:b5:b0:73:3f:4c:12:79:
-    81:53:3d:84:56:17:bc:0c
+    00:ab:51:e8:8f:9f:02:03:b1:c9:f3:58:60:31:ce:
+    f2:fb:50:cd:68:fb:8e:00:23:63:d2:1f:06:93:e0:
+    a1:c7:27:91:15:26:9e:9d:14:0c:f5:0c:6f:b6:bb:
+    9a:9e:71:06:02:c4:59:21:81:27:95:49:17:2d:d7:
+    21:39:6a:85:73:d5:c1:68:3e:b6:4e:f3:44:5c:f2:
+    09:67:f0:8e:10:fb:0c:62:d3:20:7a:2e:a3:45:e7:
+    53:ef:f4:07:f2:ff:c9:4d:f0:48:32:e7:07:70:c9:
+    e6:e1:7b:d2:da:08:c2:00:e8:d1:cb:66:9b:1c:9e:
+    ce:44:c9:e7:b9:c0:a1:64:6d
 RSA key ok
 ```
 
@@ -220,19 +217,13 @@ openssl rsa -inform DER -in key.bin -out key.pem
 openssl rsautl -decrypt -inkey key.pem -in sig.bin -out decrypted_hash 
 ```
 
-Obtained hashes:
+By running these commands, we obtained the following message:
 
-- 16 : {"hash": "6b02ef89ca11e91dace39a97bfde1f77"}
-- 29 : {"hash": "c2af16f5bd21ac77ec01c7e81a9be0eb"}
-- 6 : {"hash": "6ae39cd257a906859040b930551c1cb2"}
+```
+{"hash": "6ae39cd257a906859040b930551c1cb2"}
+```
 
-Using the provided rainbow table (not included in this folder due to its size) to match the hashes, we extracted the C&C passwords (using the command `cat rainbow.table | grep 'HASH'`) as follows:
-
-C&C password : 
-- 16: cncyrkfptyydqqzykjqkpzhexhsrrcjjfztkvponwrblpfgwxcsdc
-- 29: cncvdmwhcuabfafahvqfntetnyavetaqpyancathfmiwihbefngkx
-- 6: cncywkiyucctbmwruzcrmpiauhaikrptatuwbemwxfbtnivrqklwe
-
+Using the provided rainbow table (not included in this folder due to its size) to match the hashes, we extracted the C&C password (using the command `cat rainbow.table | grep '6ae39cd257a906859040b930551c1cb2'`), and concluded that the C&C password for vending machine 6 is "`cncywkiyucctbmwruzcrmpiauhaikrptatuwbemwxfbtnivrqklwe`"
 
 ## Crack the code
 
@@ -246,8 +237,4 @@ After sending the initial credentials to the Arduino to reach the OTP phase, we 
 ## Connect to the C&C
 **TARGET 7: Final secret**
 
-With all passwords and the cracked OTP, we could access the C&C, where the following secrets were displayed:
-
-- 16: `monkeytigeroaktape`
-- 29: `niceeaglewonderfulboat`
-- 6: `windowiguanabeachsun`
+With all passwords and the cracked OTP, we could access the C&C, where the final secret was displayed as being "`windowiguanabeachsun`".
