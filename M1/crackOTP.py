@@ -2,14 +2,14 @@ import serial
 import time 
 import re
 
-arduino = serial.Serial('COM7', baudrate=115200, timeout=0.1)
+arduino = serial.Serial('/dev/ttyUSB0', baudrate=115200, timeout=0.1)
 time.sleep(5)
 
 print(arduino.readline())
-arduino.write(bytes("alangmrseagepzqajipejuqsgksoufwldsqclpsoakfqhppuwqhtna\n", 'utf-8'))
+arduino.write(bytes("alancqoclrkwjejwvkuxguwpgxckjumvdgiyyzzvvevwsnwpcpcwrs\n", 'utf-8'))
 txt = arduino.readall()
 print(txt)
-arduino.write(bytes("cncyrkfptyydqqzykjqkpzhexhsrrcjjfztkvponwrblpfgwxcsdc\n", 'utf-8'))
+arduino.write(bytes("cncywkiyucctbmwruzcrmpiauhaikrptatuwbemwxfbtnivrqklwe\n", 'utf-8'))
 while arduino.in_waiting == 0:
 	pass
 txt = arduino.readall()
