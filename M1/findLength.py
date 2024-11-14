@@ -38,6 +38,7 @@ for item in strlen:
 	numList.append(item['length'])
 	timesList.append(item['time'])
 
+plt.xticks(numList)
 plt.plot(numList,timesList)
 plt.xlabel('Number of chars')
 plt.ylabel('Time')
