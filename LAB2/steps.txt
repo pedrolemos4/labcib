@@ -31,7 +31,7 @@ docker exec -it dind \
 # Entry at the end of the file of: sha256:77f42d47106946c50124ec2293174ae924bc120c6ab28a204618dc905a26
 # {"created":"2024-09-16T17:13:58.451692008Z","created_by":"RUN /bin/sh -c rm .env # buildkit","comment":"buildkit.dockerfile.v0"},
 
-# Also, remove the last layer in maingest.json because in this case because it is the last non-empty layer, even if the sha is different
+# Also, remove the last layer in manifest.json because in this case because it is the last non-empty layer, even if the sha is different
 "blobs/sha256/dffd5ef98d770fcc1a0aa8057ad1787569ecf563add1e0d1df0f7287cd7ffd68"
 
 docker rmi isepdei/insecurelabs02
