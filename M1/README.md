@@ -238,7 +238,11 @@ Using the provided rainbow table (not included in this folder due to its size) t
 To bypass the OTP authentication, we utilized a brute-force approach that attempts to match the OTP by submitting numbers until the expected OTP matches one previously provided.
 After sending the initial credentials to the Arduino to reach the OTP phase, we sent the 100 number (it's arbitrary, as it could be any valid number) to get a expecting value from Arduino and after that we will extract the value and use that value until the response isn't incorrect and the authentication is completed. The script to achieve this can be checked in the [Crack OTP](crackOTP.py) file. The logic behind this is that, since there's "a bug that leads to the code repeating after some attempts", we extract the code that was expected on the first attempt, and then always provide that one, since we know that, after some time, it will be repeated.
 
-![alt text](./images/crackOTP.png)
+![crackOTP.png](./images/crackOTP.png)
+
+By running this script, we were able to crack the OTP system of the vending machine, and discover the final secret.
+
+![ccLogin.png](./images/ccLogin.png)
 
 ## Connect to the C&C
 **TARGET 7: Final secret**
