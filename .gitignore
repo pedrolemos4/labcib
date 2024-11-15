@@ -3,3 +3,8 @@
 *.hst
 *.ver
 *.gz
+*.aux
+*.lof
+*.out
+*.toc
+*.log
