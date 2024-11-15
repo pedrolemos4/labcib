@@ -1,0 +1,143 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode 
+\documentclass[a4paper,11pt,openright,BCOR=15mm]{scrbook}
+
+\usepackage[onehalfspacing]{setspace}    %   
+\usepackage[utf8]{inputenc}
+\usepackage[portuges,english]{babel}     
+\usepackage[square,numbers]{natbib}
+\usepackage{graphicx}               
+\usepackage[pdftex]{hyperref}
+\usepackage[T1]{fontenc}          
+\usepackage{pdfpages}         
+\usepackage{lettrine}    
+\usepackage{booktabs}  
+\usepackage{scrhack}   
+\usepackage{scrlayer-scrpage}
+\usepackage{ulem} % for underline
+\usepackage{xcolor}
+\definecolor{cinza1}{RGB}{200,200,200}
+\definecolor{cinza2}{RGB}{70,70,70}
+\usepackage{vhistory}	%% para versoes....
+\newcommand\ChapterFont{}      % usar o tipo de letra normal
+\newcommand\SectionFont{}
+\pagestyle{scrheadings}
+\ifoot[]{\raisebox{-32pt}{\includegraphics[width=0.15\textwidth]{logos/logoisep}}}
+\ofoot[]{\raisebox{-22pt}{\includegraphics[width=0.10\textwidth]{logos/logo_DEI_big_transparente}}}
+\cfoot[\pagemark]{\pagemark}
+\automark[section]{chapter}
+\usepackage{blindtext}   % \texto para demos 
+\usepackage{listings}   %  para listagens com diferentes tipos de letra
+\usepackage{fancyvrb}  %  para listagens de codigo 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[mono=false]{libertine}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	\selectlanguage{english}  
+	\frontmatter
+	
+	\titlehead{\includegraphics[scale=0.2]{figs/logoisep}
+		\hfill \includegraphics[scale=0.115]{logos/logo_DEI_big_transparente}
+	}  
+	
+	\title{Systematization of Knowledge on Hardening Kubernetes through Native Configurations} 
+	\subtitle{LABCIB}
+	
+	\author{Master in Informatics Engineering - 2024/2025}        
+	
+	
+\publishers
+{
+	1190830 - Luís Correia\\ 1190974 - Pedro Lemos\\ 1191526 - Pedro Moreira\\ \texttt{Version \vhCurrentVersion, \vhCurrentDate}\\
+}         
+  
+	
+	
+	
+	\date{Porto, \today} 
+	
+	
+	\maketitle   
+	
+	
+	% Start of the revision history table
+	\begin{versionhistory}
+		\vhEntry{1}{2024-11-15}{Pedro Moreira}{Initial version and structure}  
+		\vhEntry{2}{2024-10-17}{...}{Extended description}  
+
+		
+
+	\end{versionhistory}
+	
+	\cleardoublepage
+	
+
+	
+	
+	
+	\tableofcontents
+	\addcontentsline{toc}{chapter}{List of Figures}
+	\listoffigures
+	
+	
+	
+	% \listoftables 
+	
+	\mainmatter 
+	
+	%% =================================
+	
+
+	%% =================================
+	\chapter{Introduction}
+	
+\textit{[Description, considering the project, of what under individual responsibility]}
+	
+	%% =================================
+	\chapter{Objectives and Scope}
+
+\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to functional correctness, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+
+	
+	%% =================================	
+	\chapter{Methodology}
+\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to maintainability, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+		
+	%% =================================		
+	\chapter{Kubernetes Native Configurations for Hardening}
+\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to performance, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+
+	\section{Data Encryption}
+	
+	\section{API Server Configurations}
+	
+	\section{Network Policies}
+	
+	\section{RBAC and Authentication}
+		
+	%% =================================
+	\chapter{Complementary Tooling}
+\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to security, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+		
+	%% =================================
+	\chapter{Analysis and Best Practices}
+ \textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to architectural compliance, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+	
+
+
+	%% =================================
+	\chapter{Conclusions }
+ ...\newline
+
+
+
+	
+	\bibliographystyle{ACM-Reference-Format}
+	\renewcommand\bibname{References}
+	\bibliography{ref}
+	\label{references}
+	\addcontentsline{toc}{chapter}{References}
+	
+\end{document}
