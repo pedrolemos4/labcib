@@ -104,10 +104,15 @@
 	%% =================================	
 	\chapter{Methodology}
 \textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to maintainability, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+	
+	
+\chapter{Background}
+Explicar o que é o Kubernetes e como usa o etcd (isto é importante). Falar também brevemente sobre o que são Secrets (porque depois vamos referir como é que os protegemos melhor). Relativamente ao Kubernetes parece-me interessante falar do básico, ou seja o que são master e worker nodes, quais são os componentes (API server, kubelet, essas coisas que se encontram facilmente na documentação deles). Não precisa de ser muito extensivo mas convém dar algum contexto para depois sabermos o que estamos a dizer
 		
 	%% =================================		
-	\chapter{Kubernetes Native Configurations for Hardening}
-\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to performance, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+\chapter{Kubernetes Native Configurations for Hardening}
+Having introduced what Kubernetes is, we are now able to delve into the main purpose of this report, which is to systematize what built-in features and configurations of this technology we can use to improve a cluster's security posture and resistance to cyber-attacks.
+This chapter will be split into various sections, each concerning an area of relevance when it comes to Kubernetes Hardening. In each section, a context regarding the security improvements that are available will be presented, and consequently the measures through which one can implement these improvements will also be showcased.
 
 	\section{Data Encryption}
 	
