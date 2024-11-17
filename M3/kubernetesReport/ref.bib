@@ -14,3 +14,31 @@
 	year = {2023},
 	note = {original-date: 2008-08-21T21:34:50Z},
 }
+
+@misc{the_linux_foundation_secrets_2024,
+	title = {Secrets},
+	url = {https://kubernetes.io/docs/concepts/configuration/secret/},
+	abstract = {A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
+	Because Secrets can be created independently of the Pods that use them, there is less risk of the Secret (and its data) being exposed during the workflow of creating, viewing, and editing Pods.},
+	language = {en},
+	urldate = {2024-11-17},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs}
+}
+
+
+@misc{the_linux_foundation_encrypting_2024,
+	title = {Encrypting {Confidential} {Data} at {Rest}},
+	url = {https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/},
+	abstract = {All of the APIs in Kubernetes that let you write persistent API resource data support at-rest encryption. For example, you can enable at-rest encryption for Secrets. This at-rest encryption is additional to any system-level encryption for the etcd cluster or for the filesystem(s) on hosts where you are running the kube-apiserver.
+	This page shows how to enable and configure encryption of API data at rest.
+	Note:This task covers encryption for resource data stored using the Kubernetes API.},
+	language = {en},
+	urldate = {2024-11-17},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs}
+}

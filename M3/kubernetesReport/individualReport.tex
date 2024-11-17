@@ -1,11 +1,12 @@
 % !TEX TS-program = pdflatex
 % !TEX encoding = UTF-8 Unicode 
 \documentclass[a4paper,11pt,openright,BCOR=15mm]{scrbook}
-
 \usepackage[onehalfspacing]{setspace}    %   
 \usepackage[utf8]{inputenc}
 \usepackage[portuges,english]{babel}     
-\usepackage[square,numbers]{natbib}
+%\usepackage[square,numbers]{natbib}
+\usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
+\addbibresource{ref.bib} % The filename of the bibliography
 \usepackage{graphicx}               
 \usepackage[pdftex]{hyperref}
 \usepackage[T1]{fontenc}          
@@ -28,7 +29,22 @@
 \automark[section]{chapter}
 \usepackage{blindtext}   % \texto para demos 
 \usepackage{listings}   %  para listagens com diferentes tipos de letra
-\usepackage{fancyvrb}  %  para listagens de codigo 
+\usepackage{fancyvrb}  %  para listagens de codigo
+\usepackage{listings}
+\usepackage{courier}
+\lstdefinestyle{yaml}{
+	basicstyle=\color{blue}\footnotesize\ttfamily,
+	rulecolor=\color{black},
+	string=[s]{'}{'},
+	stringstyle=\color{blue},
+	comment=[l]{:},
+	commentstyle=\color{black},
+	morecomment=[l]{-},
+	breaklines=true,
+	frame=single
+}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[mono=false]{libertine}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -116,6 +132,46 @@ This chapter will be split into various sections, each concerning an area of rel
 
 	\section{Data Encryption}
 	
+As we've seen in the context section of this report, Kubernetes stores Secrets and their data on the etcd backend database without any form of encryption \cite{the_linux_foundation_secrets_2024} - despite encoding them with Base64, which does not constitute encryption as the plain-text contents are directly obtainable. If an attacker is able to access either the API server or the etcd database directly, he will be able to obtain the plain-text contents of the secrets that are managed by that cluster. One can easily picture the compromise that this can cause, as secrets usually contain business-critical credentials that are used by services running in Kubernetes. For instance, an application Pod might need to access a database, and thus read the connection string and database user credentials from a secret. If an attacker could obtain the content of this secret, he too would at least have the credentials to access the database.
+
+Fortunately, Kubernetes provides a series of configurations that can be applied to encrypt Secrets - and other resources - at rest. This is done through the configuration of some resources on the cluster's API server. Notably, Kubernetes defines the \texttt{EncryptionConfiguration} Custom Defined Resource (CRD), which allows practitioners to customize what resources shall be encrypted and through what mechanism (also known as provider) \cite{the_linux_foundation_encrypting_2024}.
+
+The flow of actions is as follows: a user or application creates a Secret by sending an API call to the Kubernetes API; the API checks its \texttt{EncryptionConfiguration} file to evaluate what encryption provider to use and which key to use for that provider; if a provider is specified, as well as the key to use, the API server uses both to encrypt the provided data; then, this encrypted data is stored in etcd. For the decryption, the API retrieves the secret from etcd and uses the aforementioned \texttt{EncryptionConfiguration} to decrypt the contents.
+
+
+%\begin{lstlisting}[style=yaml]
+%	apiVersion: apiserver.config.k8s.io/v1
+%	kind: EncryptionConfiguration
+%	resources:
+%	- resources:
+%	- secrets
+%	- configmaps
+%	- pandas.awesome.bears.example # a custom resource API
+%	providers:
+%	# This configuration does not provide data confidentiality. The first
+%	# configured provider is specifying the "identity" mechanism, which
+%	# stores resources as plain text.
+%	#
+%	- identity: {} # plain text, in other words NO encryption
+%	- aesgcm:
+%	keys:
+%	- name: key1
+%	secret: c2VjcmV0IGlzIHNlY3VyZQ==
+%	- name: key2
+%	secret: dGhpcyBpcyBwYXNzd29yZA==
+%	- aescbc:
+%	keys:
+%	- name: key1
+%	secret: c2VjcmV0IGlzIHNlY3VyZQ==
+%	- name: key2
+%	secret: dGhpcyBpcyBwYXNzd29yZA==
+%	- secretbox:
+%	keys:
+%	- name: key1
+%	secret: YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY=
+%\end{lstlisting}
+
+
 	\section{API Server Configurations}
 	
 	\section{Network Policies}
@@ -138,11 +194,14 @@ This chapter will be split into various sections, each concerning an area of rel
 
 
 
+%	
+%	\bibliographystyle{ACM-Reference-Format}
+%	\renewcommand\bibname{References}
+%	\bibliography{ref}
+%	\label{references}
+%	\addcontentsline{toc}{chapter}{References}
 	
-	\bibliographystyle{ACM-Reference-Format}
-	\renewcommand\bibname{References}
-	\bibliography{ref}
-	\label{references}
-	\addcontentsline{toc}{chapter}{References}
+	\printbibliography[heading=bibintoc]
+	
 	
 \end{document}
