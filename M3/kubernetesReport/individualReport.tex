@@ -138,39 +138,41 @@ Fortunately, Kubernetes provides a series of configurations that can be applied 
 
 The flow of actions is as follows: a user or application creates a Secret by sending an API call to the Kubernetes API; the API checks its \texttt{EncryptionConfiguration} file to evaluate what encryption provider to use and which key to use for that provider; if a provider is specified, as well as the key to use, the API server uses both to encrypt the provided data; then, this encrypted data is stored in etcd. For the decryption, the API retrieves the secret from etcd and uses the aforementioned \texttt{EncryptionConfiguration} to decrypt the contents.
 
+In \ref{code:encConfig}, we present a simple example of an \texttt{EncryptionConfiguration}. What this does is instruct the Kubernetes API that all Secrets must be encrypted using the \texttt{aescbc} provider, using the encryption key specified in \texttt{keys.secret} field.
 
-%\begin{lstlisting}[style=yaml]
-%	apiVersion: apiserver.config.k8s.io/v1
-%	kind: EncryptionConfiguration
-%	resources:
-%	- resources:
-%	- secrets
-%	- configmaps
-%	- pandas.awesome.bears.example # a custom resource API
-%	providers:
-%	# This configuration does not provide data confidentiality. The first
-%	# configured provider is specifying the "identity" mechanism, which
-%	# stores resources as plain text.
-%	#
-%	- identity: {} # plain text, in other words NO encryption
-%	- aesgcm:
-%	keys:
-%	- name: key1
-%	secret: c2VjcmV0IGlzIHNlY3VyZQ==
-%	- name: key2
-%	secret: dGhpcyBpcyBwYXNzd29yZA==
-%	- aescbc:
-%	keys:
-%	- name: key1
-%	secret: c2VjcmV0IGlzIHNlY3VyZQ==
-%	- name: key2
-%	secret: dGhpcyBpcyBwYXNzd29yZA==
-%	- secretbox:
-%	keys:
-%	- name: key1
-%	secret: YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY=
-%\end{lstlisting}
 
+\begin{lstlisting}[style=yaml,caption={EncryptionConfig example},label=code:encConfig]
+	apiVersion: apiserver.config.k8s.io/v1
+	kind: EncryptionConfiguration
+	resources:
+	- secrets
+	providers:
+	- aescbc:
+	  keys:
+	    - name: key1
+	      secret: <BASE 64 ENCODED SECRET>
+	- identity: {}
+\end{lstlisting}
+
+There are several providers which we can use when encrypting secrets, which are specified in the Kubernetes documentation itself \footnote{This comparison can be seen in \href{https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/\#providers}{\underline{this documentation link}}}. Some facts are worth noting:
+
+\begin{itemize}
+	\item The \texttt{identity} provider does not encrypt data. It's the default used by Kubernetes, as we've covered before. Despite this, it has practical utilities, such as serving as one of the encryption providers for instance when migrating clear-text secrets to encrypted ones. So, despite not encrypting data, it would be improper to discard its existence;
+	\item The \texttt{aescbc}, \texttt{aesgcm} and \texttt{secretbox} providers require the encryption key to be specified in the encryption configuration file. Using them protects a cluster in the event of a compromise, but if the hosts in which the Kubernetes API is running are themselves compromised, this does not provide additional security, as the attacker will be able to obtain the encryption key from the local filesystem \cite{gkatziouras_kubernetes_2024}. Nonetheless, it's an improvement from the default configuration.
+\end{itemize}
+
+Besides the providers mentioned above, there exists the \texttt{kms} provider, which is currently in version 2 - and version 1 is deprecated. This provider offers a more complex - but more secure - encryption solution. It's purpose is to solve the issue of having the encryption key defined in a local file, as we've covered previously. To address this matter, the kms provider calls upon two new components \cite{gkatziouras_kubernetes_2024}: 
+
+\begin{itemize}
+	\item An external Key Management Service (KMS);
+	\item A Kubernetes KMS provider plugin, which is responsible for connecting with the external KMS for the encryption and decryption processes.
+\end{itemize}
+
+This mechanism adopts an "envelope encryption scheme using a two-key approach" \cite{gkatziouras_kubernetes_2024}, with those keys being: the Data Encryption Key (DEK), which is used to encrypt the resources referenced in the \texttt{EncryptionConfig}; and the Key Encryption Key (KEK), which is used to encrypt the DEK and is hosted remotely on the KMS. This way, having the encryption key on a separate system, the main downside of the previous solutions is addressed, since a filesystem compromise of the Kubernetes master nodes wouldn't directly lead to a compromise of the secrets stored in the cluster.
+
+However, we must note that the usage of the \texttt{kms} provider requires the usage of third-party tooling, not native to Kubernetes - since it requires the usage of an external KMS. 
+
+% pensar se vale a pena mencionar o Trousseau/kleidi (https://beezy.dev/kleidi/#) e o Hashicorp Vault a servir como KMS
 
 	\section{API Server Configurations}
 	
