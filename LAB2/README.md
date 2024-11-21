@@ -44,6 +44,8 @@ Please take a few moments to read the reference man pages and learn more about c
 
 **Question** **6.** **What happens if you remove** **`cap_net_raw` from ping? Describe how you removed the capability.**
 
+![pingNoCap](./pingNoCap.png)
+
 sudo sysctl -w net.ipv4.ping_group_range="0 0" 
 sudo setcap -r /usr/bin/ping 
 ping 1.1.1.1 ------------> o ping falha, porque nao tem nem a capability, nem o sysctl direito. 
@@ -62,11 +64,33 @@ sudo chmod u+s /usr/bin/ping
 
 assim conseguimos correr o ping sem a capability e sem o sysctl, porque é como se estivessemos a correr o executavel  como root.
 
+![pingSetUID](./pingSetUID.png)
+
+
 **Question** **8.** **Can you make** **passwd work without being a Set UID program? Detail how and why it works?**
+
+The passwd binary can be granted specific capabilities using the setcap tool. The relevant capabilities are:
+
+- CAP_DAC_OVERRIDE: To override file permissions (needed for accessing /etc/shadow).
+- CAP_FOWNER: To allow ownership-related operations on files like /etc/shadow.
+- CAP_CHOWN: To change the ownership of files, if required.
+- CAP_SETUID and CAP_SETGID: To change user and group IDs during the password update process.
+
+![passwdNoSetUID.png](./passwdNoSetUID.png)
 
 **Question** **9.** **Discuss why do you think that, by default,** **passwd is a Set UID program and** **ping is not?**
 
+**TODO:** Change this
+
+The **`passwd`** command is a setuid program because it requires root privileges to modify sensitive files like `/etc/shadow`, which stores password hashes. Regular users lack the necessary permissions to access or update this file, so `passwd` must run with elevated privileges to perform its function securely. Since the range of required privileges is broad and cannot be easily isolated, the setuid mechanism is used.
+
+In contrast, **`ping`** does not need to be setuid because modern Linux systems use capabilities to provide the necessary privileges more granularly. Specifically, `ping` requires the **`CAP_NET_RAW`** capability to open raw sockets for sending ICMP packets, which is safer than granting full root access. This approach reduces the risk of privilege escalation, making `ping` more secure without needing setuid.
+
 **Question** **10.** **Can you get familiar with other capabilities? On you report explain ten more capabilities of your choice.**
+
+Tem uma lista com elas todas: cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_linux_immutable,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,cap_audit_read,cap_perfmon,cap_bpf,cap_checkpoint_restore
+
+escolher 10 que nao tenham aparecido antes e explorar, explicar o que cada uma faz, um caso pratico de cada uma, e os riscos
 
 **Question** **11.** **After a program (running as normal user) disables a** **`cap_dac_override` capability, it is compromised by a buffer-overflow attack. The attacker successfully injects his malicious code into this program’s stack space and starts to run it. Can this attacker use the** **`cap_dac_override` capability? What if the process deleted the capability, can the attacker use the capability?**
 
