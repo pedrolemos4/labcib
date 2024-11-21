@@ -8,7 +8,7 @@ arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=0.1)
 time.sleep(5)
 
 print(arduino.readline())
-arduino.write(bytes("danfffxcqpfxt\n", 'utf-8'))
+arduino.write(bytes("danoazojnoird\n", 'utf-8'))
 txt = arduino.readall()
 print(txt)
 

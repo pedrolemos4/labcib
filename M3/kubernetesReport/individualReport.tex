@@ -1,0 +1,209 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode 
+\documentclass[a4paper,11pt,openright,BCOR=15mm]{scrbook}
+\usepackage[onehalfspacing]{setspace}    %   
+\usepackage[utf8]{inputenc}
+\usepackage[portuges,english]{babel}     
+%\usepackage[square,numbers]{natbib}
+\usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
+\addbibresource{ref.bib} % The filename of the bibliography
+\usepackage{graphicx}               
+\usepackage[pdftex]{hyperref}
+\usepackage[T1]{fontenc}          
+\usepackage{pdfpages}         
+\usepackage{lettrine}    
+\usepackage{booktabs}  
+\usepackage{scrhack}   
+\usepackage{scrlayer-scrpage}
+\usepackage{ulem} % for underline
+\usepackage{xcolor}
+\definecolor{cinza1}{RGB}{200,200,200}
+\definecolor{cinza2}{RGB}{70,70,70}
+\usepackage{vhistory}	%% para versoes....
+\newcommand\ChapterFont{}      % usar o tipo de letra normal
+\newcommand\SectionFont{}
+\pagestyle{scrheadings}
+\ifoot[]{\raisebox{-32pt}{\includegraphics[width=0.15\textwidth]{logos/logoisep}}}
+\ofoot[]{\raisebox{-22pt}{\includegraphics[width=0.10\textwidth]{logos/logo_DEI_big_transparente}}}
+\cfoot[\pagemark]{\pagemark}
+\automark[section]{chapter}
+\usepackage{blindtext}   % \texto para demos 
+\usepackage{listings}   %  para listagens com diferentes tipos de letra
+\usepackage{fancyvrb}  %  para listagens de codigo
+\usepackage{listings}
+\usepackage{courier}
+\lstdefinestyle{yaml}{
+	basicstyle=\color{blue}\footnotesize\ttfamily,
+	rulecolor=\color{black},
+	string=[s]{'}{'},
+	stringstyle=\color{blue},
+	comment=[l]{:},
+	commentstyle=\color{black},
+	morecomment=[l]{-},
+	breaklines=true,
+	frame=single
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[mono=false]{libertine}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	\selectlanguage{english}  
+	\frontmatter
+	
+	\titlehead{\includegraphics[scale=0.2]{figs/logoisep}
+		\hfill \includegraphics[scale=0.115]{logos/logo_DEI_big_transparente}
+	}  
+	
+	\title{Systematization of Knowledge on Hardening Kubernetes through Native Configurations} 
+	\subtitle{LABCIB}
+	
+	\author{Master in Informatics Engineering - 2024/2025}        
+	
+	
+\publishers
+{
+	1190830 - Luís Correia\\ 1190974 - Pedro Lemos\\ 1191526 - Pedro Moreira\\ \texttt{Version \vhCurrentVersion, \vhCurrentDate}\\
+}         
+  
+	
+	
+	
+	\date{Porto, \today} 
+	
+	
+	\maketitle   
+	
+	
+	% Start of the revision history table
+	\begin{versionhistory}
+		\vhEntry{1}{2024-11-15}{Pedro Moreira}{Initial version and structure}  
+		\vhEntry{2}{2024-10-17}{...}{Extended description}  
+
+		
+
+	\end{versionhistory}
+	
+	\cleardoublepage
+	
+
+	
+	
+	
+	\tableofcontents
+	\addcontentsline{toc}{chapter}{List of Figures}
+	\listoffigures
+	
+	
+	
+	% \listoftables 
+	
+	\mainmatter 
+	
+	%% =================================
+	
+
+	%% =================================
+	\chapter{Introduction}
+	
+\textit{[Description, considering the project, of what under individual responsibility]}
+	
+	%% =================================
+	\chapter{Objectives and Scope}
+
+\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to functional correctness, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+
+	
+	%% =================================	
+	\chapter{Methodology}
+\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to maintainability, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+	
+	
+\chapter{Background}
+Explicar o que é o Kubernetes e como usa o etcd (isto é importante). Falar também brevemente sobre o que são Secrets (porque depois vamos referir como é que os protegemos melhor). Relativamente ao Kubernetes parece-me interessante falar do básico, ou seja o que são master e worker nodes, quais são os componentes (API server, kubelet, essas coisas que se encontram facilmente na documentação deles). Não precisa de ser muito extensivo mas convém dar algum contexto para depois sabermos o que estamos a dizer
+		
+	%% =================================		
+\chapter{Kubernetes Native Configurations for Hardening}
+Having introduced what Kubernetes is, we are now able to delve into the main purpose of this report, which is to systematize what built-in features and configurations of this technology we can use to improve a cluster's security posture and resistance to cyber-attacks.
+This chapter will be split into various sections, each concerning an area of relevance when it comes to Kubernetes Hardening. In each section, a context regarding the security improvements that are available will be presented, and consequently the measures through which one can implement these improvements will also be showcased.
+
+	\section{Data Encryption}
+	
+As we've seen in the context section of this report, Kubernetes stores Secrets and their data on the etcd backend database without any form of encryption \cite{the_linux_foundation_secrets_2024} - despite encoding them with Base64, which does not constitute encryption as the plain-text contents are directly obtainable. If an attacker is able to access either the API server or the etcd database directly, he will be able to obtain the plain-text contents of the secrets that are managed by that cluster. One can easily picture the compromise that this can cause, as secrets usually contain business-critical credentials that are used by services running in Kubernetes. For instance, an application Pod might need to access a database, and thus read the connection string and database user credentials from a secret. If an attacker could obtain the content of this secret, he too would at least have the credentials to access the database.
+
+Fortunately, Kubernetes provides a series of configurations that can be applied to encrypt Secrets - and other resources - at rest. This is done through the configuration of some resources on the cluster's API server. Notably, Kubernetes defines the \texttt{EncryptionConfiguration} Custom Defined Resource (CRD), which allows practitioners to customize what resources shall be encrypted and through what mechanism (also known as provider) \cite{the_linux_foundation_encrypting_2024}.
+
+The flow of actions is as follows: a user or application creates a Secret by sending an API call to the Kubernetes API; the API checks its \texttt{EncryptionConfiguration} file to evaluate what encryption provider to use and which key to use for that provider; if a provider is specified, as well as the key to use, the API server uses both to encrypt the provided data; then, this encrypted data is stored in etcd. For the decryption, the API retrieves the secret from etcd and uses the aforementioned \texttt{EncryptionConfiguration} to decrypt the contents.
+
+In \ref{code:encConfig}, we present a simple example of an \texttt{EncryptionConfiguration}. What this does is instruct the Kubernetes API that all Secrets must be encrypted using the \texttt{aescbc} provider, using the encryption key specified in \texttt{keys.secret} field.
+
+
+\begin{lstlisting}[style=yaml,caption={EncryptionConfig example},label=code:encConfig]
+	apiVersion: apiserver.config.k8s.io/v1
+	kind: EncryptionConfiguration
+	resources:
+	- secrets
+	providers:
+	- aescbc:
+	  keys:
+	    - name: key1
+	      secret: <BASE 64 ENCODED SECRET>
+	- identity: {}
+\end{lstlisting}
+
+There are several providers which we can use when encrypting secrets, which are specified in the Kubernetes documentation itself \footnote{This comparison can be seen in \href{https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/\#providers}{\underline{this documentation link}}}. Some facts are worth noting:
+
+\begin{itemize}
+	\item The \texttt{identity} provider does not encrypt data. It's the default used by Kubernetes, as we've covered before. Despite this, it has practical utilities, such as serving as one of the encryption providers for instance when migrating clear-text secrets to encrypted ones. So, despite not encrypting data, it would be improper to discard its existence;
+	\item The \texttt{aescbc}, \texttt{aesgcm} and \texttt{secretbox} providers require the encryption key to be specified in the encryption configuration file. Using them protects a cluster in the event of a compromise, but if the hosts in which the Kubernetes API is running are themselves compromised, this does not provide additional security, as the attacker will be able to obtain the encryption key from the local filesystem \cite{gkatziouras_kubernetes_2024}. Nonetheless, it's an improvement from the default configuration.
+\end{itemize}
+
+Besides the providers mentioned above, there exists the \texttt{kms} provider, which is currently in version 2 - and version 1 is deprecated. This provider offers a more complex - but more secure - encryption solution. It's purpose is to solve the issue of having the encryption key defined in a local file, as we've covered previously. To address this matter, the kms provider calls upon two new components \cite{gkatziouras_kubernetes_2024}: 
+
+\begin{itemize}
+	\item An external Key Management Service (KMS);
+	\item A Kubernetes KMS provider plugin, which is responsible for connecting with the external KMS for the encryption and decryption processes.
+\end{itemize}
+
+This mechanism adopts an "envelope encryption scheme using a two-key approach" \cite{gkatziouras_kubernetes_2024}, with those keys being: the Data Encryption Key (DEK), which is used to encrypt the resources referenced in the \texttt{EncryptionConfig}; and the Key Encryption Key (KEK), which is used to encrypt the DEK and is hosted remotely on the KMS. This way, having the encryption key on a separate system, the main downside of the previous solutions is addressed, since a filesystem compromise of the Kubernetes master nodes wouldn't directly lead to a compromise of the secrets stored in the cluster.
+
+However, we must note that the usage of the \texttt{kms} provider requires the usage of third-party tooling, not native to Kubernetes - since it requires the usage of an external KMS. 
+
+% pensar se vale a pena mencionar o Trousseau/kleidi (https://beezy.dev/kleidi/#) e o Hashicorp Vault a servir como KMS
+
+	\section{API Server Configurations}
+	
+	\section{Network Policies}
+	
+	\section{RBAC and Authentication}
+		
+	%% =================================
+	\chapter{Complementary Tooling}
+\textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to security, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+		
+	%% =================================
+	\chapter{Analysis and Best Practices}
+ \textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to architectural compliance, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
+	
+
+
+	%% =================================
+	\chapter{Conclusions }
+ ...\newline
+
+
+
+%	
+%	\bibliographystyle{ACM-Reference-Format}
+%	\renewcommand\bibname{References}
+%	\bibliography{ref}
+%	\label{references}
+%	\addcontentsline{toc}{chapter}{References}
+	
+	\printbibliography[heading=bibintoc]
+	
+	
+\end{document}

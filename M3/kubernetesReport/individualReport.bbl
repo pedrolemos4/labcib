@@ -1,0 +1,148 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{the_linux_foundation_secrets_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=be71d0542f6d52e76ec4aa72b14f620c}{%
+           family={{The Linux Foundation}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{fullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{bibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorbibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code. Because Secrets can be created independently of the Pods that use them, there is less risk of the Secret (and its data) being exposed during the workflow of creating, viewing, and editing Pods.}
+      \field{journaltitle}{Kubernetes}
+      \field{note}{Section: docs}
+      \field{title}{Secrets}
+      \field{urlday}{17}
+      \field{urlmonth}{11}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/concepts/configuration/secret/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/concepts/configuration/secret/
+      \endverb
+    \endentry
+    \entry{the_linux_foundation_encrypting_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=be71d0542f6d52e76ec4aa72b14f620c}{%
+           family={{The Linux Foundation}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{fullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{bibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorbibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{All of the APIs in Kubernetes that let you write persistent API resource data support at-rest encryption. For example, you can enable at-rest encryption for Secrets. This at-rest encryption is additional to any system-level encryption for the etcd cluster or for the filesystem(s) on hosts where you are running the kube-apiserver. This page shows how to enable and configure encryption of API data at rest. Note:This task covers encryption for resource data stored using the Kubernetes API.}
+      \field{journaltitle}{Kubernetes}
+      \field{note}{Section: docs}
+      \field{title}{Encrypting {Confidential} {Data} at {Rest}}
+      \field{urlday}{17}
+      \field{urlmonth}{11}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+      \endverb
+    \endentry
+    \entry{gkatziouras_kubernetes_2024}{book}{}
+      \name{author}{4}{}{%
+        {{hash=73aeef4e28206746840828a2abda5541}{%
+           family={Gkatziouras},
+           familyi={G\bibinitperiod},
+           given={Emmanouil},
+           giveni={E\bibinitperiod}}}%
+        {{hash=8fca8737fc1711975352a4be951ed55d}{%
+           family={Adams},
+           familyi={A\bibinitperiod},
+           given={Rom},
+           giveni={R\bibinitperiod}}}%
+        {{hash=b8bdd925aab4c9fe4bdbf80858984bf8}{%
+           family={Xi},
+           familyi={X\bibinitperiod},
+           given={Chen},
+           giveni={C\bibinitperiod}}}%
+        {{hash=b7e34fb4dd6b56d0a6e512924f35faa9}{%
+           family={Jenkins},
+           familyi={J\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \list{location}{1}{%
+        {Place of publication not identified}%
+      }
+      \list{publisher}{1}{%
+        {Packt Publishing}%
+      }
+      \strng{namehash}{e104a1489850d6c58cc65d56f1230217}
+      \strng{fullhash}{5dea3efe63ce31392b769d9a8133f69e}
+      \strng{bibnamehash}{e104a1489850d6c58cc65d56f1230217}
+      \strng{authorbibnamehash}{e104a1489850d6c58cc65d56f1230217}
+      \strng{authornamehash}{e104a1489850d6c58cc65d56f1230217}
+      \strng{authorfullhash}{5dea3efe63ce31392b769d9a8133f69e}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Gain hands-on skills in Kubernetes Secrets management, ensuring a comprehensive overview of the Secrets lifecycle and prioritizing adherence to regulatory standards and business sustainability Key Features Master Secrets encryption, encompassing complex life cycles, key rotation, access control, backup, and recovery Build your skills to audit Secrets consumption, troubleshoot, and optimize for efficiency and compliance Learn how to manage Secrets through real-world cases, strengthening your applications' security posture Purchase of the print or Kindle book includes a free PDF eBook Book Description Securing Secrets in containerized apps poses a significant challenge for Kubernetes IT professionals. This book tackles the critical task of safeguarding sensitive data, addressing the limitations of Kubernetes encryption, and establishing a robust Secrets management system for heightened security for Kubernetes. Starting with the fundamental Kubernetes architecture principles and how they apply to the design of Secrets management, this book delves into advanced Kubernetes concepts such as hands-on security, compliance, risk mitigation, disaster recovery, and backup strategies. With the help of practical, real-world guidance, you'll learn how to mitigate risks and establish robust Secrets management as you explore different types of external secret stores, configure them in Kubernetes, and integrate them with existing Secrets management solutions. Further, you'll design, implement, and operate a secure method of managing sensitive payload by leveraging real use cases in an iterative process to enhance skills, practices, and analytical thinking, progressively strengthening the security posture with each solution. By the end of this book, you'll have a rock-solid Secrets management solution to run your business-critical applications in a hybrid multi-cloud scenario, addressing operational risks, compliance, and controls. What you will learn Explore Kubernetes Secrets, related API objects, and CRUD operations Understand the Kubernetes Secrets limitations, attack vectors, and mitigation strategies Explore encryption at rest and external secret stores Build and operate a production-grade solution with a focus on business continuity Integrate a Secrets Management solution in your CI/CD pipelines Conduct continuous assessments of the risks and vulnerabilities for each solution Draw insights from use cases implemented by large organizations Gain an overview of the latest and upcoming Secrets management trends Who this book is for This handbook is a comprehensive reference for IT professionals to design, implement, operate, and audit Secrets in applications and platforms running on Kubernetes. For developer, platform, and security teams experienced with containers, this Secrets management guide offers a progressive path--from foundations to implementation--with a security-first mindset. You'll also find this book useful if you work with hybrid multi-cloud Kubernetes platforms for organizations concerned with governance and compliance requirements}
+      \field{isbn}{978-1-80512-322-4 978-1-80512-715-4}
+      \field{shorttitle}{Kubernetes secrets handbook}
+      \field{title}{Kubernetes secrets handbook: design, implement, and maintain production-grade {Kubernetes} {Secrets} management solutions}
+      \field{year}{2024}
+      \verb{file}
+      \verb PDF:/home/luis/Zotero/storage/PPA24XE5/Gkatziouras et al. - 2024 - Kubernetes secrets handbook design, implement, and maintain production-grade Kubernetes Secrets man.pdf:application/pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
