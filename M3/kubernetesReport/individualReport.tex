@@ -122,7 +122,59 @@
 \textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to maintainability, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
 	
 	
+
+
 \chapter{Background}
+
+\textbf{Kubernetes} is a container orchestration platform that automates the deployment, scaling, and management of containerized applications. Originally developed by Google and now maintained by the Cloud Native Computing Foundation (CNCF), Kubernetes enables IT teams to deploy and manage applications at scale efficiently using containers.
+
+
+\section{Kubernetes Components}
+
+Kubernetes consists of two main types of nodes:
+
+\subsubsection{Master Nodes}
+Master nodes are responsible for managing and controlling the cluster. They run components that manage the cluster's state, such as creating and scaling pods. Master nodes include:
+
+\begin{itemize}
+	\item \textbf{API Server} (\texttt{kube-apiserver}): Exposes the Kubernetes API and serves as the entry point for all cluster interactions.
+	\item \textbf{Controller Manager} (\texttt{kube-controller-manager}): Manages controllers that monitor the cluster's state and make adjustments to achieve the desired state.
+	\item \textbf{Scheduler} (\texttt{kube-scheduler}): Assigns pods to available nodes in the cluster.
+	\item \textbf{etcd}: Stores all configuration data and the state of the cluster in a consistent and reliable way.
+\end{itemize}
+
+\subsubsection{Worker Nodes}
+Worker nodes are where the pods (the units of execution in Kubernetes) run. Each worker node includes:
+\begin{itemize}
+	\item \textbf{Kubelet}: An agent that ensures containers are running according to specifications.
+	\item \textbf{Kube Proxy}: Manages network routing and load balancing at the network level.
+	\item \textbf{Container Runtime}: The software responsible for running containers.
+\end{itemize}
+
+\section{What is etcd?}
+
+\textbf{etcd} is a distributed key-value store used by Kubernetes to store all critical cluster data, such as configuration settings and the desired state. It ensures that all components (e.g., API Server and Controller Manager) have access to consistent, up-to-date data and can operate in a coordinated manner.
+
+\section{What are Kubernetes Secrets?}
+
+\textbf{Secrets} in Kubernetes are objects used to store sensitive data, such as passwords, API tokens, or SSH keys. Instead of embedding this information directly into code or configuration files, Secrets allow secure storage and controlled access to sensitive information.
+
+\subsection{Key Features of Secrets}
+\begin{itemize}
+	\item \textbf{Storage}: Secrets are base64 encoded before being stored in \texttt{etcd}, but not encrypted by default. Kubernetes can be configured to encrypt them at rest using tools like Key Management Service (KMS).
+	\item \textbf{Usage}: Secrets can be mounted as volumes in containers or passed as environment variables, which allows secure handling of credentials.
+\end{itemize}
+
+\section{Securing Secrets}
+
+To protect sensitive information stored in Secrets, follow these best practices:
+\begin{itemize}
+	\item \textbf{Encryption at Rest}: Enable encryption for Secrets using a key management service (KMS).
+	\item \textbf{Access Control}: Use \textbf{Role-Based Access Control (RBAC)} to restrict access to Secrets to only authorized users and services.
+	\item \textbf{Network Security}: Ensure communication between nodes, \texttt{etcd}, and the API Server is secured using TLS.
+\end{itemize}
+
+
 Explicar o que é o Kubernetes e como usa o etcd (isto é importante). Falar também brevemente sobre o que são Secrets (porque depois vamos referir como é que os protegemos melhor). Relativamente ao Kubernetes parece-me interessante falar do básico, ou seja o que são master e worker nodes, quais são os componentes (API server, kubelet, essas coisas que se encontram facilmente na documentação deles). Não precisa de ser muito extensivo mas convém dar algum contexto para depois sabermos o que estamos a dizer
 		
 	%% =================================		
