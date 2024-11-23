@@ -111,39 +111,9 @@ In contrast, **`ping`** does not need to be setuid because modern Linux systems 
 
 **Question** **11.** **After a program (running as normal user) disables a** **`cap_dac_override` capability, it is compromised by a buffer-overflow attack. The attacker successfully injects his malicious code into this program’s stack space and starts to run it. Can this attacker use the** **`cap_dac_override` capability? What if the process deleted the capability, can the attacker use the capability?**
 
-quanto à primeira, sim pode, porque ao dar disable a capability é removida do conjunto de effective, mas não do de permitted, ou seja o processo está "permitido" a dar re-enable e a usar a capability, portanto o atacante consegue reativa-la e usa-la para conduzir parte do ataque. pelo contrario, se esta for deleted, é removida quer do effective, quer do permitted, pelo que o atacante, sem mais permissoes, nao consegue readicionar esta capability ao processo, e como tal não consegue conduzir nenhum ataque posterior.
+Yes, the attacker can use the CAP_DAC_OVERRIDE capability if it has only been disabled. Disabling the capability removes it from the effective set, but not from the permitted set. Since the capability remains in the permitted set, the process is still allowed to re-enable it. This means the attacker, upon compromising the process, can re-enable the capability and use it to carry out part of the attack.
 
-### Trying Linux Capabilities with Docker
-
-Let's explore how Docker uses Capabilities. Note however that Capabilities are only one of the several Linux kernel features Docker relies on to isolate and limit the behavior of containers. **Namespaces** provide separation of resources like processes, networking, and file systems, giving each container its own isolated environment. Control groups (**cgroups**) limit and monitor the container's resource usage (CPU, memory, etc.), preventing any single container from consuming all system resources. Docker uses **seccomp** (secure computing mode) to restrict access to potentially dangerous system calls, reducing the attack surface. In systems where it is available, Docker also uses AppArmor (a **mandatory access control mechanism**) to define what resources a container is allowed to access on the host.
-
-By default, Docker assigns a few default capabilities to containers. We created a ubuntu-based Docker image with the capability library binaries (libcap2-bin) for the purpose of running the Linux capabilities utility programs inside a container and check the container’s capabilities. It is available in Docker Hub: 
-- https://hub.docker.com/repository/docker/isepdei/capabilities01/general
-
-You can start a container named **captest** (**`--name captest`**) in background (**`-d`**) with this image (and map container port 80 to host’s port 8000;**`-p 8000:80`**)
-```
-docker run --name captest -d -p 8000:80 isepdei/capabilities01
-```
-
-The container runs a webserver you can test with, e.g., **`curl`**:
-```
-curl localhost:8000
-```
-
-Now, use **`capsh`**[^P24] installed in the container to see the capabilities of a process inside the container (**`docker exec <container_name> <command>`** executes the given command inside the named container):
-```
-docker exec captest sh -c 'capsh --print'
-```
-
-You can also directly check the contents of the container’s **`proc`** filesystem (**`/proc/1/status`** is the status the main container process, with PID 1); this is useful to see quickly all the different capability sets and visually compare the values:
-```
-docker exec captest sh -c 'grep Cap /proc/1/status'
-```
-
-And decode the given values using **`capsh`**:
-```
-docker exec captest sh -c 'capsh --decode=00000000a80425fb'
-```
+On the other hand, if the capability has been deleted, it is removed from both the effective set and the permitted set. Without the capability in the permitted set, the attacker cannot add it back to the process. As a result, the attacker would not be able to use this capability to conduct any subsequent attacks.
 
 **Question** **12.** **What are the inheritable, permitted and effective capabilities of a process running in the container (look at the `proc` filesystem output)? Compare to the output of** **`capsh –-print`.**
 
@@ -164,20 +134,33 @@ docker run --name captest --cap-drop all -d -p 8000:80 isepdei/capabilities01
 
 **Question** **13.** **Do you notice any issue when you try to do a `ping` again? Explain why and how can you fix it while still running with** **`--cap-drop` all.**
 
+The issue arises because the ping command requires the CAP_NET_RAW capability to construct and send ICMP packets, but running the container with --cap-drop all removes all capabilities, including the required one. As a result, trying to run ping without the necessary capability results in the error:
+```
 sh: 1: ping: Operation not permitted
+```
 
-como resolver? 
+To fix this while still running the container with --cap-drop all, you can explicitly add back only the required capability (CAP_NET_RAW) using the --cap-add flag:
 
+```
 docker run --name captest --cap-drop all --cap-add NET_RAW -d -p 8000:80 isepdei/capabilities01
+```
 
-adicionamos a cap NET_RAW que é utilizada pelo executavel ping para construir os pacotes ICMP que sao enviados, como podemos ver atraves de: 
+The ping executable requires CAP_NET_RAW, as can be verified with getcap /usr/bin/ping and the output is the following:
 
 ```
 $ getcap /usr/bin/ping
 /usr/bin/ping cap_net_raw=ep
 ```
 
-tambem podemos comparar as capabilities de agora com as do container "default", e ver que de facto so temos esta que especificamos no --cap-add
+By adding only the CAP_NET_RAW capability using --cap-add, we grant the container just enough privilege to allow ping to operate, while still dropping all other capabilities for enhanced security.
+
+After starting the container, you can verify the current capabilities using:
+
+```
+docker exec captest bash -c 'capsh --print'
+```
+
+The output should show that only CAP_NET_RAW is enabled in the effective (ep) and bounding set, confirming minimal privilege configuration :
 
 ```
 $ docker exec captest bash -c 'capsh --print'
