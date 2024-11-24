@@ -52,47 +52,56 @@ Please take a few moments to read the reference man pages and learn more about c
 
 **Question** **6.** **What happens if you remove** **`cap_net_raw` from ping? Describe how you removed the capability.**
 
+To remove the `cap_net_raw` capability from the ping command, we used the following command
+
+```
+sudo setcap -r /usr/bin/ping
+```
+
+After doing this, we were observed that we were no longer able to run the ping command:
+
 ![pingNoCap](./pingNoCap.png)
 
-sudo sysctl -w net.ipv4.ping_group_range="0 0" 
-sudo setcap -r /usr/bin/ping 
-ping 1.1.1.1 ------------> o ping falha, porque nao tem nem a capability, nem o sysctl direito. 
-
-**nota**: para repor ao normal 
-
-sudo sysctl -w net.ipv4.ping_group_range="0 2147483647"
-sudo setcap 'cap_net_raw=ep' /usr/bin/ping
-ping 1.1.1.1 --------------> volta a dar
 
 **Question** **7.** **Can you make ping work again without adding any capability, and without running with** **sudo?**
 
-sim, recorrendo ao setuid.
+To make it so that ping works again without adding any capability and without running it as sudo, we turned it into a SetUID program by using the following command:
 
+```
 sudo chmod u+s /usr/bin/ping
+```
 
-assim conseguimos correr o ping sem a capability e sem o sysctl, porque é como se estivessemos a correr o executavel  como root.
+Then, we were able to confirm that ping works again, even though no capabilities were added and we're running it as an unprivileged user.
 
 ![pingSetUID](./pingSetUID.png)
 
 
 **Question** **8.** **Can you make** **passwd work without being a Set UID program? Detail how and why it works?**
 
-The passwd binary can be granted specific capabilities using the setcap tool. The relevant capabilities are:
+To test this, first we removed the SetUID permission from the passwd executable by running:
 
-- CAP_DAC_OVERRIDE: To override file permissions (needed for accessing /etc/shadow).
-- CAP_FOWNER: To allow ownership-related operations on files like /etc/shadow.
-- CAP_CHOWN: To change the ownership of files, if required.
-- CAP_SETUID and CAP_SETGID: To change user and group IDs during the password update process.
+```
+sudo chmod u-s /usr/bin/passwd
+```
+
+Since now the passwd binary doesn't have this permission, it will no longer work. So, to restore it to working order without setting its SetUID permission again we used capabilities. We thought about what the passwd exectuable actually does, which is manipulate files such as `/etc/shadow` to change a user's password. This file is only writable by the root user, so capabilities related to overriding file permissions would surely be necessary.
+
+After testing different combinations, we concluded that the following group of capabilities are necessary:
+
+- `CAP_DAC_OVERRIDE`: To override file permissions (needed for accessing /etc/shadow).
+- `CAP_FOWNER`: To allow ownership-related operations on files like /etc/shadow, for instance, changing the modification timestamp.
+- `CAP_CHOWN`: To change the ownership of files, if required.
+- `CAP_SETUID` and `CAP_SETGID`: To change user and group IDs during the password update process.
+
+After setting these capabilities, and running passwd as a non-SetUID program, we were able to confirm that it works again. It does so due to the fact that it has the required capabilities to perform the actions it needs to (as we've presented previously), even though it does not have the SetUID permission.
 
 ![passwdNoSetUID.png](./passwdNoSetUID.png)
 
 **Question** **9.** **Discuss why do you think that, by default,** **passwd is a Set UID program and** **ping is not?**
 
-**TODO:** Change this
+By default, `passwd` is a setuid program because it requires root permissions to modify files like `/etc/shadow`, which hold password hashes and thus is considered sensitive. Normal users don't have the permissions to change these files, and so `passwd` must run with elevated privileges to perform its function properly and securely. Additionally, since the capabilities that would be required are quite broad and could encompass even more than the ones we've set (depending on specific authentication characteristics of the system), having passwd as a SetUID ensures further compatibility as well as ease of management.
 
-The **`passwd`** command is a setuid program because it requires root privileges to modify sensitive files like `/etc/shadow`, which stores password hashes. Regular users lack the necessary permissions to access or update this file, so `passwd` must run with elevated privileges to perform its function securely. Since the range of required privileges is broad and cannot be easily isolated, the setuid mechanism is used.
-
-In contrast, **`ping`** does not need to be setuid because modern Linux systems use capabilities to provide the necessary privileges more granularly. Specifically, `ping` requires the **`CAP_NET_RAW`** capability to open raw sockets for sending ICMP packets, which is safer than granting full root access. This approach reduces the risk of privilege escalation, making `ping` more secure without needing setuid.
+The `ping` command, however, does not need to be a setuid program. This executable only requires the `CAP_NET_RAW` capability to open raw sockets for sending ICMP packets, and no other capability, so it is much safer to provide it as a normal executable with this capability, rather than a setuid program, which could introduce unwarranted risks. 
 
 **Question** **10.** **Can you get familiar with other capabilities? On you report explain ten more capabilities of your choice.**
 
@@ -117,20 +126,33 @@ On the other hand, if the capability has been deleted, it is removed from both t
 
 **Question** **12.** **What are the inheritable, permitted and effective capabilities of a process running in the container (look at the `proc` filesystem output)? Compare to the output of** **`capsh –-print`.**
 
-sao iguais, explicar as semelhanças entre os dois (bound, effective, permitted) - estao nas notas os 2 outputs que devemos comparar. nao vejo outra logica para alem de serem iguais e explicar oq estao a mostrar.
+When running `capsh --print`, we get the following listing of capabilities:
 
-distinguir as inheritable, permitted and effective capabilities.
+```
+$ docker exec captest sh -c 'capsh --print'
+Current: cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap=ep
+Bounding set =cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
+```
 
-Try to use the container to perform a **`ping`**:
+When looking at the proc filesystem output, we get the following information:
+
 ```
-docker exec captest sh -c 'ping www.dei.isep.ipp.pt'
+$ docker exec captest sh -c 'cat /proc/1/status | grep Cap'
+CapInh:	0000000000000000
+CapPrm:	00000000a80425fb
+CapEff:	00000000a80425fb
+CapBnd:	00000000a80425fb
+CapAmb:	0000000000000000
 ```
 
-Now, let’s stop the container, and start it again dropping all capabilities (**--cap-drop all**):
+Which, when decoded, translates to:
+
 ```
-docker stop captest; docker rm captest
-docker run --name captest --cap-drop all -d -p 8000:80 isepdei/capabilities01
+$ docker exec captest sh -c 'capsh --decode=00000000a80425fb'
+0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
 ```
+
+From this information, we conclude that the permitted and effective capabilities of a process running in the container are the same as the ones listed by `capsh --print`, which have been presented above. However, by inspecting the output of `proc`, we're able to see that CapInh is set to 0, unlike CapPrm, CapEff and CapBnd, which means that a process which is a child of the root process will not inherit its capabilites, since the set of inheritable capabilities is empty.
 
 **Question** **13.** **Do you notice any issue when you try to do a `ping` again? Explain why and how can you fix it while still running with** **`--cap-drop` all.**
 
@@ -260,28 +282,27 @@ With these logs, we can conclude that the container's capabilities are:
 `cap_audit_read`,
 `cap_perfmon`,
 `cap_bpf`,
-`cap_checkpoint_restore`
-```
+`cap_checkpoint_restore`.
 
 **Question** **15.** **Can you tell what can go wrong? Provide a detailed exploit of the issue, showcasing some compromise of the container’s host (for some reason, Scott installed `fdisk` on the container).**
 
-o problema e que com privileged podemos aceder ao host que esta a correr o container e partir muita coisa -> procurar o que que o --privileged dá efetivamente.
-
-correr o container com --privileged e ver as capabilities (ja estao la acima): 
+The root of the problem here is that running a container with the `--privileged` flag grants it full access to the host system. Not only is access to sensitive files and directories of the host granted, but the container is also granted the full set of Linux capabilities, as we can see below: 
 
 ![containerWithPriv](./containerWithPrivileges.png)
 
-se corrermos um `fdisk -l` conseguimos ver as partiçoes de disco do host que esta a correr o container:
+One of the possible exploits is tampering with the filesystem of the host from inside of the container, which could cause critical damage in a production scenario. We shall demonstrate what this exploit could look like and the harm that it could do.
+
+If, when inside the container, we run `fdisk -l`, we'll be able to see the partitions of the host system, confirming the information provided previously:
 
 ![fdisk](./fdisk.png)
 
-ainda pior, conseguimos montar essas partiçoes dentro do container. por exemplo:
+Furthermore, due to the elevated privileges described, we're able to mount this host filesystem on the container, thus granting us access to the host's files. In this case, the `/boot` partition was mounted:
 
 ![mountHostPartition.png](./mountHostPartition.png)
 
-assim, nos dentro do container estamos a aceder a uma partiçao de disco do host. isto e muito perigoso pois podemos comprometer totalmente os dados armazenados no host, algo que, com o isolamento apropriado do docker, nao conseguiriamos fazer.
+Deleting the contents of this partition, for example, could render the host system unbootable, as the kernel files would no longer be present on the server. It's clear to see that the security concerns caused by running a container with `--privileged` are quite significant.
 
-se corrermos o container sem privilegios, vemos que este nao e o caso:
+If we run the container without this flag, however, we can see that this exploit is rendered impossible:
 
 ![containerWithoutPriv.png](./containerWithoutPriv.png)
 
