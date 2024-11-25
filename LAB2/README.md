@@ -16,39 +16,60 @@ This new approach still has some issues. Even though the file is deleted in `RUN
 
 **Question** **4.** **Is it possible to recover the new API key now[^P13] ? Provide detailed instructions.**
 
+
+1.  Pull the required Docker image:
+        ```
+        docker pull isepdei/insecurelabs02
+        ```
+2.  Create directories to store the original tar file and modified:
+    ```
+    mkdir tar
+    mkdir origin
+    mkdir modified
+    ```
+3.  Save the docker image and extract to each file created :
+    ``` 
+    docker save -o tar/inseclabs02.tar isepdei/insecurelabs02
+    tar -xvf tar/inseclabs02.tar -C origin/
+    tar -xvf tar/inseclabs02.tar -C modified/ 
+    ```
+4.  Remove / reload the image:
+    ``` 
+    docker rmi isepdei/insecurelabs02
+    docker load -i tar/inseclabs02.tar
+    ```
+5.  Analyze with Dive:
+    ``` 
+    docker run -d --name dind --privileged docker
+    sleep 2
+    docker exec -it dind \
+    docker run --rm -it \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    wagoodman/dive isepdei/insecurelabs02
+    ```
+6.  Using dive we need to navigate through the layers and identify where the .env file is created or copied.
+7.  After identify the layer ```7c77060f8e296437d59379d85957af60397ebf98994643af81e332c3f434789e```, we extract the content with :
+    *   ``` 
+        gunzip -c 7c77060f8e296437d59379d85957af60397ebf98994643af81e332c3f434789e | tar xvf - 
+        ```
+8.  Locate .env file and retrieve the API Key:
+    ``` 
+    ls app/
+    cat app/.env    
+    ```
+
+
 **Question** **5.** **So, how would you go about doing Scott’s job? Would you do something different? Explain in detail.**
 
+Using Docker Secrets its possible to securely manage sensitive data by restricting access to specific services in Docker Swarm. Secrets are encrypted at rest and in transit and are only accessible to containers explicitly configured to use them. They are mounted as temporary, read-only files (/run/secrets/) with strict permissions (0400), ensuring only the container's process user can read them. Secrets are ephemeral, removed when the container stops, and not stored in persistent storage. Additional security can be achieved by running containers as non-root users, applying Swarm constraints, and using role-based access control (RBAC). This ensures secrets remain protected and inaccessible to unauthorized users or containers.
+
+Steps:
+1.  Create a Secret : ```echo "MY_API_KEY=aaaaaaaa" | docker secret create my_env -```
+2.  Assign the secret to a service : ```docker service create --name insecurelabs --secret my_env isepdei/insecurelabs02```
+    *  Only containers running as part of **my_service** can access the secret. 
+
+
 # Part 2: Docker and Linux Capabilities
-
-## Introduction
-
-This is the second part of the *Isolation Lab*, where you are going to experiment with various aspects of software Isolation using Docker. If you haven't, checkout Part I for a longer intro and the first set of experiments.
-
-## Setup
-
-You will need a modern Linux Distribution and Docker. We suggest using a prebuilt Linux VM[^P21] and install Docker on the VM. Windows WSL should be able to support this lab but was not tested.
-
-## Intro to Linux Capabilities
-
-Traditional UNIX systems categorize processes into two types: **privileged processes**, which have an effective user ID (UID) of 0 and are commonly referred to as superuser or root, and **unprivileged processes**, which have a nonzero effective UID. A special type of executables, called **Set UID** (Set User ID), allow users to run the program with the file owner's privileges, rather than their own. This is useful in scenarios where certain actions require higher privileges, such as administrative tasks, but users should not have full access to those elevated privileges. A common example of a Set UID program is the `passwd` command, which allows a regular user to change their password. The system password file (like `/etc/passwd` or `/etc/shadow`) is typically only writable by root, but when a user runs `passwd`, it executes with root privileges (thanks to Set UID), allowing the password change while maintaining system security. Because Set UID programs run with elevated privileges, they pose security risks if not implemented carefully. Set UID programs must be carefully scrutinized.  
-
-You can see that a program has Set UID by looking at its permissions. The program **passwd**, needs Set UID permission (notice the ‘**s**’ in the user permissions):
-
-```
-# ls -la /usr/bin/passwd
--rw**s**r-xr-x 1 root root 55544 fev 6 2024 /usr/bin/passwd
-```
-
-Instead of granting full privileged access (as Set UID does), we can split the privileges once reserved for the superuser into smaller, discrete units called **Capabilities**[^P22]. Capabilities were introduced in the Linux Kernel since a while back (Kernel version 2.2). For example, Capabilities, such as CAP_NET_BIND_SERVICE to allow binding to ports below 1024 (something typically reserved for privileged services[^P23]), or CAP_SYS_BOOT to allow rebooting the system (there are many more; see them in references given in the footnotes). **Linux Capabilities are widely used in container platforms (such as Docker) to restrict what a process inside the container can do, improving security isolation**. 
-
-One example of a program that uses Capabilities is **ping**. It needs RAW sockets because it directly constructs and sends ICMP (Internet Control Message Protocol) packets, bypassing transport layer protocols like TCP or UDP. Use `getcap` to see a program’s capabilities (**cap_net_raw** is the name of the capability and **ep** refers to the Effective (e) and Permitted (p) capability sets):
-
-```
-# getcap /usr/bin/ping
-/usr/bin/ping cap_net_raw=ep  
-```
-
-Please take a few moments to read the reference man pages and learn more about capability sets, processes, files, users, and ambient capabilities.
 
 **Question** **6.** **What happens if you remove** **`cap_net_raw` from ping? Describe how you removed the capability.**
 
@@ -202,23 +223,6 @@ Guessed mode: HYBRID (4)
 ```
 
 # Part 3: Docker Security Evasion
-
-## Introduction
-
-This is the third part of the *Isolation Lab*, where you are going to experiment with various aspects of software Isolation using Docker. If you haven't, start from Part I.
-
-## Setup
-
-For this part of the Lab, you will need a computer with Docker installed.
-
-## Privileged Containers
-
-### Scott is Back
-
-Oh oh, they asked Scott to setup the container on one of SecureLabs’ servers. He was having some issues bringing up the container and ended up with doing this:
-```
-docker run -d --privileged -p 80:80 isepdei/insecurelabs03
-```
 
 **Question** **14.** **What are the capabilities of the container?**
 
