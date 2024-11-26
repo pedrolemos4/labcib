@@ -133,7 +133,7 @@
 
 Kubernetes consists of two main types of nodes:
 
-\subsubsection{Master Nodes}
+\subsubsection{Master Nodes}\label{sect:masters}
 Master nodes are responsible for managing and controlling the cluster. They run components that manage the cluster's state, such as creating and scaling pods. Master nodes include:
 
 \begin{itemize}
@@ -228,6 +228,77 @@ However, we must note that the usage of the \texttt{kms} provider requires the u
 
 	\section{API Server Configurations}
 	
+The API server is an essential component of Kubernetes, as we've explained in \ref{sect:masters}. It is responsible for handling all administrative operations and communications within the cluster, and thus acts as the primary interface for practitioners to interact with the Kubernetes environment. Given its critical role, the API Server is a frequent target for attackers aiming to exploit vulnerabilities, gain unauthorized access, or disrupt cluster operations.
+
+Securing the API server is, thus, a crucial task that cluster administrators must undergo to ensure the integrity, confidentiality and availability of this environment. Misconfigurations or weak security settings can expose the cluster to numerous risks, such as unauthorized access to data, or disruption of operations.
+
+Therefore, to assist practitioners in undergoing this process, we will look into relevant API server configurations which will improve its security posture.
+
+Before proceeding, it's important to note that the API server can be interacted with through many means, such as the \texttt{kubectl} utility, as well as REST requests. This highlights the relevance of appropriate firewall practices. Access to the Kubernetes API must be properly limited to business-related needs. A good approach for this is to allow only an organizational VPN's IP or set of IP addresses to make requests to the API, thus limiting the attack vectors. However, were this firewall or VPN to be compromised, further security measures are necessary.
+
+\subsection{Authentication}
+
+When a user attempts to interact with the API server, he must first undergo a process of authentication. This verifies the identity of a user or service before allowing them to communicate with the API server. Kubernetes supports multiple authentication methods which can be employed \cite{the_linux_foundation_authenticating_2024}:
+
+\begin{itemize}
+	\item \textbf{X.509 Client Certificates}: Kubernetes is able to use certificates for authentication purposes. For this effect, the API server must be started with the \texttt{--client-ca-file} flag which should point towards one or more valid Certificate Authority (CA) files, which will be used to validate the certificates used by clients when issuing requests to the API \cite{the_linux_foundation_authenticating_2024}. These certificates can be generated and distributed manually using tools such as \texttt{easyrsa} and \texttt{openssl}.
+	\item \textbf{Static token file}:
+	\item \textbf{OpenID Connect (OIDC):}
+	\item \textbf{Webhook Token Authentication:}
+\end{itemize}
+
+NOTAS:
+\begin{itemize}
+	\item dizer que \texttt{--anonymous-auth=false} deve ser usado para nao permitir auth sem identidade
+	\item dizer que static tokens nao expiram portanto nao devem ser extensivamente usados
+\end{itemize}
+
+
+\subsection{Admission Controllers}
+
+https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
+https://kubernetes.io/blog/2022/01/19/secure-your-admission-controllers-and-webhooks/
+https://kubernetes.io/docs/concepts/security/controlling-access/\#admission-control
+
+os default sao: CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, DefaultStorageClass, DefaultTolerationSeconds, LimitRanger, MutatingAdmissionWebhook, NamespaceLifecycle, PersistentVolumeClaimResize, PodSecurity, Priority, ResourceQuota, RuntimeClass, ServiceAccount, StorageObjectInUseProtection, TaintNodesByCondition, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook
+
+falar de adicionar NamespaceLifecycle. falar de configurar as ResourceQuotas em cada deployment talvez?
+
+\subsection{API Server Security Flags}
+
+(https://chatgpt.com/share/674613c5-f8c8-8013-80ee-268d0270a2e1)
+
+List and explain important API Server flags for hardening the cluster:
+
+a. Network Security
+
+--secure-port:
+Ensure the API Server listens on a secure port (default: 6443) and disables non-secure ports (--insecure-port=0).
+
+--bind-address:
+Limit the API Server to listen only on the internal network (e.g., 127.0.0.1 or cluster-internal IP).
+
+--tls-cert-file and --tls-private-key-file:
+Configure TLS to encrypt communication.
+
+b. Authentication and Authorization Flags
+
+--anonymous-auth=false:
+Disable anonymous access to the API Server.
+
+--enable-bootstrap-token-auth=true:
+Use temporary tokens for secure cluster bootstrapping.
+
+c. Audit Logging
+
+--audit-log-path and --audit-log-maxage:
+Enable and configure audit logs to track all API requests and detect malicious activity.
+
+d. etcd Encryption
+
+--encryption-provider-config:
+Ensure sensitive data like Secrets is encrypted before being stored in etcd.
+
 	\section{Network Policies}
 	
 	\section{RBAC and Authentication}

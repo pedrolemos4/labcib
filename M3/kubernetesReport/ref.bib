@@ -57,3 +57,37 @@
 	file = {PDF:/home/luis/Zotero/storage/PPA24XE5/Gkatziouras et al. - 2024 - Kubernetes secrets handbook design, implement, and maintain production-grade Kubernetes Secrets man.pdf:application/pdf},
 }
 
+
+@misc{the_linux_foundation_authenticating_2024,
+	title = {Authenticating},
+	url = {https://kubernetes.io/docs/reference/access-authn-authz/authentication/},
+	abstract = {This page provides an overview of authentication.
+	Users in Kubernetes All Kubernetes clusters have two categories of users: service accounts managed by Kubernetes, and normal users.
+	It is assumed that a cluster-independent service manages normal users in the following ways:
+	an administrator distributing private keys a user store like Keystone or Google Accounts a file with a list of usernames and passwords In this regard, Kubernetes does not have objects which represent normal user accounts.},
+	language = {en},
+	urldate = {2024-11-17},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs},
+	file = {Snapshot:/home/luis/Zotero/storage/6G7ADPQA/authentication.html:text/html},
+}
+
+
+@misc{the_linux_foundation_generate_2024,
+	title = {Generate {Certificates} {Manually}},
+	url = {https://kubernetes.io/docs/tasks/administer-cluster/certificates/},
+	abstract = {When using client certificate authentication, you can generate certificates manually through easyrsa, openssl or cfssl.
+	easyrsa easyrsa can manually generate certificates for your cluster.
+	Download, unpack, and initialize the patched version of easyrsa3.
+	curl -LO https://dl.k8s.io/easy-rsa/easy-rsa.tar.gz tar xzf easy-rsa.tar.gz cd easy-rsa-master/easyrsa3 ./easyrsa init-pki Generate a new certificate authority (CA). --batch sets automatic mode; --req-cn specifies the Common Name (CN) for the CA's new root certificate.
+	./easyrsa --batch "--req-cn=\$\{MASTER\_IP\}@`date +\%s`" build-ca nopass Generate server certificate and key.},
+	language = {en},
+	urldate = {2024-11-26},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs},
+	file = {Snapshot:/home/luis/Zotero/storage/S95PXB4C/certificates.html:text/html},
+}
