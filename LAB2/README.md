@@ -319,3 +319,26 @@ There are a number of container escapes that rely on the availability of certain
 **Question** **16.** **Can you replicate any of these escapes? Remember that some might not work anylonger. You should test them and explain how you proceeded to make it work. The group will be asked to demo the exploit.** (this question is for extra points)
 
 **Question** **17.** **Finally, what are some good practices regarding Docker security?**
+
+Upon answering the questions in this lab, we identified several good practices for Docker security. By combining these insights with the [OWASP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rules) we conclude that the following 5 top rules from OWASP are the most critical recommendations:
+
+
+### 1. Keep host and docker up to date
+- Regularly update the host kernel and Docker Engine to protect against vulnerabilities.
+
+### 2. Do not expose the docker daemon socket
+- Avoid exposing `/var/run/docker.sock` to containers or externally.
+- Never use `--privileged` or expose the Docker daemon via TCP without encryption and authentication.
+
+### 3. Set a user
+- Configure containers to run as a non-root user:
+  - In the Dockerfile: use the `USER` directive.
+  - At runtime: `docker run -u <user_id>`.
+
+### 4. Limit capabilities
+- Use `--cap-drop all` and add only the required capabilities with `--cap-add`.
+- Never use the `--privileged` flag.
+
+### 5. Prevent in-container privilege escalation
+- Use the `--read-only` flag to ensure containers have a read-only filesystem.
+- For temporary files, combine `--read-only` with `--tmpfs`.
