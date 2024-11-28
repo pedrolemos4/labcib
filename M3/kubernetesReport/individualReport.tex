@@ -131,51 +131,46 @@
 
 \section{Kubernetes Components}
 
-Kubernetes consists of two main types of nodes:
+Kubernetes architecture is based on a distributed system that consists of two primary types of nodes: master nodes and worker nodes. Each type plays a specific role in ensuring the cluster operates effectively \cite{the_linux_foundation_kubernetes_2024}.
 
 \subsubsection{Master Nodes}\label{sect:masters}
-Master nodes are responsible for managing and controlling the cluster. They run components that manage the cluster's state, such as creating and scaling pods. Master nodes include:
+Master nodes are the control center of a Kubernetes cluster. They manage the cluster’s state, handle scheduling, and coordinate operations. The key components running on master nodes are:
 
 \begin{itemize}
 	\item \textbf{API Server} (\texttt{kube-apiserver}): Exposes the Kubernetes API and serves as the entry point for all cluster interactions.
-	\item \textbf{Controller Manager} (\texttt{kube-controller-manager}): Manages controllers that monitor the cluster's state and make adjustments to achieve the desired state.
-	\item \textbf{Scheduler} (\texttt{kube-scheduler}): Assigns pods to available nodes in the cluster.
+	\item \textbf{Controller Manager} (\texttt{kube-controller-manager}): Manages controllers that monitor the clusters state and make adjustments to achieve the desired state.
+	\item \textbf{Scheduler} (\texttt{kube-scheduler}): Component that watches for newly Pods without assigned nodes, and selects one for them to run on. Some factors are taken into the decision, like hardware/software/policy constraints, data location, deadlines, among others.
 	\item \textbf{etcd}: Stores all configuration data and the state of the cluster in a consistent and reliable way.
+	\item \textbf{Cloud Controller Manager} (\texttt{cloud-controller-manager}): This component runs cloud-provider-specific controllers that manage resources outside the Kubernetes cluster. It is only active when the cluster is hosted on a cloud platform.
 \end{itemize}
 
 \subsubsection{Worker Nodes}
-Worker nodes are where the pods (the units of execution in Kubernetes) run. Each worker node includes:
+
+The main responsibilities of a worker node is to process data stored within the cluster and managing networking to ensure seamless communication both between applications within the cluster and with external systems. The control plane assigns tasks to the worker node to carry out these functions. The key components are:
+
 \begin{itemize}
-	\item \textbf{Kubelet}: An agent that ensures containers are running according to specifications.
+	\item \textbf{Kubelet}: An agent that ensures containers are running and in healthy state according to specifications.
 	\item \textbf{Kube Proxy}: Manages network routing and load balancing at the network level.
 	\item \textbf{Container Runtime}: The software responsible for running containers.
 \end{itemize}
 
 \section{What is etcd?}
 
-\textbf{etcd} is a distributed key-value store used by Kubernetes to store all critical cluster data, such as configuration settings and the desired state. It ensures that all components (e.g., API Server and Controller Manager) have access to consistent, up-to-date data and can operate in a coordinated manner.
+etcd is a distributed key-value database essential for storing the cluster’s state and configuration. It ensures data consistency across all nodes using the Raft consensus algorithm, which keeps all nodes in sync even during failures, providing a reliable foundation for Kubernetes operations \cite{etcd_faq_2024}.
+
+A leader is elected among the etcd nodes to manage all write operations, while follower nodes stay synchronized with the leader. If the leader fails, the Raft algorithm ensures a new one is elected quickly, maintaining high availability and preventing service disruption \cite{etcd_faq_2024}.
+
+Additionally, etcd persistently stores the cluster's state, allowing Kubernetes to retrieve and update this information in real-time. It holds metadata and operational data for Kubernetes objects like pods, deployments, and services, enabling the Kubernetes API server to query etcd and consistently enforce the cluster’s desired state \cite{etcd_faq_2024}.
 
 \section{What are Kubernetes Secrets?}
 
-\textbf{Secrets} in Kubernetes are objects used to store sensitive data, such as passwords, API tokens, or SSH keys. Instead of embedding this information directly into code or configuration files, Secrets allow secure storage and controlled access to sensitive information.
+\textbf{Secrets} are objects used to store sensitive data, such as passwords, API tokens, or SSH keys. Instead of embedding this information directly into code or configuration files, Secrets allow secure storage and controlled access to sensitive information \cite{the_linux_foundation_secrets_2024}.
 
 \subsection{Key Features of Secrets}
 \begin{itemize}
 	\item \textbf{Storage}: Secrets are base64 encoded before being stored in \texttt{etcd}, but not encrypted by default. Kubernetes can be configured to encrypt them at rest using tools like Key Management Service (KMS).
 	\item \textbf{Usage}: Secrets can be mounted as volumes in containers or passed as environment variables, which allows secure handling of credentials.
 \end{itemize}
-
-\section{Securing Secrets}
-
-To protect sensitive information stored in Secrets, follow these best practices:
-\begin{itemize}
-	\item \textbf{Encryption at Rest}: Enable encryption for Secrets using a key management service (KMS).
-	\item \textbf{Access Control}: Use \textbf{Role-Based Access Control (RBAC)} to restrict access to Secrets to only authorized users and services.
-	\item \textbf{Network Security}: Ensure communication between nodes, \texttt{etcd}, and the API Server is secured using TLS.
-\end{itemize}
-
-
-Explicar o que é o Kubernetes e como usa o etcd (isto é importante). Falar também brevemente sobre o que são Secrets (porque depois vamos referir como é que os protegemos melhor). Relativamente ao Kubernetes parece-me interessante falar do básico, ou seja o que são master e worker nodes, quais são os componentes (API server, kubelet, essas coisas que se encontram facilmente na documentação deles). Não precisa de ser muito extensivo mas convém dar algum contexto para depois sabermos o que estamos a dizer
 		
 	%% =================================		
 \chapter{Kubernetes Native Configurations for Hardening}
