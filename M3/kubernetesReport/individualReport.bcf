@@ -2351,10 +2351,11 @@
     <bcf:citekey order="5">gkatziouras_kubernetes_2024</bcf:citekey>
     <bcf:citekey order="6">the_linux_foundation_authenticating_2024</bcf:citekey>
     <bcf:citekey order="7">the_linux_foundation_authenticating_2024</bcf:citekey>
-    <bcf:citekey order="8">the_linux_foundation_secrets_2024</bcf:citekey>
-    <bcf:citekey order="9">the_linux_foundation_encrypting_2024</bcf:citekey>
-    <bcf:citekey order="10">gkatziouras_kubernetes_2024</bcf:citekey>
-    <bcf:citekey order="11">the_linux_foundation_authenticating_2024</bcf:citekey>
+    <bcf:citekey order="8">the_linux_foundation_authenticating_2024</bcf:citekey>
+    <bcf:citekey order="9">the_linux_foundation_secrets_2024</bcf:citekey>
+    <bcf:citekey order="10">the_linux_foundation_encrypting_2024</bcf:citekey>
+    <bcf:citekey order="11">gkatziouras_kubernetes_2024</bcf:citekey>
+    <bcf:citekey order="12">the_linux_foundation_authenticating_2024</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
