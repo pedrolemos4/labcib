@@ -237,19 +237,21 @@ When a user attempts to interact with the API server, he must first undergo a pr
 
 \begin{itemize}
 	\item \textbf{X.509 Client Certificates}: Kubernetes is able to use certificates for authentication purposes. For this effect, the API server must be started with the \texttt{--client-ca-file} flag which should point towards one or more valid Certificate Authority (CA) files, which will be used to validate the certificates used by clients when issuing requests to the API \cite{the_linux_foundation_authenticating_2024}. These certificates can be generated manually using tools such as \texttt{easyrsa} and \texttt{openssl}.
-	\item \textbf{Service Account Tokens}: These are signed JSON Web Tokens (JWT) which Kubernetes generates so that users, as well as pods, can communicate with the API server \cite{the_linux_foundation_authenticating_2024}. These tokens are associated with ServiceAccount objects, whose function will be expanded upon in the RBAC section. It's unusual that these tokens are used for the authentication of users, as they are more frequently used by Pods which require to communicate with the Kubernetes API, or by processes that run outside of the cluster but frequently need to talk with its API.
-	\item \textbf{OpenID Connect (OIDC):}
+	\item \textbf{Service Account Tokens}: These are signed JSON Web Tokens (JWT) which Kubernetes generates so that entities can communicate with the API server \cite{the_linux_foundation_authenticating_2024}. These tokens are associated with ServiceAccount objects, whose function will be expanded upon in the RBAC section. It's unusual that these tokens are used for the authentication of users, as they are more frequently used by Pods which require to communicate with the Kubernetes API, or by processes that run outside of the cluster but frequently need to talk with its API.
+	\item \textbf{OpenID Connect (OIDC):} This authentication mechanism relies on a third-party identity provider, such as Google or Keycloak, for the generation of a JWT which the user can then present to the API server in order to issue requests. \textbf{todo:} completar isto, pensar em como melhorar
 	\item \textbf{Webhook Token Authentication:}
 \end{itemize}
 
-NOTAS:
-\begin{itemize}
-	\item dizer que \texttt{--anonymous-auth=false} deve ser usado para nao permitir auth sem identidade
-	\item dizer que static tokens nao expiram portanto nao devem ser extensivamente usados
-\end{itemize}
-
+Besides these login mechanisms, there is the concept of anonymous requests. When enabled, "requests that are not rejected by other configured authentication methods are treated as anonymous requests" \cite{the_linux_foundation_authenticating_2024}. As such, a user would be able to query the API without identifying himself which, if proper RBAC configurations are not employed, could be quite damming to an organization. As such, it is advised that anonymous requests are disabled by using the \texttt{--anonymous-auth=false} on the API server. If it needs to be enabled due to organizational needs, it's paramount to ensure that the permissions of unauthenticated users are as restrictive as possible.
 
 \subsection{Admission Controllers}
+
+Explicar o flow do Kubernetes, primeiro autenticaçao, depois autorizaçao (que vem do RBAC ou ABAC), e finalmente admission (podemos usar esta imagem https://kubernetes.io/docs/concepts/security/controlling-access/).
+
+
+validating ou mutating, falar disso e da diferença
+
+Admission controllers do not (and cannot) block requests to read (get, watch or list) objects. -> importante realçar isto, referir que os requests nao cobertos por admission control devem ser cobertos por RBAC e gestao de permissoes
 
 https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
 https://kubernetes.io/blog/2022/01/19/secure-your-admission-controllers-and-webhooks/
@@ -257,7 +259,9 @@ https://kubernetes.io/docs/concepts/security/controlling-access/\#admission-cont
 
 os default sao: CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, DefaultStorageClass, DefaultTolerationSeconds, LimitRanger, MutatingAdmissionWebhook, NamespaceLifecycle, PersistentVolumeClaimResize, PodSecurity, Priority, ResourceQuota, RuntimeClass, ServiceAccount, StorageObjectInUseProtection, TaintNodesByCondition, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook
 
-falar de adicionar NamespaceLifecycle. falar de configurar as ResourceQuotas em cada deployment talvez?
+configurar o EventRateLimit pode ser interessante para evitar algum tipo de flood de eventos que um atacante pudesse causar?
+
+falar de configurar as ResourceQuotas em cada deployment talvez?
 
 \subsection{API Server Security Flags}
 
