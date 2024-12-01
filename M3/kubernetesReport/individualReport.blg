@@ -1,17 +1,17 @@
-[0] Config.pm:307> INFO - This is Biber 2.17
-[0] Config.pm:310> INFO - Logfile is 'individualReport.blg'
-[54] biber:340> INFO - === ter nov 26, 2024, 18:12:17
-[64] Biber.pm:418> INFO - Reading 'individualReport.bcf'
-[112] Biber.pm:972> INFO - Found 4 citekeys in bib section 0
-[122] Biber.pm:4383> INFO - Processing section 0
-[130] Biber.pm:4574> INFO - Looking for bibtex file 'ref.bib' for section 0
-[132] bibtex.pm:1713> INFO - LaTeX decoding ...
-[138] bibtex.pm:1518> INFO - Found BibTeX data source 'ref.bib'
-[187] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[188] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[188] Biber.pm:4203> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[188] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
-[194] bbl.pm:654> INFO - Writing 'individualReport.bbl' with encoding 'UTF-8'
-[196] bbl.pm:757> INFO - Output to individualReport.bbl
-[196] Biber.pm:130> WARN - ISBN '978-1-80512-322-4 978-1-80512-715-4' in entry 'gkatziouras_kubernetes_2024' is invalid - run biber with '--validate_datamodel' for details.
-[196] Biber.pm:132> INFO - WARNINGS: 1
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is '/Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.blg'
+[28] biber-darwin:340> INFO - === Sun Dec  1, 2024, 11:06:00
+[105] Biber.pm:419> INFO - Reading '/Users/pedrolemos/Isep/Mestrado - Cibersegurança e Administração de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bcf'
+[141] Biber.pm:979> INFO - Found 6 citekeys in bib section 0
+[146] Biber.pm:4419> INFO - Processing section 0
+[150] Biber.pm:4610> INFO - Looking for bibtex file 'ref.bib' for section 0
+[151] bibtex.pm:1713> INFO - LaTeX decoding ...
+[156] bibtex.pm:1519> INFO - Found BibTeX data source 'ref.bib'
+[183] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[183] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[183] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[183] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[187] bbl.pm:660> INFO - Writing '/Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl' with encoding 'UTF-8'
+[188] bbl.pm:763> INFO - Output to /Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl
+[188] Biber.pm:131> WARN - ISBN '978-1-80512-322-4 978-1-80512-715-4' in entry 'gkatziouras_kubernetes_2024' is invalid - run biber with '--validate_datamodel' for details.
+[188] Biber.pm:133> INFO - WARNINGS: 1
