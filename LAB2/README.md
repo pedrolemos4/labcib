@@ -8,7 +8,7 @@ The issue is that the instructions are copying everything with `COPY . .`. This 
 
 First we pull the image with `docker pull isepdei/insecurelabs01`, then we go inside the container and read the file
 
-![getEnvFile1st](./getEnvFile1st.png)
+![getEnvFile1st](./Images/getEnvFile1st.png)
 
 **Question** **3.** **What do you think of Tom’s fix?**
 
@@ -61,7 +61,9 @@ This new approach still has some issues. Even though the file is deleted in `RUN
 
 **Question** **5.** **So, how would you go about doing Scott’s job? Would you do something different? Explain in detail.**
 
-Using Docker Secrets its possible to securely manage sensitive data by restricting access to specific services in Docker Swarm. Secrets are encrypted at rest and in transit and are only accessible to containers explicitly configured to use them. They are mounted as temporary, read-only files (/run/secrets/) with strict permissions (0400), ensuring only the container's process user can read them. Secrets are ephemeral, removed when the container stops, and not stored in persistent storage. Additional security can be achieved by running containers as non-root users, applying Swarm constraints, and using role-based access control (RBAC). This ensures secrets remain protected and inaccessible to unauthorized users or containers.
+A solution for securely using secrets is through environment variables. These are configured at runtime and can differ across environments, so the secret's value - in this case, the API_KEY - is never stored in the Docker image itself.
+
+Another option is the use of Docker Secrets, which allows us to securely manage sensitive data by restricting access to specific services in Docker Swarm. Secrets are encrypted at rest and in transit and are only accessible to containers explicitly configured to use them. They are mounted as temporary, read-only files (/run/secrets/) with strict permissions (0400), ensuring only the container's process user can read them. Secrets are ephemeral, removed when the container stops, and not stored in persistent storage. Additional security can be achieved by running containers as non-root users, applying Swarm constraints, and using role-based access control (RBAC). This ensures secrets remain protected and inaccessible to unauthorized users or containers.
 
 Steps:
 1.  Create a Secret : ```echo "MY_API_KEY=aaaaaaaa" | docker secret create my_env -```
@@ -79,9 +81,9 @@ To remove the `cap_net_raw` capability from the ping command, we used the follow
 sudo setcap -r /usr/bin/ping
 ```
 
-After doing this, we were observed that we were no longer able to run the ping command:
+After doing this, we observed that we were no longer able to run the ping command:
 
-![pingNoCap](./pingNoCap.png)
+![pingNoCap](./Images/pingNoCap.png)
 
 
 **Question** **7.** **Can you make ping work again without adding any capability, and without running with** **sudo?**
@@ -94,7 +96,7 @@ sudo chmod u+s /usr/bin/ping
 
 Then, we were able to confirm that ping works again, even though no capabilities were added and we're running it as an unprivileged user.
 
-![pingSetUID](./pingSetUID.png)
+![pingSetUID](./Images/pingSetUID.png)
 
 
 **Question** **8.** **Can you make** **passwd work without being a Set UID program? Detail how and why it works?**
@@ -116,7 +118,7 @@ After testing different combinations, we concluded that the following group of c
 
 After setting these capabilities, and running passwd as a non-SetUID program, we were able to confirm that it works again. It does so due to the fact that it has the required capabilities to perform the actions it needs to (as we've presented previously), even though it does not have the SetUID permission.
 
-![passwdNoSetUID.png](./passwdNoSetUID.png)
+![passwdNoSetUID.png](./Images/passwdNoSetUID.png)
 
 **Question** **9.** **Discuss why do you think that, by default,** **passwd is a Set UID program and** **ping is not?**
 
@@ -292,31 +294,25 @@ With these logs, we can conclude that the container's capabilities are:
 
 The root of the problem here is that running a container with the `--privileged` flag grants it full access to the host system. Not only is access to sensitive files and directories of the host granted, but the container is also granted the full set of Linux capabilities, as we can see below: 
 
-![containerWithPriv](./containerWithPrivileges.png)
+![containerWithPriv](./Images/containerWithPrivileges.png)
 
 One of the possible exploits is tampering with the filesystem of the host from inside of the container, which could cause critical damage in a production scenario. We shall demonstrate what this exploit could look like and the harm that it could do.
 
 If, when inside the container, we run `fdisk -l`, we'll be able to see the partitions of the host system, confirming the information provided previously:
 
-![fdisk](./fdisk.png)
+![fdisk](./Images/fdisk.png)
 
 Furthermore, due to the elevated privileges described, we're able to mount this host filesystem on the container, thus granting us access to the host's files. In this case, the `/boot` partition was mounted:
 
-![mountHostPartition.png](./mountHostPartition.png)
+![mountHostPartition.png](./Images/mountHostPartition.png)
 
 Deleting the contents of this partition, for example, could render the host system unbootable, as the kernel files would no longer be present on the server. It's clear to see that the security concerns caused by running a container with `--privileged` are quite significant.
 
 If we run the container without this flag, however, we can see that this exploit is rendered impossible:
 
-![containerWithoutPriv.png](./containerWithoutPriv.png)
+![containerWithoutPriv.png](./Images/containerWithoutPriv.png)
 
-## Advanced Escapes
 
-There are a number of container escapes that rely on the availability of certain capabilities[^P31]. Have a look at the article. 
-
-> Note that some of these exploits might depend on other system configuration, Docker versions, and other layers of isolation Docker relies on (e.g. namespaces, capabilities, seccomp,...).
-
-**Question** **16.** **Can you replicate any of these escapes? Remember that some might not work anylonger. You should test them and explain how you proceeded to make it work. The group will be asked to demo the exploit.** (this question is for extra points)
 
 **Question** **17.** **Finally, what are some good practices regarding Docker security?**
 
