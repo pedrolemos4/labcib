@@ -111,3 +111,138 @@
 	file = {Snapshot:files/40/faq.html:text/html},
 }
 
+
+@misc{the_linux_foundation_controlling_2023,
+	title = {Controlling {Access} to the {Kubernetes} {API}},
+	url = {https://kubernetes.io/docs/concepts/security/controlling-access/},
+	abstract = {This page provides an overview of controlling access to the Kubernetes API.
+	Users access the Kubernetes API using kubectl, client libraries, or by making REST requests. Both human users and Kubernetes service accounts can be authorized for API access. When a request reaches the API, it goes through several stages, illustrated in the following diagram:
+	Transport security By default, the Kubernetes API server listens on port 6443 on the first non-localhost network interface, protected by TLS.},
+	language = {en},
+	urldate = {2024-12-07},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2023},
+	note = {Section: docs},
+	file = {Snapshot:/home/luis/Zotero/storage/MPC65RLA/controlling-access.html:text/html},
+}
+
+
+@misc{the_linux_foundation_admission_2024,
+	title = {Admission {Control} in {Kubernetes}},
+	url = {https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/},
+	abstract = {This page provides an overview of admission controllers.
+	An admission controller is a piece of code that intercepts requests to the Kubernetes API server prior to persistence of the resource, but after the request is authenticated and authorized.
+	Several important features of Kubernetes require an admission controller to be enabled in order to properly support the feature. As a result, a Kubernetes API server that is not properly configured with the right set of admission controllers is an incomplete server that will not support all the features you expect.},
+	language = {en},
+	urldate = {2024-12-08},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs},
+	file = {Snapshot:/home/luis/Zotero/storage/8TID97JK/admission-controllers.html:text/html},
+}
+
+
+@book{sayfan_mastering_2020,
+	address = {Place of publication not identified},
+	edition = {3rd ed},
+	title = {Mastering {Kubernetes}: level up your container orchestration skills with {Kubernetes} to build, run, secure, and observe largescale distributed apps, third edition},
+	isbn = {978-1-83921-125-6 978-1-83921-308-3},
+	shorttitle = {Mastering {Kubernetes}},
+	abstract = {Master Kubernetes architecture and design to build and deploy secure distributed applications Learn advanced concepts like autoscaling, cluster federation, serverless computing, and service mesh integration for observability Explore Kubernetes 1.18 features and its rich ecosystem of tools like Kubectl, Knative, and Helm Book DescriptionThe third edition of Mastering Kubernetes is updated with the latest tools and code enabling you to learn Kubernetes 1.18's latest features. This book primarily concentrates on diving deeply into complex concepts and Kubernetes best practices to help you master the skills of designing and deploying large clusters on various cloud platforms. The book trains you to run complex stateful microservices on Kubernetes including advanced features such as horizontal pod autoscaling, rolling updates, resource quotas, and persistent storage backend. With the two new chapters, you will gain expertise in serverless computing and utilizing service meshes. As you proceed through the chapters, you will explore different options for network configuration and learn to set up, operate, and troubleshoot Kubernetes networking plugins through real-world use cases. Furthermore, you will understand the mechanisms of custom resource development and its utilization in automation and maintenance workflows. By the end of this Kubernetes book, you will graduate from an intermediate to advanced Kubernetes professional},
+	language = {en},
+	publisher = {Packt Publishing},
+	author = {Sayfan, Gigi},
+	year = {2020},
+	file = {PDF:/home/luis/Zotero/storage/UM5EKTBU/Sayfan - 2020 - Mastering Kubernetes level up your container orchestration skills with Kubernetes to build, run, se.pdf:application/pdf},
+}
+
+
+@book{martin_hacking_2021,
+	address = {Sebastopol},
+	title = {Hacking kubernetes: threat-driven analysis and defense},
+	isbn = {978-1-4920-8173-9 978-1-4920-8170-8},
+	shorttitle = {Hacking kubernetes},
+	language = {eng},
+	publisher = {O'Reilly Media, Incorporated},
+	author = {Martin, Andrew and Hausenblas, Michael},
+	year = {2021},
+	annote = {Description based on publisher supplied metadata and other sources},
+	file = {PDF:/home/luis/Zotero/storage/LA58SLMY/Martin and Hausenblas - Hacking Kubernetes.pdf:application/pdf},
+}
+
+
+@misc{the_linux_foundation_webhook_2024,
+	title = {Webhook {Mode}},
+	url = {https://kubernetes.io/docs/reference/access-authn-authz/webhook/},
+	abstract = {A WebHook is an HTTP callback: an HTTP POST that occurs when something happens; a simple event-notification via HTTP POST. A web application implementing WebHooks will POST a message to a URL when certain things happen.
+	When specified, mode Webhook causes Kubernetes to query an outside REST service when determining user privileges.
+	Configuration File Format Mode Webhook requires a file for HTTP configuration, specify by the --authorization-webhook-config-file=SOME\_FILENAME flag.
+	The configuration file uses the kubeconfig file format.},
+	language = {en},
+	urldate = {2024-12-08},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs},
+	file = {Snapshot:/home/luis/Zotero/storage/MPVU7DNY/webhook.html:text/html},
+}
+
+
+@misc{eknert_kubernetes_2022,
+	title = {The {Kubernetes} {Authorization} {Webhook}},
+	url = {https://www.styra.com/blog/kubernetes-authorization-webhook/},
+	abstract = {Kubernetes Authorization webhook offers a powerful mechanism to extend the modules that comprise the K8s API servers with custom code for authorization.},
+	language = {en-US},
+	urldate = {2024-12-08},
+	journal = {Styra},
+	author = {Eknert, Anders},
+	month = may,
+	year = {2022},
+	file = {Snapshot:/home/luis/Zotero/storage/LS9MEJ5C/kubernetes-authorization-webhook.html:text/html},
+}
+
+
+@article{national_security_agency_kubernetes_2022,
+	title = {Kubernetes {Hardening} {Guide}},
+	url = {https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF},
+	abstract = {NSA and CISA developed this document in furtherance of their respective cybersecurity missions, including their responsibilities to develop and issue cybersecurity specifications and mitigations. This information may be shared broadly to reach all appropriate stakeholders.},
+	journal = {Cybersecurity Technical Report},
+	author = {{National Security Agency} and {Cybersecurity and Infrastructure Security Agency}},
+	year = {2022},
+	file = {CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.pdf:/home/luis/Zotero/storage/BDMGVWXW/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.pdf:application/pdf},
+}
+
+
+@misc{the_linux_foundation_resource_2024,
+	title = {Resource {Quotas}},
+	url = {https://kubernetes.io/docs/concepts/policy/resource-quotas/},
+	abstract = {When several users or teams share a cluster with a fixed number of nodes, there is a concern that one team could use more than its fair share of resources.
+	Resource quotas are a tool for administrators to address this concern.
+	A resource quota, defined by a ResourceQuota object, provides constraints that limit aggregate resource consumption per namespace. It can limit the quantity of objects that can be created in a namespace by type, as well as the total amount of compute resources that may be consumed by resources in that namespace.},
+	language = {en},
+	urldate = {2024-12-08},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs},
+	file = {Snapshot:/home/luis/Zotero/storage/CB949S37/resource-quotas.html:text/html},
+}
+
+
+@misc{the_linux_foundation_limit_2024,
+	title = {Limit {Ranges}},
+	url = {https://kubernetes.io/docs/concepts/policy/limit-range/},
+	abstract = {By default, containers run with unbounded compute resources on a Kubernetes cluster. Using Kubernetes resource quotas, administrators (also termed cluster operators) can restrict consumption and creation of cluster resources (such as CPU time, memory, and persistent storage) within a specified namespace. Within a namespace, a Pod can consume as much CPU and memory as is allowed by the ResourceQuotas that apply to that namespace. As a cluster operator, or as a namespace-level administrator, you might also be concerned about making sure that a single object cannot monopolize all available resources within a namespace.},
+	language = {en},
+	urldate = {2024-12-08},
+	journal = {Kubernetes},
+	author = {{The Linux Foundation}},
+	year = {2024},
+	note = {Section: docs},
+	file = {Snapshot:/home/luis/Zotero/storage/7FBY2EWL/limit-range.html:text/html},
+}
+
+
+

@@ -6,6 +6,7 @@
 \usepackage[portuges,english]{babel}     
 %\usepackage[square,numbers]{natbib}
 \usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
+\usepackage[normalem]{ulem}
 \addbibresource{ref.bib} % The filename of the bibliography
 \usepackage{graphicx}               
 \usepackage[pdftex]{hyperref}
@@ -232,75 +233,172 @@ Therefore, to assist practitioners in undergoing this process, we will look into
 Before proceeding, it's important to note that the API server can be interacted with through many means, such as the \texttt{kubectl} utility, as well as REST requests. This highlights the relevance of appropriate firewall practices. Access to the Kubernetes API must be properly limited to business-related needs. A good approach for this is to allow only an organizational VPN's IP or set of IP addresses to make requests to the API, thus limiting the attack vectors. However, were this firewall or VPN to be compromised, further security measures are necessary.
 
 \subsection{Authentication}
+\label{subsec:auth}
 
-When a user attempts to interact with the API server, he must first undergo a process of authentication. This verifies the identity of a user or service before allowing them to communicate with the API server. Kubernetes supports multiple authentication methods which can be employed \cite{the_linux_foundation_authenticating_2024}:
+When a user attempts to interact with the API server, he must first undergo a process of authentication. This verifies the identity of a user or service before allowing them to communicate with the API server. Kubernetes supports multiple authentication methods which can be employed \cite{the_linux_foundation_authenticating_2024}.
 
-\begin{itemize}
-	\item \textbf{X.509 Client Certificates}: Kubernetes is able to use certificates for authentication purposes. For this effect, the API server must be started with the \texttt{--client-ca-file} flag which should point towards one or more valid Certificate Authority (CA) files, which will be used to validate the certificates used by clients when issuing requests to the API \cite{the_linux_foundation_authenticating_2024}. These certificates can be generated manually using tools such as \texttt{easyrsa} and \texttt{openssl}.
-	\item \textbf{Service Account Tokens}: These are signed JSON Web Tokens (JWT) which Kubernetes generates so that entities can communicate with the API server \cite{the_linux_foundation_authenticating_2024}. These tokens are associated with ServiceAccount objects, whose function will be expanded upon in the RBAC section. It's unusual that these tokens are used for the authentication of users, as they are more frequently used by Pods which require to communicate with the Kubernetes API, or by processes that run outside of the cluster but frequently need to talk with its API.
-	\item \textbf{OpenID Connect (OIDC):} This authentication mechanism relies on a third-party identity provider, such as Google or Keycloak, for the generation of a JWT which the user can then present to the API server in order to issue requests. \textbf{todo:} completar isto, pensar em como melhorar
-	\item \textbf{Webhook Token Authentication:}
-\end{itemize}
+\subsubsection{X.509 Client Certificates}
+
+Kubernetes is able to use certificates for authentication purposes. For this effect, the API server must be started with the \texttt{--client-ca-file} flag which should point towards one or more valid Certificate Authority (CA) files, which will be used to validate the certificates used by clients when issuing requests to the API \cite{the_linux_foundation_authenticating_2024}. These certificates can be generated manually using tools such as \texttt{easyrsa} and \texttt{openssl}.
+
+With this method "any user that presents a valid certificate signed by the cluster's certificate authority (CA) is considered authenticated" \cite{the_linux_foundation_authenticating_2024}. A more proper way to use this is to have users generate their own private key, as well as a Certificate Signing Request (CSR) which specifies necessary attributes that a user certificate must have. Notably, the subject of the certificate will be used by Kubernetes to identify the username of a client, and thus using it for authorization purposes. Then, this CSR is validated and signed by the administrator, using the CA of the cluster, and the certificate is distributed to the client.
+
+This ensures that each user has an account, and further ensures traceability and accountability of any user's actions. However, the manual distribution of certificates might be a hindrance on organizations which are larger and more complex. Nonetheless, it's a native setting of Kubernetes that ensures the hardening of the authentication process. 
+
+\subsubsection{Service Account Token}
+
+These are signed JSON Web Tokens (JWT) which Kubernetes generates so that entities can communicate with the API server \cite{the_linux_foundation_authenticating_2024}. These tokens are associated with ServiceAccount objects, which by default represent the identity of an application in Kubernetes \cite{martin_hacking_2021} - their function will be expanded upon in the RBAC section. It's unusual that these tokens are used for the authentication of users, as they are more frequently used by Pods which require to communicate with the Kubernetes API, or by processes that run outside of the cluster but frequently need to talk with its API.
+
+\subsubsection{OpenID Connect (OIDC)}
+
+This authentication mechanism relies on a third-party identity provider, such as Google or Keycloak, for the generation of a JWT which the user can then present to the API server in order to issue requests \cite{the_linux_foundation_authenticating_2024}. It's still relevant in the scope of this Systematization of Knowledge, as even though it resorts to an external mechanism, it uses a configuration that's available in Kubernetes itself.
+
+It's worth noting that, unlike workloads - which are represented in Kubernetes via Service Accounts - human users are not represented by Kubernetes objects \cite{the_linux_foundation_authenticating_2024,martin_hacking_2021}. Therefore, integrating with an external source-of-truth for users such as the ones mentioned above is optimal for handling user interaction with the API Server. The applicability of this can be easier when using a cloud instance, as practitioners can check what options their cloud provider offers \cite{martin_hacking_2021}, but technologies like Keycloak or Dex enable organizations to deploy an identity management system on their own infrastructure.
+
+\subsubsection{Webhook Token Authentication}
+
+Users are able to specify authentication tokens on their requests to the API, which must contain the value of this token on the Authorization header of the request. What this authentication method relates to is the assessment of the validity of the provided token.
+
+It works by using a remote webhook service when determining user privileges \cite{the_linux_foundation_webhook_2024}. This external service responds to REST requests and allows or denies access to the requested resources. It's essentially a way to delegate the authorization process to a third-party, thus allowing administrators to inject their custom logic as part of an authorization policy \cite{eknert_kubernetes_2022}.
+
+\subsubsection{Anonymous Requests}
 
 Besides these login mechanisms, there is the concept of anonymous requests. When enabled, "requests that are not rejected by other configured authentication methods are treated as anonymous requests" \cite{the_linux_foundation_authenticating_2024}. As such, a user would be able to query the API without identifying himself which, if proper RBAC configurations are not employed, could be quite damming to an organization. As such, it is advised that anonymous requests are disabled by using the \texttt{--anonymous-auth=false} on the API server. If it needs to be enabled due to organizational needs, it's paramount to ensure that the permissions of unauthenticated users are as restrictive as possible.
 
 \subsection{Admission Controllers}
 
-Explicar o flow do Kubernetes, primeiro autenticaçao, depois autorizaçao (que vem do RBAC ou ABAC), e finalmente admission (podemos usar esta imagem https://kubernetes.io/docs/concepts/security/controlling-access/).
+%Explicar o flow do Kubernetes, primeiro autenticaçao, depois autorizaçao (que vem do RBAC ou ABAC), e finalmente admission (podemos usar esta imagem https://kubernetes.io/docs/concepts/security/controlling-access/).
+%
+%
+%validating ou mutating, falar disso e da diferença
+%
+%Admission controllers do not (and cannot) block requests to read (get, watch or list) objects. -> importante realçar isto, referir que os requests nao cobertos por admission control devem ser cobertos por RBAC e gestao de permissoes
+%
+%https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
+%https://kubernetes.io/blog/2022/01/19/secure-your-admission-controllers-and-webhooks/
+%https://kubernetes.io/docs/concepts/security/controlling-access/\#admission-control
+%
+%os default sao: CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, DefaultStorageClass, DefaultTolerationSeconds, LimitRanger, MutatingAdmissionWebhook, NamespaceLifecycle, PersistentVolumeClaimResize, PodSecurity, Priority, ResourceQuota, RuntimeClass, ServiceAccount, StorageObjectInUseProtection, TaintNodesByCondition, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook
+%
+%configurar o EventRateLimit pode ser interessante para evitar algum tipo de flood de eventos que um atacante pudesse causar?
+%
+%falar de configurar as ResourceQuotas em cada deployment talvez?
+
+When considering interactions with the Kubernetes API, there are three actions that take place: authentication, authorization, and admission. This is clearly illustrated in Figure \ref{fig:authflow}. It's worth highlighting that both human users, as well as Pods, go through the same access control flow, further showcasing the versatility of Kubernetes authentication and authorization methods.
+
+\begin{figure}[h!]
+	\centering
+	\label{fig:authflow}
+	\includegraphics[scale=0.3]{figs/access-control-overview.png}
+	\caption{Access Control Overview \cite{the_linux_foundation_controlling_2023}}
+\end{figure}
 
 
-validating ou mutating, falar disso e da diferença
+The first one has been explored in \ref{subsec:auth}, covering the different methods supported by Kubernetes, as well as recommendations. Considering authorization, this will be covered in \ref{sec:auth}. So, we must now cover the admission phase, as it's the last in the process, as well as a crucial part of it.
 
-Admission controllers do not (and cannot) block requests to read (get, watch or list) objects. -> importante realçar isto, referir que os requests nao cobertos por admission control devem ser cobertos por RBAC e gestao de permissoes
+In Kubernetes, the admission process is handled by Admission Controllers. These are "software modules that can modify or reject requests" \cite{the_linux_foundation_controlling_2023}. They do so by intercepting requests to the API before the persistence of resources \cite{the_linux_foundation_admission_2024}. Note that the persistence of resources is being specifically mentioned, excluding other types of operations. This is because admission controllers only operate on "requests that create, delete, or modify objects" \cite{the_linux_foundation_admission_2024}. As such, read operations (the \texttt{get}, \texttt{watch} or \texttt{list} verbs) must be strictly covered by RBAC policies.
 
-https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
-https://kubernetes.io/blog/2022/01/19/secure-your-admission-controllers-and-webhooks/
-https://kubernetes.io/docs/concepts/security/controlling-access/\#admission-control
+Admission controllers may be validating, mutating, or both. With validating admission controllers, the resources are validated against the set of modules to ensure that they comply with the rules imposed by them, and are only persisted in the cluster if they pass all controllers. In the case of mutating controllers, however, they may modify the data for the resource that's being modified \cite{the_linux_foundation_admission_2024}.
 
-os default sao: CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, DefaultStorageClass, DefaultTolerationSeconds, LimitRanger, MutatingAdmissionWebhook, NamespaceLifecycle, PersistentVolumeClaimResize, PodSecurity, Priority, ResourceQuota, RuntimeClass, ServiceAccount, StorageObjectInUseProtection, TaintNodesByCondition, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook
+These modules are enabled at the API level, as we've seen. This is done by using the \texttt{--enable-admission-plugins} flag with the controllers that we want to enable. As such, to see what admission controllers are currently enabled in the cluster, we can investigate the manifest of the Pod that runs the API server in the cluster. An example of this is showcased in Figure \ref{fig:admission}.
 
-configurar o EventRateLimit pode ser interessante para evitar algum tipo de flood de eventos que um atacante pudesse causar?
+\begin{figure}[h!]
+	\centering
+	\label{fig:admission}
+	\includegraphics[scale=0.5]{figs/enabled-admission.png}
+	\caption{Enabled admission controllers in testing instance}
+\end{figure}
 
-falar de configurar as ResourceQuotas em cada deployment talvez?
+By consulting the Kubernetes documentation in \cite{the_linux_foundation_admission_2024}, we're able to confirm that the default admission controllers in version 1.31 are the ones shown in \ref{code:admission}.
+
+\begin{lstlisting}[style=yaml,caption={Default Admission Controllers},label=code:admission]
+	CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, DefaultStorageClass, DefaultTolerationSeconds, LimitRanger, MutatingAdmissionWebhook, NamespaceLifecycle, PersistentVolumeClaimResize, PodSecurity, Priority, ResourceQuota, RuntimeClass, ServiceAccount, StorageObjectInUseProtection, TaintNodesByCondition, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook
+\end{lstlisting}
+
+Thus, we're able to confirm that our testing instance is missing some of the defaults, which should be enabled. To enable them, we can simply edit the \texttt{kube-apiserver} manifest, adding the necessary controllers to the flag shown in Figure \ref{fig:admission}.
+
+The available Admission Controller plugins vary vastly in functionality, and cover the validation and mutation of requests "mostly from the resource management and security points of view" \cite{sayfan_mastering_2020}. Our recommendation is for practitioners to:
+
+\begin{enumerate}
+	\item Validate what Admission Controllers are currently enabled in the cluster;
+	\item Investigate what plugins can be useful in their specific organizational context. This can be done by consulting the documentation of each controller's function \footnote{Presented in \href{https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/\#what-does-each-admission-controller-do}{\underline{this documentation link}}}, and evaluating if it responds to any organizational needs.
+\end{enumerate}
+
+Besides these recommendations, we must also consider the ResourceQuota and LimitRanges admission controllers separately, as their implementation is quite helpful in ensuring the proper deployment of applications in a Kubernetes cluster.
+
+\subsubsection{ResourceQuotas and LimitRanges}
+
+Kubernetes offers the ResourceQuota and LimitRanges admission controllers by default, which can be used to restrict resource usage for namespaces, nodes or Pods \cite{national_security_agency_kubernetes_2022}.
+
+Resource quotas can be used to limit the aggregate resource consumption per namespace \cite{the_linux_foundation_resource_2024}. With them, practitioners can manage their computational resources used by their clusters' namespaces more effectively. For instance, they can be used to limit the total amount of CPU and memory requested and/or used by each namespace.
+
+It's worth noting the difference between the requested and the used values, as an administrator must be aware of this to properly define the resource quotas for the cluster. Considering the CPU and memory attributes, the requested value represents the resources the Pod specifies at the time of its initialization. This does not mean that the Pod will automatically use the requested amount of CPU and memory, but that it will require them during the execution. As an example, a Pod can request 1Gi of RAM, but only consume 100Mi while it's executing. However, if the memory usage has any spike during the Pod's operation - for instance, due to a spike in traffic - it will be able to use more of it, since that initial request has been allocated to it.
+
+Further analyzing this example scenario, if this memory spike were to increase further, it could hinder the operation of the cluster as a whole, since it's exhausting the resources. This is where the concept of limits is useful. If a limit of memory is defined in this case, the pod will be able to use more that it has requested - as we've explained prior - but not more than the defined limit.
+
+Having this context established, we assert as a good practice to define resource quotas which impose maximum values not only on the compute power requested for a namespace, but also on the limits which said namespace will not be able to exceed. A practical example of a ResourceQuota manifest matching this description is presented in \ref{code:reqquota}.
+
+\begin{lstlisting}[style=yaml,caption={ResourceQuota example},label=code:reqquota]
+	apiVersion: v1
+	kind: ResourceQuota
+	metadata:
+	  name: example-cpu-mem-resourcequota
+	spec:
+	  hard:
+	    requests.cpu: "1"
+		requests.memory: 1Gi
+		limits.cpu: "2"
+		limits.memory: 2Gi
+\end{lstlisting}
+
+
+Whereas a ResourceQuota imposes a limit on the resources used by a namespace, the LimitRange policy imposes limits per Pod \cite{national_security_agency_kubernetes_2022}. It's objective is to help adminstrators ensure "that a single object cannot monopolize all available resources within a namespace" \cite{the_linux_foundation_limit_2024}. As such, it provides constraints to limit resource allocations per Pod or even container within each Pod, as well as storage requests per each \texttt{PersistentVolumeClaim}.
+
+\textbf{TODO: ACABAR PARTE DE LIMITRANGE}
 
 \subsection{API Server Security Flags}
 
-(https://chatgpt.com/share/674613c5-f8c8-8013-80ee-268d0270a2e1)
+%(https://chatgpt.com/share/674613c5-f8c8-8013-80ee-268d0270a2e1)
+%
+%List and explain important API Server flags for hardening the cluster:
+%
+%a. Network Security
+%
+%--secure-port:
+%Ensure the API Server listens on a secure port (default: 6443) and disables non-secure ports (--insecure-port=0).
+%
+%--bind-address:
+%Limit the API Server to listen only on the internal network (e.g., 127.0.0.1 or cluster-internal IP).
+%
+%--tls-cert-file and --tls-private-key-file:
+%Configure TLS to encrypt communication.
+%
+%b. Authentication and Authorization Flags
+%
+%--anonymous-auth=false:
+%Disable anonymous access to the API Server.
+%
+%--enable-bootstrap-token-auth=true:
+%Use temporary tokens for secure cluster bootstrapping.
+%
+%c. Audit Logging
+%
+%--audit-log-path and --audit-log-maxage:
+%Enable and configure audit logs to track all API requests and detect malicious activity.
+%
+%d. etcd Encryption
+%
+%--encryption-provider-config:
+%Ensure sensitive data like Secrets is encrypted before being stored in etcd.
 
-List and explain important API Server flags for hardening the cluster:
+Throughout this chapter, we've already explored some API configurations that can be enabled to harden the security posture of a Kubernetes cluster. Besides those, there are several others which we find relevant to systematize in the present document. That is, therefore, the goal that this subsection aims to achieve.
 
-a. Network Security
 
---secure-port:
-Ensure the API Server listens on a secure port (default: 6443) and disables non-secure ports (--insecure-port=0).
-
---bind-address:
-Limit the API Server to listen only on the internal network (e.g., 127.0.0.1 or cluster-internal IP).
-
---tls-cert-file and --tls-private-key-file:
-Configure TLS to encrypt communication.
-
-b. Authentication and Authorization Flags
-
---anonymous-auth=false:
-Disable anonymous access to the API Server.
-
---enable-bootstrap-token-auth=true:
-Use temporary tokens for secure cluster bootstrapping.
-
-c. Audit Logging
-
---audit-log-path and --audit-log-maxage:
-Enable and configure audit logs to track all API requests and detect malicious activity.
-
-d. etcd Encryption
-
---encryption-provider-config:
-Ensure sensitive data like Secrets is encrypted before being stored in etcd.
 
 	\section{Network Policies}
 	
 	\section{RBAC and Authentication}
+	\label{sec:auth}
 		
 	%% =================================
 \chapter{Complementary Tooling}

@@ -32,8 +32,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Kubernetes Components}
@@ -57,8 +57,8 @@
       \strng{authorbibnamehash}{a226e9fbdfc1c8dd7e7fef4d333f86ed}
       \strng{authornamehash}{a226e9fbdfc1c8dd7e7fef4d333f86ed}
       \strng{authorfullhash}{a226e9fbdfc1c8dd7e7fef4d333f86ed}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Frequently asked questions}
@@ -96,8 +96,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{2}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code. Because Secrets can be created independently of the Pods that use them, there is less risk of the Secret (and its data) being exposed during the workflow of creating, viewing, and editing Pods.}
@@ -132,8 +132,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{3}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{All of the APIs in Kubernetes that let you write persistent API resource data support at-rest encryption. For example, you can enable at-rest encryption for Secrets. This at-rest encryption is additional to any system-level encryption for the etcd cluster or for the filesystem(s) on hosts where you are running the kube-apiserver. This page shows how to enable and configure encryption of API data at rest. Note:This task covers encryption for resource data stored using the Kubernetes API.}
@@ -190,8 +190,8 @@
       \strng{authorbibnamehash}{e104a1489850d6c58cc65d56f1230217}
       \strng{authornamehash}{e104a1489850d6c58cc65d56f1230217}
       \strng{authorfullhash}{5dea3efe63ce31392b769d9a8133f69e}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Gain hands-on skills in Kubernetes Secrets management, ensuring a comprehensive overview of the Secrets lifecycle and prioritizing adherence to regulatory standards and business sustainability Key Features Master Secrets encryption, encompassing complex life cycles, key rotation, access control, backup, and recovery Build your skills to audit Secrets consumption, troubleshoot, and optimize for efficiency and compliance Learn how to manage Secrets through real-world cases, strengthening your applications' security posture Purchase of the print or Kindle book includes a free PDF eBook Book Description Securing Secrets in containerized apps poses a significant challenge for Kubernetes IT professionals. This book tackles the critical task of safeguarding sensitive data, addressing the limitations of Kubernetes encryption, and establishing a robust Secrets management system for heightened security for Kubernetes. Starting with the fundamental Kubernetes architecture principles and how they apply to the design of Secrets management, this book delves into advanced Kubernetes concepts such as hands-on security, compliance, risk mitigation, disaster recovery, and backup strategies. With the help of practical, real-world guidance, you'll learn how to mitigate risks and establish robust Secrets management as you explore different types of external secret stores, configure them in Kubernetes, and integrate them with existing Secrets management solutions. Further, you'll design, implement, and operate a secure method of managing sensitive payload by leveraging real use cases in an iterative process to enhance skills, practices, and analytical thinking, progressively strengthening the security posture with each solution. By the end of this book, you'll have a rock-solid Secrets management solution to run your business-critical applications in a hybrid multi-cloud scenario, addressing operational risks, compliance, and controls. What you will learn Explore Kubernetes Secrets, related API objects, and CRUD operations Understand the Kubernetes Secrets limitations, attack vectors, and mitigation strategies Explore encryption at rest and external secret stores Build and operate a production-grade solution with a focus on business continuity Integrate a Secrets Management solution in your CI/CD pipelines Conduct continuous assessments of the risks and vulnerabilities for each solution Draw insights from use cases implemented by large organizations Gain an overview of the latest and upcoming Secrets management trends Who this book is for This handbook is a comprehensive reference for IT professionals to design, implement, operate, and audit Secrets in applications and platforms running on Kubernetes. For developer, platform, and security teams experienced with containers, this Secrets management guide offers a progressive path--from foundations to implementation--with a security-first mindset. You'll also find this book useful if you work with hybrid multi-cloud Kubernetes platforms for organizations concerned with governance and compliance requirements}
@@ -240,6 +240,352 @@
       \endverb
       \verb{url}
       \verb https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+      \endverb
+    \endentry
+    \entry{martin_hacking_2021}{book}{}
+      \name{author}{2}{}{%
+        {{hash=0f8b44db96f0051ceb98a264428f2aff}{%
+           family={Martin},
+           familyi={M\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5b13d06ab937ded9946b4e63303131d3}{%
+           family={Hausenblas},
+           familyi={H\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {eng}%
+      }
+      \list{location}{1}{%
+        {Sebastopol}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media, Incorporated}%
+      }
+      \strng{namehash}{17a4cac22b8cf841f6feb10fde90cc48}
+      \strng{fullhash}{17a4cac22b8cf841f6feb10fde90cc48}
+      \strng{bibnamehash}{17a4cac22b8cf841f6feb10fde90cc48}
+      \strng{authorbibnamehash}{17a4cac22b8cf841f6feb10fde90cc48}
+      \strng{authornamehash}{17a4cac22b8cf841f6feb10fde90cc48}
+      \strng{authorfullhash}{17a4cac22b8cf841f6feb10fde90cc48}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{annotation}{Description based on publisher supplied metadata and other sources}
+      \field{isbn}{978-1-4920-8173-9 978-1-4920-8170-8}
+      \field{shorttitle}{Hacking kubernetes}
+      \field{title}{Hacking kubernetes: threat-driven analysis and defense}
+      \field{year}{2021}
+      \verb{file}
+      \verb PDF:/home/luis/Zotero/storage/LA58SLMY/Martin and Hausenblas - Hacking Kubernetes.pdf:application/pdf
+      \endverb
+    \endentry
+    \entry{the_linux_foundation_webhook_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=be71d0542f6d52e76ec4aa72b14f620c}{%
+           family={{The Linux Foundation}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{fullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{bibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorbibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \field{extraname}{5}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A WebHook is an HTTP callback: an HTTP POST that occurs when something happens; a simple event-notification via HTTP POST. A web application implementing WebHooks will POST a message to a URL when certain things happen. When specified, mode Webhook causes Kubernetes to query an outside REST service when determining user privileges. Configuration File Format Mode Webhook requires a file for HTTP configuration, specify by the --authorization-webhook-config-file=SOME\_FILENAME flag. The configuration file uses the kubeconfig file format.}
+      \field{journaltitle}{Kubernetes}
+      \field{note}{Section: docs}
+      \field{title}{Webhook {Mode}}
+      \field{urlday}{8}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/home/luis/Zotero/storage/MPVU7DNY/webhook.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/reference/access-authn-authz/webhook/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/reference/access-authn-authz/webhook/
+      \endverb
+    \endentry
+    \entry{eknert_kubernetes_2022}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=1b7d6926f91f763b2ba7696678942212}{%
+           family={Eknert},
+           familyi={E\bibinitperiod},
+           given={Anders},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en-US}%
+      }
+      \strng{namehash}{1b7d6926f91f763b2ba7696678942212}
+      \strng{fullhash}{1b7d6926f91f763b2ba7696678942212}
+      \strng{bibnamehash}{1b7d6926f91f763b2ba7696678942212}
+      \strng{authorbibnamehash}{1b7d6926f91f763b2ba7696678942212}
+      \strng{authornamehash}{1b7d6926f91f763b2ba7696678942212}
+      \strng{authorfullhash}{1b7d6926f91f763b2ba7696678942212}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Kubernetes Authorization webhook offers a powerful mechanism to extend the modules that comprise the K8s API servers with custom code for authorization.}
+      \field{journaltitle}{Styra}
+      \field{month}{5}
+      \field{title}{The {Kubernetes} {Authorization} {Webhook}}
+      \field{urlday}{8}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/home/luis/Zotero/storage/LS9MEJ5C/kubernetes-authorization-webhook.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.styra.com/blog/kubernetes-authorization-webhook/
+      \endverb
+      \verb{url}
+      \verb https://www.styra.com/blog/kubernetes-authorization-webhook/
+      \endverb
+    \endentry
+    \entry{the_linux_foundation_controlling_2023}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=be71d0542f6d52e76ec4aa72b14f620c}{%
+           family={{The Linux Foundation}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{fullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{bibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorbibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \field{extraname}{6}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This page provides an overview of controlling access to the Kubernetes API. Users access the Kubernetes API using kubectl, client libraries, or by making REST requests. Both human users and Kubernetes service accounts can be authorized for API access. When a request reaches the API, it goes through several stages, illustrated in the following diagram: Transport security By default, the Kubernetes API server listens on port 6443 on the first non-localhost network interface, protected by TLS.}
+      \field{journaltitle}{Kubernetes}
+      \field{note}{Section: docs}
+      \field{title}{Controlling {Access} to the {Kubernetes} {API}}
+      \field{urlday}{7}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/home/luis/Zotero/storage/MPC65RLA/controlling-access.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/concepts/security/controlling-access/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/concepts/security/controlling-access/
+      \endverb
+    \endentry
+    \entry{the_linux_foundation_admission_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=be71d0542f6d52e76ec4aa72b14f620c}{%
+           family={{The Linux Foundation}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{fullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{bibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorbibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \field{extraname}{7}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This page provides an overview of admission controllers. An admission controller is a piece of code that intercepts requests to the Kubernetes API server prior to persistence of the resource, but after the request is authenticated and authorized. Several important features of Kubernetes require an admission controller to be enabled in order to properly support the feature. As a result, a Kubernetes API server that is not properly configured with the right set of admission controllers is an incomplete server that will not support all the features you expect.}
+      \field{journaltitle}{Kubernetes}
+      \field{note}{Section: docs}
+      \field{title}{Admission {Control} in {Kubernetes}}
+      \field{urlday}{8}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/home/luis/Zotero/storage/8TID97JK/admission-controllers.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
+      \endverb
+    \endentry
+    \entry{sayfan_mastering_2020}{book}{}
+      \name{author}{1}{}{%
+        {{hash=3b7e4ddae321065bfa17eb9bdaefa122}{%
+           family={Sayfan},
+           familyi={S\bibinitperiod},
+           given={Gigi},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \list{location}{1}{%
+        {Place of publication not identified}%
+      }
+      \list{publisher}{1}{%
+        {Packt Publishing}%
+      }
+      \strng{namehash}{3b7e4ddae321065bfa17eb9bdaefa122}
+      \strng{fullhash}{3b7e4ddae321065bfa17eb9bdaefa122}
+      \strng{bibnamehash}{3b7e4ddae321065bfa17eb9bdaefa122}
+      \strng{authorbibnamehash}{3b7e4ddae321065bfa17eb9bdaefa122}
+      \strng{authornamehash}{3b7e4ddae321065bfa17eb9bdaefa122}
+      \strng{authorfullhash}{3b7e4ddae321065bfa17eb9bdaefa122}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Master Kubernetes architecture and design to build and deploy secure distributed applications Learn advanced concepts like autoscaling, cluster federation, serverless computing, and service mesh integration for observability Explore Kubernetes 1.18 features and its rich ecosystem of tools like Kubectl, Knative, and Helm Book DescriptionThe third edition of Mastering Kubernetes is updated with the latest tools and code enabling you to learn Kubernetes 1.18's latest features. This book primarily concentrates on diving deeply into complex concepts and Kubernetes best practices to help you master the skills of designing and deploying large clusters on various cloud platforms. The book trains you to run complex stateful microservices on Kubernetes including advanced features such as horizontal pod autoscaling, rolling updates, resource quotas, and persistent storage backend. With the two new chapters, you will gain expertise in serverless computing and utilizing service meshes. As you proceed through the chapters, you will explore different options for network configuration and learn to set up, operate, and troubleshoot Kubernetes networking plugins through real-world use cases. Furthermore, you will understand the mechanisms of custom resource development and its utilization in automation and maintenance workflows. By the end of this Kubernetes book, you will graduate from an intermediate to advanced Kubernetes professional}
+      \field{edition}{3rd ed}
+      \field{isbn}{978-1-83921-125-6 978-1-83921-308-3}
+      \field{shorttitle}{Mastering {Kubernetes}}
+      \field{title}{Mastering {Kubernetes}: level up your container orchestration skills with {Kubernetes} to build, run, secure, and observe largescale distributed apps, third edition}
+      \field{year}{2020}
+      \verb{file}
+      \verb PDF:/home/luis/Zotero/storage/UM5EKTBU/Sayfan - 2020 - Mastering Kubernetes level up your container orchestration skills with Kubernetes to build, run, se.pdf:application/pdf
+      \endverb
+    \endentry
+    \entry{national_security_agency_kubernetes_2022}{article}{}
+      \name{author}{2}{}{%
+        {{hash=eee2e3280b72459a568be70f1d6b1ae3}{%
+           family={{National Security Agency}},
+           familyi={N\bibinitperiod}}}%
+        {{hash=97329f9723291d80bcb72f021cddf30c}{%
+           family={{Cybersecurity and Infrastructure Security Agency}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{cec21d119f0b18b94bd0d8be25a1c4de}
+      \strng{fullhash}{cec21d119f0b18b94bd0d8be25a1c4de}
+      \strng{bibnamehash}{cec21d119f0b18b94bd0d8be25a1c4de}
+      \strng{authorbibnamehash}{cec21d119f0b18b94bd0d8be25a1c4de}
+      \strng{authornamehash}{cec21d119f0b18b94bd0d8be25a1c4de}
+      \strng{authorfullhash}{cec21d119f0b18b94bd0d8be25a1c4de}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{NSA and CISA developed this document in furtherance of their respective cybersecurity missions, including their responsibilities to develop and issue cybersecurity specifications and mitigations. This information may be shared broadly to reach all appropriate stakeholders.}
+      \field{journaltitle}{Cybersecurity Technical Report}
+      \field{title}{Kubernetes {Hardening} {Guide}}
+      \field{year}{2022}
+      \verb{file}
+      \verb CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.pdf:/home/luis/Zotero/storage/BDMGVWXW/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+      \endverb
+      \verb{url}
+      \verb https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+      \endverb
+    \endentry
+    \entry{the_linux_foundation_resource_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=be71d0542f6d52e76ec4aa72b14f620c}{%
+           family={{The Linux Foundation}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{fullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{bibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorbibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \field{extraname}{8}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{When several users or teams share a cluster with a fixed number of nodes, there is a concern that one team could use more than its fair share of resources. Resource quotas are a tool for administrators to address this concern. A resource quota, defined by a ResourceQuota object, provides constraints that limit aggregate resource consumption per namespace. It can limit the quantity of objects that can be created in a namespace by type, as well as the total amount of compute resources that may be consumed by resources in that namespace.}
+      \field{journaltitle}{Kubernetes}
+      \field{note}{Section: docs}
+      \field{title}{Resource {Quotas}}
+      \field{urlday}{8}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/home/luis/Zotero/storage/CB949S37/resource-quotas.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/concepts/policy/resource-quotas/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/concepts/policy/resource-quotas/
+      \endverb
+    \endentry
+    \entry{the_linux_foundation_limit_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=be71d0542f6d52e76ec4aa72b14f620c}{%
+           family={{The Linux Foundation}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{fullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{bibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorbibnamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
+      \field{extraname}{9}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{By default, containers run with unbounded compute resources on a Kubernetes cluster. Using Kubernetes resource quotas, administrators (also termed cluster operators) can restrict consumption and creation of cluster resources (such as CPU time, memory, and persistent storage) within a specified namespace. Within a namespace, a Pod can consume as much CPU and memory as is allowed by the ResourceQuotas that apply to that namespace. As a cluster operator, or as a namespace-level administrator, you might also be concerned about making sure that a single object cannot monopolize all available resources within a namespace.}
+      \field{journaltitle}{Kubernetes}
+      \field{note}{Section: docs}
+      \field{title}{Limit {Ranges}}
+      \field{urlday}{8}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/home/luis/Zotero/storage/7FBY2EWL/limit-range.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/concepts/policy/limit-range/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/concepts/policy/limit-range/
       \endverb
     \endentry
   \enddatalist
