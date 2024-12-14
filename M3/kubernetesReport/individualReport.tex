@@ -33,6 +33,7 @@
 \usepackage{fancyvrb}  %  para listagens de codigo
 \usepackage{listings}
 \usepackage{courier}
+\usepackage{float}
 \lstdefinestyle{yaml}{
 	basicstyle=\color{blue}\footnotesize\ttfamily,
 	rulecolor=\color{black},
@@ -178,7 +179,7 @@ Additionally, etcd persistently stores the cluster's state, allowing Kubernetes 
 Having introduced what Kubernetes is, we are now able to delve into the main purpose of this report, which is to systematize what built-in features and configurations of this technology we can use to improve a cluster's security posture and resistance to cyber-attacks.
 This chapter will be split into various sections, each concerning an area of relevance when it comes to Kubernetes Hardening. In each section, a context regarding the security improvements that are available will be presented, and consequently the measures through which one can implement these improvements will also be showcased.
 
-	\section{Data Encryption}
+	\section{Data Encryption}\label{sect:data}
 	
 As we've seen in the context section of this report, Kubernetes stores Secrets and their data on the etcd backend database without any form of encryption \cite{the_linux_foundation_secrets_2024} - despite encoding them with Base64, which does not constitute encryption as the plain-text contents are directly obtainable. If an attacker is able to access either the API server or the etcd database directly, he will be able to obtain the plain-text contents of the secrets that are managed by that cluster. One can easily picture the compromise that this can cause, as secrets usually contain business-critical credentials that are used by services running in Kubernetes. For instance, an application Pod might need to access a database, and thus read the connection string and database user credentials from a secret. If an attacker could obtain the content of this secret, he too would at least have the credentials to access the database.
 
@@ -352,11 +353,42 @@ Having this context established, we assert as a good practice to define resource
 \end{lstlisting}
 
 
-Whereas a ResourceQuota imposes a limit on the resources used by a namespace, the LimitRange policy imposes limits per Pod \cite{national_security_agency_kubernetes_2022}. It's objective is to help adminstrators ensure "that a single object cannot monopolize all available resources within a namespace" \cite{the_linux_foundation_limit_2024}. As such, it provides constraints to limit resource allocations per Pod or even container within each Pod, as well as storage requests per each \texttt{PersistentVolumeClaim}.
+Whereas a ResourceQuota imposes a limit on the resources used by a namespace, the LimitRange policy imposes limits per Pod \cite{national_security_agency_kubernetes_2022}. It's objective is to help adminstrators ensure "that a single object cannot monopolize all available resources within a namespace" \cite{the_linux_foundation_limit_2024}. As such, it provides constraints to limit resource allocations per Pod or even container within each Pod, as well as storage requests per each \texttt{PersistentVolumeClaim}. In \ref{code:limitrange}, we present an example of a LimitRange manifest which could be applied in a cluster.
 
-\textbf{TODO: ACABAR PARTE DE LIMITRANGE}
+
+\begin{lstlisting}[style=yaml,caption={ResourceQuota example},label=code:limitrange]
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-resource-constraint
+  namespace: demo
+spec:
+limits:
+- default:
+    cpu: 500m
+  defaultRequest:
+    cpu: 500m
+  max:
+    cpu: "1"
+  min:
+    cpu: 100m
+  type: Container
+\end{lstlisting}
+
+What the presented manifest does is:
+\begin{enumerate}
+	\item Define the default CPU limit and request for containers in the "demo" namespace as 500m. What this means is that, if no request or limit is specified in the Pod, it will be set to 500m;
+	\item Define that the maximum CPU a container can request is 1;
+	\item Define that the minimum CPU a container can request is 100m.
+\end{enumerate}
+
+It's important to note that the LimitRange admission controller "does not check the consistency of the default values it applies" \cite{the_linux_foundation_limit_2024}. This means that the values which are applied could generate a conflict with the container that's being started. For instance, and still considering the LimitRange in \ref{code:limitrange}, if we were to start a Pod that specifies a container which requests 700m of CPU, this policy wouldn't alter this request, but would set the limit to 500m. Thus, the Pod wouldn't be scheduled, since the request can never be bigger than the limit.
+
+We advise cluster administrators to set \texttt{ResourceQuotas} and \texttt{LimitRanges} according to the needs of their applications. While not strictly a security concern, it could mitigate potential issues in the cluster, which could originate some exposure to attacks.
 
 \subsection{API Server Security Flags}
+
+
 
 %(https://chatgpt.com/share/674613c5-f8c8-8013-80ee-268d0270a2e1)
 %
@@ -364,19 +396,9 @@ Whereas a ResourceQuota imposes a limit on the resources used by a namespace, th
 %
 %a. Network Security
 %
-%--secure-port:
-%Ensure the API Server listens on a secure port (default: 6443) and disables non-secure ports (--insecure-port=0).
-%
-%--bind-address:
-%Limit the API Server to listen only on the internal network (e.g., 127.0.0.1 or cluster-internal IP).
 %
 %--tls-cert-file and --tls-private-key-file:
 %Configure TLS to encrypt communication.
-%
-%b. Authentication and Authorization Flags
-%
-%--anonymous-auth=false:
-%Disable anonymous access to the API Server.
 %
 %--enable-bootstrap-token-auth=true:
 %Use temporary tokens for secure cluster bootstrapping.
@@ -386,14 +408,80 @@ Whereas a ResourceQuota imposes a limit on the resources used by a namespace, th
 %--audit-log-path and --audit-log-maxage:
 %Enable and configure audit logs to track all API requests and detect malicious activity.
 %
-%d. etcd Encryption
-%
-%--encryption-provider-config:
-%Ensure sensitive data like Secrets is encrypted before being stored in etcd.
+
 
 Throughout this chapter, we've already explored some API configurations that can be enabled to harden the security posture of a Kubernetes cluster. Besides those, there are several others which we find relevant to systematize in the present document. That is, therefore, the goal that this subsection aims to achieve.
 
 
+In 2020, the vulnerability CVE-2020-8558 \cite{national_institute_of_standards_and_technology_nvd_2020} was reported. It states that there was a defect in the kubelet and kube-proxy components which allowed attackers on the local network of the cluster, or in malicious pods with specific capabilities running in it, to exploit the API server. This was because they were able to access services bound to the localhost address from the local network, which should not be possible. This highlighted the importance of ensuring that the flag \texttt{--secure-port} is configured, so that the API listens on a secure port \cite{the_linux_foundation_kube-apiserver_2024}.
+
+Also related to the \texttt{--secure-port} flag, we advise administrators to also set the \texttt{--bind-address} configuration, which sets the IP address on which the API will listen to for requests \cite{the_linux_foundation_kube-apiserver_2024}. This should be set to an address on the local network, ensuring that the API is not exposed on a server's public IP. Keep in mind that, if this is implemented, a VPN or reverse proxy will be required for administrators to communicate with the API.
+
+The Kubernetes API also allows administrators to configure audit policies \cite{the_linux_foundation_auditing_2024}. These record "the chronological set of records documenting the sequence of actions in a cluster" \cite{the_linux_foundation_auditing_2024}, logging activities that are performed by users, by applications that interact with the API, and by the control plane itself. Similarly to the \texttt{EncryptionConfiguration} shown in \ref{sect:data}, this feature requires the definition of a manifest, which is then referenced on the Kubernetes API configuration. In \ref{code:auditpol}, we present an example audit policy, which we'll explore.
+
+\begin{lstlisting}[style=yaml,caption={ResourceQuota example},label=code:auditpol]
+	apiVersion: audit.k8s.io/v1
+	kind: Policy
+	rules:
+	  - level: Metadata
+	    verbs: ["create"]
+	    namespaces: ["demo"] 
+	    resources:
+	      - group: ""   
+	    resources: ["pods"]
+	
+	  - level: RequestResponse 
+	    resources:
+	      - group: ""
+	        resources: ["namespaces"]
+\end{lstlisting}
+
+In this example, we're logging two types of activities:
+\begin{enumerate}
+	\item All creations of Pods in the "demo" namespace;
+	\item All activities related to namespaces in the cluster, including creation and deletion.
+\end{enumerate}
+
+We can also see different values in the "level" key of each entry in the "rules" list. There are four possible values \cite{the_linux_foundation_auditing_2024}:
+\begin{itemize}
+	\item None: Does not log the events that match the rule;
+	\item Metadata: Logs the event that matches the rule with the respective metadata, but doesn't include the request or response body;
+	\item Request: Logs the events with request metadata and body, but does not log the response body;
+	\item RequestResponse: Logs events with the request and response's metadata and body.
+\end{itemize}
+
+So, for the creation of namespaces, the policy in \ref{code:auditpol} will log both the request and response's metadata and body, whereas for the creation of pods, only the metadata will be recorded.
+
+Now that the \texttt{Policy} manifest has been created, it must be referenced in the API configuration so that it can be used by the cluster. This is done by using the \texttt{audit-policy-file} and \texttt{audit-log-path} fields when configuring the API, as shown in Figure \ref{fig:auditconf}. Bear in mind that, for this example, we're outputting the logs to the standard output, which is the logs of the \texttt{kube-apiserver} pod.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{figs/api-config-audit.png}
+	\caption{Configuration of API server for audit logs}
+	\label{fig:auditconf}
+\end{figure}
+
+As an example, Figure \ref{fig:audit-namespace} demonstrates the audit log of a response to a request which creates the "demo" namespace.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.4]{figs/audit-namespace-create.png}
+	\caption{Audit logs of a namespace creation}
+	\label{fig:audit-namespace}
+\end{figure}
+
+In these logs, we can see some very useful information, such as the IP address from where the request originated, the username of who performed it and their RBAC groups. However, we can also infer that logging events with the \texttt{RequestReponse} level might not be appropriate for every case, as there's a lot of information to go through. For comparison, we present a \textit{Metadata}-level log of a pod created in the "demo" namespace - matching the audit rule - in Figure \ref{fig:audit-pod}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.4]{figs/audit-pod-create.png}
+	\caption{Audit logs of a pod creation}
+	\label{fig:audit-pod}
+\end{figure}
+
+From this log, we can clearly extract that the \texttt{demo-audit} pod was successfully created in the \texttt{demo} namespace - due to the 201 response code. We can also see exactly when it was created, and by what user and IP address.
+
+The importance of these audit policies now becomes clear, as the data contained within them can assist practitioners in keeping track of the actions that take place in the cluster. Another factor which adds to the usability of this feature is the configurable granularity of the logs that are captured. With this, administrators can fine-tune audit policies based on their organizational requirements, thus ensuring that relevant actions are captured with the necessary detail.
 
 	\section{Network Policies}
 	
