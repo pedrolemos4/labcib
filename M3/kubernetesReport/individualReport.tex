@@ -493,6 +493,47 @@ The importance of these audit policies now becomes clear, as the data contained 
 	
 	\section{RBAC and Authentication}
 	\label{sec:auth}
+	
+Role-Based Access Control (RBAC) and Authentication are essential mechanisms in Kubernetes to ensure secure and controlled access to resources. These mechanisms work together to define and enforce access policies for users, applications, and processes \cite{rostami_role-based_2023}.
+
+Authentication is the first step in the security model, where the identity of a user or service attempting to interact with the Kubernetes API is verified \cite{rostami_role-based_2023}. Kubernetes supports various authentication methods, already detailed in \ref{subsec:auth}.
+
+However, authentication alone does not grant access to resources. This is where RBAC plays a critical role. RBAC determines what authenticated users or services are allowed to do within the cluster. It defines access policies by associating permissions with specific roles \cite{rostami_role-based_2023}.
+
+\subsection{Role and ClusterRole}
+
+An RBAC Role or ClusterRole contains the rules that represent a set of permissions. Permissions are added, and there is no deny rule; the permission is either granted or, by default, not granted \cite{the_linux_foundation_rbacauthorization_2024}.
+
+A Role sets permissions within a specific namespace, so when the Role is created, a namespace must be specified. A ClusterRole is a non-namespaced resource. The resources have different names because a Kubernetes object either has a namespace or not, but never both \cite{the_linux_foundation_rbacauthorization_2024}.
+
+ClusterRoles have different uses. It's possible to:
+
+\begin{itemize}
+	\item Set permissions on namespaced resources and be granted access in individual namespace(s) or across all namespaces
+	\item Set permissions on cluster-scoped resources
+\end{itemize}
+
+In summary, if you need to define a role within a namespace, the Role should be used. Otherwise, if you need to define a role cluster-wide, use the ClusterRole.
+
+
+\subsection{RoleBinding and ClusterRoleBinding}
+
+A RoleBinding grants the permissions defined in a Role to users or groups within a specific namespace. It links users (subjects) to a Role, which specifies what actions they can perform in that namespace. A ClusterRoleBinding, on the other hand, grants permissions cluster-wide, linking a user to a ClusterRole that applies across all namespaces \cite{the_linux_foundation_rbacauthorization_2024}.
+
+A RoleBinding can reference a Role within the same namespace, or it can reference a ClusterRole, binding that ClusterRole to a specific namespace. To apply a ClusterRole across all namespaces present in the Cluster, ClusterRoleBinding should be used \cite{the_linux_foundation_rbacauthorization_2024}.
+
+The name of both RoleBinding and ClusterRoleBinding must be a valid path segment name.
+	
+
+\subsection{Implementation of RBAC}
+
+To implement RBAC effectively, it is essential to follow the principle of least privilege, granting only the necessary permissions to perform specific tasks. Creating granular roles for specific workloads can help minimize the risk of unauthorized access. Auditing access policies ensures that they remain effective and secure over time \cite{rostami_role-based_2023}.
+
+When a request is made to the Kubernetes API server, it undergoes three steps. First, authentication, as mentioned previously, verifies the identity of the requester. Next, authorization checks whether the request complies with the RBAC policies. Finally, admission control applies additional checks to ensure compliance with cluster-wide rules. This layered approach ensures that only authorized requests gain access to resources and that all actions respect the defined policies \cite{the_linux_foundation_rbacauthorization_2024}.
+
+
+
+
 		
 	%% =================================
 \chapter{Complementary Tooling}
