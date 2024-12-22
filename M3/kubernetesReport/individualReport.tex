@@ -166,13 +166,19 @@ Additionally, etcd persistently stores the cluster's state, allowing Kubernetes 
 
 \section{What are Kubernetes Secrets?}
 
-\textbf{Secrets} are objects used to store sensitive data, such as passwords, API tokens, or SSH keys. Instead of embedding this information directly into code or configuration files, Secrets allow secure storage and controlled access to sensitive information \cite{the_linux_foundation_secrets_2024}.
+In Kubernetes, a \textbf{Secret} is an object designed to securely store sensitive data, such as passwords, API tokens, SSH keys, or other confidential information. Secrets help prevent the exposure of sensitive data by avoiding hardcoding such information directly in application code or configuration files \cite{the_linux_foundation_secrets_2024}.
+
+Kubernetes Secrets were introduced to provide a more secure and flexible approach to managing sensitive data. Secrets are stored within the Kubernetes cluster and can be accessed by containers running in the cluster without exposing the data directly in code or static files. While they are base64 encoded by default, additional measures, such as encryption, can be applied to protect them \cite{the_linux_foundation_secrets_2024}.
 
 \subsection{Key Features of Secrets}
 \begin{itemize}
-	\item \textbf{Storage}: Secrets are base64 encoded before being stored in \texttt{etcd}, but not encrypted by default. Kubernetes can be configured to encrypt them at rest using tools like Key Management Service (KMS).
-	\item \textbf{Usage}: Secrets can be mounted as volumes in containers or passed as environment variables, which allows secure handling of credentials.
+	\item \textbf{Storage}: Secrets are base64 encoded before being stored in \texttt{etcd}, but not encrypted by default. However, Kubernetes can be configured to encrypt Secrets at rest using tools like Key Management Service (KMS).
+	\item \textbf{Usage}: Secrets can be mounted as volumes in containers or passed as environment variables. This method allows for secure and flexible handling of credentials without exposing them in plain text.
+	\item \textbf{Access Control}: Kubernetes uses Role-Based Access Control (RBAC) to define which users or applications can access specific Secrets. This ensures that only authorized entities can retrieve sensitive information.
+	\item \textbf{Decoupling Configuration}: Sensitive data is decoupled from application code and deployment configurations. This simplifies updates to credentials without requiring changes to the underlying codebase.
 \end{itemize}
+
+Kubernetes supports several types of Secrets to cater to different use cases. The most common type is the \textbf{Opaque Secret}, which allows the storage of arbitrary key-value pairs, making it suitable for storing passwords, tokens, or generic credentials. For handling Docker credentials, Kubernetes offers \textbf{Dockercfg} Secrets, which store authentication details for accessing private container registries. Finally, there are \textbf{TLS Secrets}, specifically designed to store TLS certificates and their corresponding private keys, enabling secure communication between services within the cluster \cite{the_linux_foundation_secrets_2024}.
 		
 	%% =================================		
 \chapter{Kubernetes Native Configurations for Hardening}
