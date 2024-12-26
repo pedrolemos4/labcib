@@ -491,6 +491,106 @@ The importance of these audit policies now becomes clear, as the data contained 
 
 	\section{Network Policies}
 	
+In order to control traffic flow in level 3 or 4 of the OSI layer, at IP address or port level, Network Policies rules should be implemented. These rules can be specified within the cluster, pods and the outside world to contorl traffic flow \cite{network_policies_kubernetes_from_kubernetes_io}. 
+
+When implemented, Network Policies control traffic by filtering traffic and implementing network segregation. This allows the different components to be isolated and have a controlled access to resources. This minimizes the attack surface and it plays a crucial role in maintaining integrity and confidentiality of applications.
+
+By default, Kubernetes clusters have no policies set, which can cause security issues since all pods are allowed to communicate freely with any other system. The administrator must explicity configure Network Policies to ensure a controlled and restrict environment within the cluster \cite{amaechi_learn_2023}.
+
+Before creating any Network Policies, the cluster must use a network plugin that supports the Network Policy enforcement.
+
+\subsection{Policy Types}
+
+There are 2 policy types that must be implemented to ensure pod isolation: Ingress and Egress. While Ingress controls incoming traffic, Egress controls outgoing traffic.
+
+As previously mentioned, no Network Policies are set by default. This means that all outbound and inbound traffic is allowed. When this behavior is restricted by explicitly defining the rules, only connections specified in the Egress section of a NetworkPolicy that applies to the pod are allowed. Additionally, reply traffic for those allowed connections is implicitly permitted. \cite{walker_kubernetes_2023}
+
+Similar behavior occurs for Ingress, that the only allowed connections into the pod are those specified in the Ingress section and the reply for these connections is implicitly permitted. Additionally, connections from the pod's node are also allowed.
+
+Rules in both Ingress and Egress have an order, so the first rule defined is the first to be check, the second rules is validated after the first one, and so on.
+
+An example from \cite{network_policies_kubernetes_from_kubernetes_io} is used to demonstrate how to define Network Policies:
+
+\begin{lstlisting}[style=yaml,caption={NetworkPolicies example},label=code:netPolicies]
+	apiVersion: networking.k8s.io/v1
+	kind: NetworkPolicy
+	metadata:
+	  name: test-network-policy
+	  namespace: default
+	spec:
+	  podSelector:
+		matchLabels:
+		  role: db
+	  policyTypes:
+	  - Ingress
+	  - Egress
+	  ingress:
+	  - from:
+		- ipBlock:
+		  cidr: 172.17.0.0/16
+		  except:
+		  - 172.17.1.0/24
+		- namespaceSelector:
+		  matchLabels:
+		  project: myproject
+		- podSelector:
+		  matchLabels:
+		  role: frontend
+		ports:
+		- protocol: TCP
+			port: 6379
+	  egress:
+	  - to:
+		- ipBlock:
+		  cidr: 10.0.0.0/24
+		ports:
+		- protocol: TCP
+		  port: 5978
+\end{lstlisting}
+
+In this picture \ref{code:netPolicies}, the Network Policy defined that:
+
+\begin{enumerate}
+	\item This policy applied to all pods with role equal to \texttt{db} inside the \texttt{default} namespace
+	\item In this policy, both Ingress and Egress rules are set
+	\item Inbound traffic from range \texttt{172.17.0.0/16}, except IPs in range \texttt{172.17.1.0/24} is accepted. As well as traffic from Pods in namespaces that match label \texttt{project:myproject} and from Pods with label that matches \texttt{role:frontend}
+	\item Outbound traffic to range \texttt{10.0.0.0/24} with \texttt{TCP} protocol in port \texttt{5978} is allowed
+\end{enumerate}
+
+\subsection{Component Analysis}
+
+From the example provided in \ref{code:netPolicies} the following main components can be identified:
+
+\begin{enumerate}
+	\item \texttt{podSelector}: defines to which pods the policy is applied to
+	\item \texttt{policyTypes}: indicates if an Ingress, Egress or both policies are applied. If no policyTypes are specified, the default is to set Ingress, and Egress if any egress rule is defined.
+	\item \texttt{ingress}: list of ingress rules
+	\item \texttt{egress}: list of egress rules
+\end{enumerate}
+
+Ingress and Egress rules have a few different ways to be defined. As displayed in \ref{code:netPolicies}, the following components either for ingress (using \texttt{from} block) or egress (using \texttt{to} block), can be used to define the elements that are allowed to establish a connection. The components are: \texttt{podSelector} that is a list of the Pods to be included, \texttt{namespaceSelector} that is a list of namespaces that Pods must be on, and \texttt{ipBlock} that contains a list of IPs or ranges that are allowed.
+
+\subsection{Best Practices}
+
+To maximize the security benefits of Network Policies, it is essential to adhere to established best practices. The following actions mentioned in \cite{amaechi_learn_2023} and \cite{de_tender_kubernetes_2022} must be implemented to ensure robust network isolation, prevent unauthorized access, and maintain secure communication within the Kubernetes cluster.
+
+Use a default \texttt{deny-all} network policy. This ensures that only explicitly defined resources can communicate with the Pod \ref{denyAllPolicy}.
+
+\begin{lstlisting}[style=yaml,caption={Deny All Default Policy example},label=code:denyAllPolicy]
+	apiVersion: networking.k8s.io/v1
+	kind: NetworkPolicy
+	metadata:
+	  name: default-deny-ingress
+	spec:
+	  podSelector: {}
+	  policyTypes:
+	  - Ingress
+\end{lstlisting}
+
+Once this default policy is implemented, carefully define the required Ingress and Egress rules to ensure your application functions as intended. These rules should adhere to the principle of least privilege by allowing only the traffic that is explicitly necessary for the application to work as expected.
+
+Group Pods that need to communicate with each other using the \texttt{podSelector}. This practices allows for an easier network management, less prone to errors and more scalable. With this, a more secure environment is created since communication is restricted to only the intended Pods.
+
 	\section{RBAC and Authentication}
 	\label{sec:auth}
 	
