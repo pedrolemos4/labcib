@@ -2409,16 +2409,17 @@
     <bcf:citekey order="46" intorder="1">walker_kubernetes_2023</bcf:citekey>
     <bcf:citekey order="47" intorder="1">network_policies_kubernetes_from_kubernetes_io</bcf:citekey>
     <bcf:citekey order="48" intorder="1">amaechi_learn_2023</bcf:citekey>
-    <bcf:citekey order="49" intorder="1">de_tender_kubernetes_2022</bcf:citekey>
-    <bcf:citekey order="50" intorder="1">rostami_role-based_2023</bcf:citekey>
+    <bcf:citekey order="49" intorder="1">amaechi_learn_2023</bcf:citekey>
+    <bcf:citekey order="50" intorder="1">de_tender_kubernetes_2022</bcf:citekey>
     <bcf:citekey order="51" intorder="1">rostami_role-based_2023</bcf:citekey>
     <bcf:citekey order="52" intorder="1">rostami_role-based_2023</bcf:citekey>
-    <bcf:citekey order="53" intorder="1">the_linux_foundation_rbacauthorization_2024</bcf:citekey>
+    <bcf:citekey order="53" intorder="1">rostami_role-based_2023</bcf:citekey>
     <bcf:citekey order="54" intorder="1">the_linux_foundation_rbacauthorization_2024</bcf:citekey>
     <bcf:citekey order="55" intorder="1">the_linux_foundation_rbacauthorization_2024</bcf:citekey>
     <bcf:citekey order="56" intorder="1">the_linux_foundation_rbacauthorization_2024</bcf:citekey>
-    <bcf:citekey order="57" intorder="1">rostami_role-based_2023</bcf:citekey>
-    <bcf:citekey order="58" intorder="1">the_linux_foundation_rbacauthorization_2024</bcf:citekey>
+    <bcf:citekey order="57" intorder="1">the_linux_foundation_rbacauthorization_2024</bcf:citekey>
+    <bcf:citekey order="58" intorder="1">rostami_role-based_2023</bcf:citekey>
+    <bcf:citekey order="59" intorder="1">the_linux_foundation_rbacauthorization_2024</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

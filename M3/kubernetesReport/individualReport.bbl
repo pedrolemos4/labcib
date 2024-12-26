@@ -819,8 +819,8 @@
       \strng{authorbibnamehash}{0ba7570502996f38a01d5e1502b7549b}
       \strng{authornamehash}{0ba7570502996f38a01d5e1502b7549b}
       \strng{authorfullhash}{0ba7570502996f38a01d5e1502b7549b}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{This article will explore Kubernetes NetworkPolicy by creating an example network policy and examining its core parameters. Then, we'll look at some common NetworkPolicy use cases and learn how to monitor them using kubectl. Finally, we'll discover how to implement Container Network Interface (CNI) using third-party Kubernetes extensions.}

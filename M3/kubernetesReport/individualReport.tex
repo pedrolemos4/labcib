@@ -493,23 +493,23 @@ The importance of these audit policies now becomes clear, as the data contained 
 	
 In order to control traffic flow in level 3 or 4 of the OSI layer, at IP address or port level, Network Policies rules should be implemented. These rules can be specified within the cluster, pods and the outside world to contorl traffic flow \cite{network_policies_kubernetes_from_kubernetes_io}. 
 
-When implemented, Network Policies control traffic by filtering traffic and implementing network segregation. This allows the different components to be isolated and have a controlled access to resources. This minimizes the attack surface and it plays a crucial role in maintaining integrity and confidentiality of applications.
+When implemented, Network Policies control traffic by filtering it and implementing network segregation. This allows the different components to be isolated and have a controlled access to resources. This minimizes the attack surface and it plays a crucial role in maintaining integrity and confidentiality of applications.
 
-By default, Kubernetes clusters have no policies set, which can cause security issues since all pods are allowed to communicate freely with any other system. The administrator must explicity configure Network Policies to ensure a controlled and restrict environment within the cluster \cite{amaechi_learn_2023}.
+By default, Kubernetes clusters have no policies set, which can cause security issues since all pods are allowed to communicate freely with any other system or resource. The administrator must explicity configure Network Policies to ensure a controlled and restrict environment within the cluster \cite{amaechi_learn_2023}.
 
-Before creating any Network Policies, the cluster must use a network plugin that supports the Network Policy enforcement.
+Before creating any Network Policies, the cluster must use a network plugin, known as CNI, that supports the Network Policy enforcement.
 
 \subsection{Policy Types}
 
 There are 2 policy types that must be implemented to ensure pod isolation: Ingress and Egress. While Ingress controls incoming traffic, Egress controls outgoing traffic.
 
-As previously mentioned, no Network Policies are set by default. This means that all outbound and inbound traffic is allowed. When this behavior is restricted by explicitly defining the rules, only connections specified in the Egress section of a NetworkPolicy that applies to the pod are allowed. Additionally, reply traffic for those allowed connections is implicitly permitted. \cite{walker_kubernetes_2023}
+As previously mentioned, no Network Policies are set by default. This means that all outbound and inbound traffic is allowed. When this behavior is restricted by explicitly defining the rules, only connections originated by resources specified in the Egress section of a NetworkPolicy are allowed. Additionally, reply traffic for those allowed connections is implicitly permitted. \cite{walker_kubernetes_2023}
 
 Similar behavior occurs for Ingress, that the only allowed connections into the pod are those specified in the Ingress section and the reply for these connections is implicitly permitted. Additionally, connections from the pod's node are also allowed.
 
 Rules in both Ingress and Egress have an order, so the first rule defined is the first to be check, the second rules is validated after the first one, and so on.
 
-An example from \cite{network_policies_kubernetes_from_kubernetes_io} is used to demonstrate how to define Network Policies:
+An example from \cite{network_policies_kubernetes_from_kubernetes_io} is used to demonstrate how to define Network Policy:
 
 \begin{lstlisting}[style=yaml,caption={NetworkPolicies example},label=code:netPolicies]
 	apiVersion: networking.k8s.io/v1
@@ -548,18 +548,18 @@ An example from \cite{network_policies_kubernetes_from_kubernetes_io} is used to
 		  port: 5978
 \end{lstlisting}
 
-In this picture \ref{code:netPolicies}, the Network Policy defined that:
+In this picture \ref{code:netPolicies}, the Network Policy defines that:
 
 \begin{enumerate}
-	\item This policy applied to all pods with role equal to \texttt{db} inside the \texttt{default} namespace
-	\item In this policy, both Ingress and Egress rules are set
+	\item It is applied to all pods with role equal to \texttt{db} inside the \texttt{default} namespace
+	\item Both Ingress and Egress rules are set
 	\item Inbound traffic from range \texttt{172.17.0.0/16}, except IPs in range \texttt{172.17.1.0/24} is accepted. As well as traffic from Pods in namespaces that match label \texttt{project:myproject} and from Pods with label that matches \texttt{role:frontend}
 	\item Outbound traffic to range \texttt{10.0.0.0/24} with \texttt{TCP} protocol in port \texttt{5978} is allowed
 \end{enumerate}
 
 \subsection{Component Analysis}
 
-From the example provided in \ref{code:netPolicies} the following main components can be identified:
+When defining a Network Policy, the following main components can be identified \cite{amaechi_learn_2023}:
 
 \begin{enumerate}
 	\item \texttt{podSelector}: defines to which pods the policy is applied to
@@ -568,7 +568,7 @@ From the example provided in \ref{code:netPolicies} the following main component
 	\item \texttt{egress}: list of egress rules
 \end{enumerate}
 
-Ingress and Egress rules have a few different ways to be defined. As displayed in \ref{code:netPolicies}, the following components either for ingress (using \texttt{from} block) or egress (using \texttt{to} block), can be used to define the elements that are allowed to establish a connection. The components are: \texttt{podSelector} that is a list of the Pods to be included, \texttt{namespaceSelector} that is a list of namespaces that Pods must be on, and \texttt{ipBlock} that contains a list of IPs or ranges that are allowed.
+Ingress and Egress rules have a few different ways to be defined. As displayed in \ref{code:netPolicies}, the following components either for Ingress (using \texttt{from} block) or Egress (using \texttt{to} block), can be used to define the elements that are allowed to establish a connection. The components are: \texttt{podSelector} that is a list of the Pods to be included, \texttt{namespaceSelector} that is a list of namespaces that Pods must be on, and \texttt{ipBlock} that contains a list of IPs or ranges that are allowed.
 
 \subsection{Best Practices}
 
@@ -640,14 +640,24 @@ When a request is made to the Kubernetes API server, it undergoes three steps. F
 
 While Kubernetes provides robust built-in capabilities for container orchestration, there is a broad list of complementary tools that allow to extend these capabilities.  These tools enhance areas such as advanced security features and comprehensive monitoring to strengthen cluster security. This section highlights several tools that offer security-enhancing features and explains how each contributes to improving cluster security.
 
-\section{Network and Security}\label{sect:complementNetSec}
+\section{Falco}\label{sect:complementNetSec}
 Text, text, text...
 
-\section{RBAC}\label{sect:complmentRbac}
+\section{OPA (Open Policy Agent)}\label{sect:complmentRbac}
 Text, text, text...
 
-\section{Monitoring and Logging}\label{sect:complementMonitor}
+\section{Trivy}\label{sect:complementMonitor}
 Text, text, text...
+
+\section{Vault (by HashiCorp)}\label{sect:complementMonitor}
+Text, text, text...
+
+\section{Kubesec}\label{sect:complementMonitor}
+Text, text, text...
+
+\section{Kube-bench}\label{sect:complementMonitor}
+Text, text, text...
+
 
 	%% =================================
 	\chapter{Analysis and Best Practices}
