@@ -910,6 +910,64 @@
       \verb https://kubernetes.io/docs/reference/access-authn-authz/rbac/
       \endverb
     \endentry
+    \entry{falco_about_page}{misc}{}
+      \list{language}{1}{%
+        {en}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Runtime Security}
+      \field{journaltitle}{Falco}
+      \field{title}{What is {Falco}?}
+      \field{urlday}{26}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://falco.org/about/
+      \endverb
+      \verb{url}
+      \verb https://falco.org/about/
+      \endverb
+    \endentry
+    \entry{benhassan_advanced_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=69858996d1a573ebcada536d4e653bf6}{%
+           family={Benhassan},
+           familyi={B\bibinitperiod},
+           given={Tamer},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{fullhash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{bibnamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authorbibnamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authornamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authorfullhash}{69858996d1a573ebcada536d4e653bf6}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Falco, the cloud-native runtime security tool, serves as a critical component for detecting anomalous activity within Kubernetes…}
+      \field{journaltitle}{Medium}
+      \field{month}{5}
+      \field{title}{Advanced {Security} {Monitoring} with {Falco} in {Kubernetes}}
+      \field{urlday}{26}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://medium.com/@tamerbenhassan/advanced-security-monitoring-with-falco-in-kubernetes-093e2a694ddc
+      \endverb
+      \verb{url}
+      \verb https://medium.com/@tamerbenhassan/advanced-security-monitoring-with-falco-in-kubernetes-093e2a694ddc
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

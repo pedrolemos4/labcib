@@ -641,7 +641,31 @@ When a request is made to the Kubernetes API server, it undergoes three steps. F
 While Kubernetes provides robust built-in capabilities for container orchestration, there is a broad list of complementary tools that allow to extend these capabilities.  These tools enhance areas such as advanced security features and comprehensive monitoring to strengthen cluster security. This section highlights several tools that offer security-enhancing features and explains how each contributes to improving cluster security.
 
 \section{Falco}\label{sect:complementNetSec}
-Text, text, text...
+
+Falco is an open-source security tool that can be used integrated with Kubernetes, focused on runtime security monitoring. It consumes Linux kernel syscalls, and applies pre-defined rules to these events and warns the developer when something unexpected happends \cite{falco_about_page}. Falco usually sits accross a distributed infrastructure, providing real-time security monitoring and auditing for Kubernetes clusters.
+
+By default, Falco includes a set of defined rules. However, these can be customized to align with the specific needs of the cluster and it typically address scenarios such as monitoring sensitive file access, detecting unauthorized privilege escalations, and more \cite{benhassan_advanced_2024}. They can be defined as follows in \ref{code:falcoRule}:
+
+\begin{lstlisting}[style=yaml,caption={Falco rule example},label=code:falcoRule]
+	- rule: Outbound Connection to Unauthorized Port
+	  desc: Alert on outbound traffic to unauthorized ports
+	  condition: >
+		outbound and not fd.sport in (http, https)
+	  output: "Suspicious connection detected (command=%proc.cmdline connection=%fd.name)"
+	  priority: WARNING
+	  tags: [network]
+\end{lstlisting}
+
+In this example \ref{code:falcoRule}, Falco will monitor outbound traffic to unauthorized ports. This rule is implemented to prevent suspicious activity or data exfiltration attempts.
+
+Falco excels in identifying unexpected behaviors in a runtime environment. This characteristic enables its application in various use cases, such as:
+
+\begin{itemize}
+	\item Detecting Unauthorized Network Connections
+	\item Monitoring for Changes in Critical Configuration Files
+	\item Identifying Suspicious Pod Executions
+	\item Detecting Kubernetes API Misuse
+\end{itemize}
 
 \section{OPA (Open Policy Agent)}\label{sect:complmentRbac}
 Text, text, text...
