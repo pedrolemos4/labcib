@@ -491,19 +491,19 @@ The importance of these audit policies now becomes clear, as the data contained 
 
 	\section{Network Policies}
 	
-In order to control traffic flow in level 3 or 4 of the OSI layer, at IP address or port level, Network Policies rules should be implemented. These rules can be specified within the cluster, pods and the outside world to contorl traffic flow \cite{network_policies_kubernetes_from_kubernetes_io}. 
+In order to control traffic flow in level 3 or 4 of the OSI layer, at IP address or port level, Network Policies rules should be implemented. These rules are meant to control communication within the cluster, between pods \cite{network_policies_kubernetes_from_kubernetes_io}. 
 
-When implemented, Network Policies control traffic by filtering it and implementing network segregation. This allows the different components to be isolated and have a controlled access to resources. This minimizes the attack surface and it plays a crucial role in maintaining integrity and confidentiality of applications.
+Network Policies control traffic by filtering it and implementing network segregation. This allows the different components to be isolated and have a controlled access to other resources. This minimizes the attack surface and it plays a crucial role in maintaining integrity and confidentiality of applications.
 
-By default, Kubernetes clusters have no policies set, which can cause security issues since all pods are allowed to communicate freely with any other system or resource. The administrator must explicity configure Network Policies to ensure a controlled and restrict environment within the cluster \cite{amaechi_learn_2023}.
+By default, Kubernetes clusters have no policies set, which can cause security issues since all pods are allowed to communicate freely with each other. The administrator must explicity configure Network Policies to ensure a controlled and restrict environment within the cluster \cite{amaechi_learn_2023}.
 
-Before creating any Network Policies, the cluster must use a network plugin, known as CNI, that supports the Network Policy enforcement.
+To create any Network Policy, the cluster must use a network plugin, known as CNI. This is the actual controller that supports the Network Policy implementation, and without a controller the Network Policies will have no effect.
 
 \subsection{Policy Types}
 
 There are 2 policy types that must be implemented to ensure pod isolation: Ingress and Egress. While Ingress controls incoming traffic, Egress controls outgoing traffic.
 
-As previously mentioned, no Network Policies are set by default. This means that all outbound and inbound traffic is allowed. When this behavior is restricted by explicitly defining the rules, only connections originated by resources specified in the Egress section of a NetworkPolicy are allowed. Additionally, reply traffic for those allowed connections is implicitly permitted. \cite{walker_kubernetes_2023}
+As previously mentioned, no Network Policies are set by default. This means that all outbound and inbound traffic is allowed in a Pod. When this behavior is restricted by explicitly defining the rules, only connections originated by Pods specified in the Egress section of a NetworkPolicy are allowed. Additionally, reply traffic for those allowed connections is implicitly permitted. \cite{walker_kubernetes_2023}
 
 Similar behavior occurs for Ingress, that the only allowed connections into the pod are those specified in the Ingress section and the reply for these connections is implicitly permitted. Additionally, connections from the pod's node are also allowed.
 
@@ -589,7 +589,7 @@ Use a default \texttt{deny-all} network policy. This ensures that only explicitl
 
 Once this default policy is implemented, carefully define the required Ingress and Egress rules to ensure your application functions as intended. These rules should adhere to the principle of least privilege by allowing only the traffic that is explicitly necessary for the application to work as expected.
 
-Group Pods that need to communicate with each other using the \texttt{podSelector}. This practices allows for an easier network management, less prone to errors and more scalable. With this, a more secure environment is created since communication is restricted to only the intended Pods.
+Group all Pods that need to communicate with each other using the \texttt{podSelector}. This practices allows for an easier network management, less prone to errors and more scalable. With this, a more secure environment is created since communication is restricted to only the intended Pods.
 
 	\section{RBAC and Authentication}
 	\label{sec:auth}
@@ -668,7 +668,31 @@ Falco excels in identifying unexpected behaviors in a runtime environment. This 
 \end{itemize}
 
 \section{OPA (Open Policy Agent)}\label{sect:complmentRbac}
-Text, text, text...
+
+OPA is a tool that enables the implementation of policies across the cluster. Policies are defined in the OPA engine, and whenever a service (e.g. a Pod) in the cluster queries OPA, it evaluates the request and provides a decision based on the defined policies \cite{bruner_better_2020}.
+
+It is important to note that OPA itself does not enforce policies, just a decision. This decision is made based on the policies defined before deploying OPA. These policies are written in a specific language called Rego \cite{barua_securing_2023}.
+
+Once the OPA is configured and deployed (usually in server mode on a container), the OPA engine intercepts the request and makes a decision based on the policies defined. After a decision is made, OPA returns the decision via API in a JSON format. With this decision, the Admission Controller acts on the decision, either blocking or accepting the request \cite{opa_doc_guides_nodate}.
+
+Using the example provided in \cite{bruner_better_2020}, the policy displayed in \ref{code:opaPolicy} reject names that do not start with the letter 'a'.
+
+\begin{lstlisting}[style=yaml,caption={OPA policy example},label=code:opaPolicy]
+	package startswitha
+	
+	name := input.request.name
+	
+	default allow = false
+	
+	allow {
+	  startswith(name, 'a')
+	}
+\end{lstlisting}
+
+In this code \ref{code:opaPolicy}, in the first line is defined the name of the policy's namespace. Then, it is assgined to variable \texttt{name} the value of key \texttt{name} from the payload. In the thrid instruction, it is defined the default value of this policy to \texttt{false} and then, the rule is defined. In the final block, the \texttt{allow} statement acts like a function, if the validation is successfull, \texttt{allow} is automatically changed to true, otherwise the rule stops and \texttt{allow} is left unchanged.
+
+In this example \ref{code:opaPolicy}, if a request to OPA with payload \texttt{\{``name'': ``apple''\}} the request is allowed by OTA. Yet, if a request to OPA with payload \texttt{\{``name'': ``rice''\}} will not be allowed.
+
 
 \section{Trivy}\label{sect:complementMonitor}
 Text, text, text...

@@ -968,6 +968,106 @@
       \verb https://medium.com/@tamerbenhassan/advanced-security-monitoring-with-falco-in-kubernetes-093e2a694ddc
       \endverb
     \endentry
+    \entry{bruner_better_2020}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=3e558ee66bd6e606fffb4bdfd06cd20c}{%
+           family={Bruner},
+           familyi={B\bibinitperiod},
+           given={Karen},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{3e558ee66bd6e606fffb4bdfd06cd20c}
+      \strng{fullhash}{3e558ee66bd6e606fffb4bdfd06cd20c}
+      \strng{bibnamehash}{3e558ee66bd6e606fffb4bdfd06cd20c}
+      \strng{authorbibnamehash}{3e558ee66bd6e606fffb4bdfd06cd20c}
+      \strng{authornamehash}{3e558ee66bd6e606fffb4bdfd06cd20c}
+      \strng{authorfullhash}{3e558ee66bd6e606fffb4bdfd06cd20c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{As the adoption of Kubernetes spreads, users have begun to look for additional options to control and secure their Kubernetes clusters.}
+      \field{journaltitle}{RedHat}
+      \field{month}{4}
+      \field{shorttitle}{Better {Kubernetes} {Security} with {Open} {Policy} {Agent} ({OPA})}
+      \field{title}{Better {Kubernetes} {Security} with {Open} {Policy} {Agent} ({OPA}) - {Part} 1}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.redhat.com/en/blog/better-kubernetes-security-with-open-policy-agent-opa-part-1
+      \endverb
+      \verb{url}
+      \verb https://www.redhat.com/en/blog/better-kubernetes-security-with-open-policy-agent-opa-part-1
+      \endverb
+    \endentry
+    \entry{barua_securing_2023}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=284c0e122c00fd0393669e9a4eaae387}{%
+           family={Barua},
+           familyi={B\bibinitperiod},
+           given={Anik},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{284c0e122c00fd0393669e9a4eaae387}
+      \strng{fullhash}{284c0e122c00fd0393669e9a4eaae387}
+      \strng{bibnamehash}{284c0e122c00fd0393669e9a4eaae387}
+      \strng{authorbibnamehash}{284c0e122c00fd0393669e9a4eaae387}
+      \strng{authornamehash}{284c0e122c00fd0393669e9a4eaae387}
+      \strng{authorfullhash}{284c0e122c00fd0393669e9a4eaae387}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{OPA Gatekeeper is a Kubernetes admission controller that enforces policies at admission time.}
+      \field{journaltitle}{Medium}
+      \field{month}{3}
+      \field{title}{Securing {Kubernetes} with {Open} {Policy} {Agent} ({OPA})}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://medium.com/@onixoni72/securing-kubernetes-with-open-policy-agent-opa-67167157d477
+      \endverb
+      \verb{url}
+      \verb https://medium.com/@onixoni72/securing-kubernetes-with-open-policy-agent-opa-67167157d477
+      \endverb
+    \endentry
+    \entry{opa_doc_guides_nodate}{misc}{}
+      \list{language}{1}{%
+        {en}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Policy-based control for cloud native environments}
+      \field{journaltitle}{Open Policy Agent}
+      \field{shorttitle}{Guides}
+      \field{title}{Guides: {Kubernetes} {Admission} {Control}}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/Users/pedrolemos/Zotero/storage/YXRQLH7T/guides-kubernetes-admission-control.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.openpolicyagent.org/docs/v0.11.0/guides-kubernetes-admission-control/
+      \endverb
+      \verb{url}
+      \verb https://www.openpolicyagent.org/docs/v0.11.0/guides-kubernetes-admission-control/
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
