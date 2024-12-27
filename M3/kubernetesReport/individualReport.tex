@@ -695,17 +695,79 @@ In this example \ref{code:opaPolicy}, if a request to OPA with payload \texttt{\
 
 
 \section{Trivy}\label{sect:complementMonitor}
-Text, text, text...
+
+When managing Kubernetes clusters, it is crucial to identify if the resources that are being use have any vulnerability. One of the best tools to solve this problem is Trivy. Trivy is a vulnerability scanner for containers and other resources that can detect vulnerabilities in the dependencies being used \cite{benhassan_deep_2024}.
+
+Trivy differentiates between three elements when scanning a Kubernetes cluster and its associated resources \cite{trivy_doc_kubernetes_nodate}:
+
+\begin{itemize}
+	\item Cluster Infrastructure: Components like the API server, kubelet, and addons.
+	\item Cluster Configuration: Kubernetes resources like Roles and ClusterRoles.
+	\item Application Workloads: Containerized applications such as Nginx or PostgreSQL.
+\end{itemize}
+
+When scanning each of these elements, Trivy scans the container image separately from the Kubernetes manifest that contains all resources definitions.
+
+For the container image and the cluster, both are scanned for vulnerabilities, misconfigurations and exposed secrets \cite{trivy_doc_kubernetes_nodate}.
+
+It as many advantages such as comprehensive scanning since it scans containers, filesystems, and repositories for vulnerabilities. It is easy to use because it has a simple installation, good documentation and the output from each of the commands is easy to understand. Finally, it can be integrated in a CI/CD pipeline, enable the automation of the scanning process \cite{benhassan_deep_2024}.
+
+In \ref{fig:trivyResult}, it is presented the result of a Trivy scanning in summary of a Kubernetes cluster:
+
+\begin{figure}[h!]
+	\centering
+	\label{fig:trivyResult}
+	\includegraphics[scale=0.3]{figs/trivy-summary-output.png}
+	\caption{Trivy Summary Report \cite{trivy_doc_kubernetes_nodate}}
+\end{figure}
+
 
 \section{Vault (by HashiCorp)}\label{sect:complementMonitor}
-Text, text, text...
 
-\section{Kubesec}\label{sect:complementMonitor}
-Text, text, text...
+Effective management of secrets in Kubernetes is crucial for maintaining the security and integrity of your applications. Although Kubernetes has built-in secrets management mechanisms, such as Kubernetes Secrets, it has some limitations \cite{muppeda_guide_vault_2024}.
+
+Vault is a tool desgined to solve these problems. It provides a robust way to securely store and manage sensitive information \cite{muppeda_guide_vault_2024}. It provides multiple key features that ensure this security are \cite{vault_doc_introduction_nodate}:
+
+\begin{itemize}
+	\item Secure Secret Storage: Arbitrary key/value secrets can be stored in Vault. Before written them to persistent storage, these secrets are encrypted by Vault. If an attacker has access to the raw storage, it isn't enough to access your secrets.
+	\item Dynamic Secrets: It has the ability to generate secrets on-demand for some systems. For example, when an application needs to access an S3 bucket, it requests credentials from Vault, which then creates an AWS keypair with the necessary permissions. Once these dynamic secrets are generated, Vault automatically revokes them when their lease expires.
+	\item Data Encryption: Vault can encrypt and decrypt data without storing it. This allows teams to use Vault's encryption and descryption mechanism and not having to create a new one.
+	\item Leasing and Renewal: All secrets in Vault have an expiration date. Once this secret's validation expires, Vault will automatically revoke that secret. This expiration date can later be renewed by clients via built-in renew APIs.
+	\item Revocation: Vault offers native support for secret revocation, allowing it to revoke not just individual secrets, but entire groups of secrets. For instance, it can revoke all secrets accessed by a specific user or all secrets of a particular type.
+\end{itemize}
+
+Vault's core functionality revolves around the use of tokens, each linked to a specific client policy. These policies are path-based, detailing the actions and access permissions for each client within specified paths. Tokens can either be generated manually and allocated to clients, or clients can authenticate with Vault to receive a token. The diagram in \ref{fig:vaultFlow} showcases Vault's fundamental workflow \cite{vault_doc_introduction_nodate}.
+
+\begin{figure}[h!]
+	\centering
+	\label{fig:vaultFlow}
+	\includegraphics[scale=0.2]{figs/vault-flow.png}
+	\caption{Vault Flow \cite{vault_doc_introduction_nodate}}
+\end{figure}
 
 \section{Kube-bench}\label{sect:complementMonitor}
-Text, text, text...
 
+Kube-bench is a tool that automates the validation of the security of the cluster against CIS Kubernetes Benchmark (set of the best security practices in Kubernetes). Helps to evaluate the cluster’s configuration and Kubernetes components. After the check is done, the tool provides the administrator a detailed report with misconfigurations and vulnerabilities. Another of the advantages of using this tool is that it can be integrated in CI/CD pipelines, enabling this validation to be made continuously \cite{benhassan_depth_2024} \cite{noauthor_aquasecurity_kube_bench_2024}.
+
+One usual use case to use kube-bench is when there is a need to audit the security configuration of the master node of a cluster. After running the command to target the master node, an output similar to the one on \ref{fig:kubeBenchOutput} is displayed.
+
+\begin{figure}[h!]
+	\centering
+	\label{fig:kubeBenchOutput}
+	\includegraphics[scale=0.5]{figs/kube-bench-output.png}
+	\caption{kube-bench output example \cite{noauthor_kube_bench_nodate}}
+\end{figure}
+
+In this output, it is possible to observe that several critical checks have failed, indicating misconfigurations that could compromise the cluster's security. For example, this container allows privileged containers and insecure port configurations.
+
+Although not displayed in the previous picture, for each failed test, kube-bench provides a description and remediation advice, similar to \ref{fig:kubeBenchRemediation}.
+
+\begin{figure}[h!]
+	\centering
+	\label{fig:kubeBenchRemediation}
+	\includegraphics[scale=0.45]{figs/kube-bench-remediation.png}
+	\caption{kube-bench remediation output \cite{benhassan_depth_2024}}
+\end{figure}
 
 	%% =================================
 	\chapter{Analysis and Best Practices}

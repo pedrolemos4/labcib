@@ -32,8 +32,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{1}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Kubernetes Components}
@@ -57,8 +57,8 @@
       \strng{authorbibnamehash}{a226e9fbdfc1c8dd7e7fef4d333f86ed}
       \strng{authornamehash}{a226e9fbdfc1c8dd7e7fef4d333f86ed}
       \strng{authorfullhash}{a226e9fbdfc1c8dd7e7fef4d333f86ed}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Frequently asked questions}
@@ -96,8 +96,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{2}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code. Because Secrets can be created independently of the Pods that use them, there is less risk of the Secret (and its data) being exposed during the workflow of creating, viewing, and editing Pods.}
@@ -270,8 +270,8 @@
       \strng{authorbibnamehash}{17a4cac22b8cf841f6feb10fde90cc48}
       \strng{authornamehash}{17a4cac22b8cf841f6feb10fde90cc48}
       \strng{authorfullhash}{17a4cac22b8cf841f6feb10fde90cc48}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{annotation}{Description based on publisher supplied metadata and other sources}
@@ -417,8 +417,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{7}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{This page provides an overview of admission controllers. An admission controller is a piece of code that intercepts requests to the Kubernetes API server prior to persistence of the resource, but after the request is authenticated and authorized. Several important features of Kubernetes require an admission controller to be enabled in order to properly support the feature. As a result, a Kubernetes API server that is not properly configured with the right set of admission controllers is an incomplete server that will not support all the features you expect.}
@@ -565,8 +565,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{9}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{By default, containers run with unbounded compute resources on a Kubernetes cluster. Using Kubernetes resource quotas, administrators (also termed cluster operators) can restrict consumption and creation of cluster resources (such as CPU time, memory, and persistent storage) within a specified namespace. Within a namespace, a Pod can consume as much CPU and memory as is allowed by the ResourceQuotas that apply to that namespace. As a cluster operator, or as a namespace-level administrator, you might also be concerned about making sure that a single object cannot monopolize all available resources within a namespace.}
@@ -600,8 +600,8 @@
       \strng{authorbibnamehash}{ef9cb61878e61d434507444346b29d1a}
       \strng{authornamehash}{ef9cb61878e61d434507444346b29d1a}
       \strng{authorfullhash}{ef9cb61878e61d434507444346b29d1a}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{7}
@@ -637,8 +637,8 @@
       \strng{authornamehash}{be71d0542f6d52e76ec4aa72b14f620c}
       \strng{authorfullhash}{be71d0542f6d52e76ec4aa72b14f620c}
       \field{extraname}{10}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Synopsis The Kubernetes API server validates and configures data for the api objects which include pods, services, replicationcontrollers, and others. The API Server services REST operations and provides the frontend to the cluster's shared state through which all other components interact. kube-apiserver [flags] Options --admission-control-config-file string File with admission control configuration. --advertise-address string The IP address on which to advertise the apiserver to members of the cluster. This address must be reachable by the rest of the cluster.}
@@ -781,8 +781,8 @@
       \strng{authorbibnamehash}{bb1477ade4f217dd74d82b339bea9302}
       \strng{authornamehash}{bb1477ade4f217dd74d82b339bea9302}
       \strng{authorfullhash}{bb1477ade4f217dd74d82b339bea9302}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Learn what are Network Policies in Kubernetes, how to implement them and best practices. See examples for default policies, egress and ingress.}
@@ -948,6 +948,7 @@
       \strng{authorbibnamehash}{69858996d1a573ebcada536d4e653bf6}
       \strng{authornamehash}{69858996d1a573ebcada536d4e653bf6}
       \strng{authorfullhash}{69858996d1a573ebcada536d4e653bf6}
+      \field{extraname}{1}
       \field{sortinit}{6}
       \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
@@ -1066,6 +1067,203 @@
       \endverb
       \verb{url}
       \verb https://www.openpolicyagent.org/docs/v0.11.0/guides-kubernetes-admission-control/
+      \endverb
+    \endentry
+    \entry{benhassan_deep_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=69858996d1a573ebcada536d4e653bf6}{%
+           family={Benhassan},
+           familyi={B\bibinitperiod},
+           given={Tamer},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{fullhash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{bibnamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authorbibnamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authornamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authorfullhash}{69858996d1a573ebcada536d4e653bf6}
+      \field{extraname}{2}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Hey there! If you’re managing Kubernetes clusters, you know that security is crucial.}
+      \field{journaltitle}{Medium}
+      \field{month}{6}
+      \field{shorttitle}{Deep {Dive}}
+      \field{title}{Deep {Dive}: {Using} {Trivy} for {Kubernetes} {Security}}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://medium.com/@tamerbenhassan/deep-dive-using-trivy-for-kubernetes-security-5ad56bca1dcd
+      \endverb
+      \verb{url}
+      \verb https://medium.com/@tamerbenhassan/deep-dive-using-trivy-for-kubernetes-security-5ad56bca1dcd
+      \endverb
+    \endentry
+    \entry{trivy_doc_kubernetes_nodate}{misc}{}
+      \list{language}{1}{%
+        {en}%
+      }
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Trivy - All-in-one open source security scanner}
+      \field{title}{Trivy - {Kubernetes}}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://aquasecurity.github.io/trivy/v0.58/docs/target/kubernetes/
+      \endverb
+      \verb{url}
+      \verb https://aquasecurity.github.io/trivy/v0.58/docs/target/kubernetes/
+      \endverb
+    \endentry
+    \entry{muppeda_guide_vault_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=626f36b8caf362da485c302cd0e1ddab}{%
+           family={Muppeda},
+           familyi={M\bibinitperiod},
+           given={Anvesh},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{626f36b8caf362da485c302cd0e1ddab}
+      \strng{fullhash}{626f36b8caf362da485c302cd0e1ddab}
+      \strng{bibnamehash}{626f36b8caf362da485c302cd0e1ddab}
+      \strng{authorbibnamehash}{626f36b8caf362da485c302cd0e1ddab}
+      \strng{authornamehash}{626f36b8caf362da485c302cd0e1ddab}
+      \strng{authorfullhash}{626f36b8caf362da485c302cd0e1ddab}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Manage k8s Secrets Using HashiCorp Vault: With Practical Examples}
+      \field{journaltitle}{Medium}
+      \field{title}{A Hands-On Guide to Vault in Kubernetes}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://medium.com/@muppedaanvesh/a-hand-on-guide-to-vault-in-kubernetes-%EF%B8%8F-1daf73f331bd
+      \endverb
+      \verb{url}
+      \verb https://medium.com/@muppedaanvesh/a-hand-on-guide-to-vault-in-kubernetes-%EF%B8%8F-1daf73f331bd
+      \endverb
+    \endentry
+    \entry{vault_doc_introduction_nodate}{misc}{}
+      \list{language}{1}{%
+        {en}%
+      }
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Welcome to the intro guide to Vault! This guide is the best place to start with Vault. We cover what Vault is, what problems it can solve, how it compares to existing software, and contains a quick start for using Vault.}
+      \field{journaltitle}{Introduction {|} Vault {|} HashiCorp Developer}
+      \field{title}{Introduction {|} {Vault} {|} {HashiCorp} {Developer}}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://developer.hashicorp.com/vault/docs/what-is-vault
+      \endverb
+      \verb{url}
+      \verb https://developer.hashicorp.com/vault/docs/what-is-vault
+      \endverb
+    \endentry
+    \entry{benhassan_depth_2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=69858996d1a573ebcada536d4e653bf6}{%
+           family={Benhassan},
+           familyi={B\bibinitperiod},
+           given={Tamer},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{fullhash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{bibnamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authorbibnamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authornamehash}{69858996d1a573ebcada536d4e653bf6}
+      \strng{authorfullhash}{69858996d1a573ebcada536d4e653bf6}
+      \field{extraname}{3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Ensuring the security and compliance of Kubernetes clusters is paramount for organizations leveraging container orchestration for their…}
+      \field{journaltitle}{Medium}
+      \field{month}{5}
+      \field{title}{In-{Depth} {Guide} to {CIS} {Benchmarking} with {Kubernetes} {Using} kube-bench}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://medium.com/@tamerbenhassan/in-depth-guide-to-cis-benchmarking-with-kubernetes-using-kube-bench-df74aebb41c7
+      \endverb
+      \verb{url}
+      \verb https://medium.com/@tamerbenhassan/in-depth-guide-to-cis-benchmarking-with-kubernetes-using-kube-bench-df74aebb41c7
+      \endverb
+    \endentry
+    \entry{noauthor_aquasecurity_kube_bench_2024}{misc}{}
+      \list{publisher}{1}{%
+        {Aqua Security}%
+      }
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark}
+      \field{month}{12}
+      \field{note}{original-date: 2017-06-19T13:27:02Z}
+      \field{title}{aquasecurity/kube-bench}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/aquasecurity/kube-bench
+      \endverb
+      \verb{url}
+      \verb https://github.com/aquasecurity/kube-bench
+      \endverb
+      \keyw{cis-benchmark,cis-kubernetes-benchmark,cis-security,hacktoberfest,kube-bench,kubernetes,kubernetes-security,openshift}
+    \endentry
+    \entry{noauthor_kube_bench_nodate}{misc}{}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Kube-bench}
+      \field{title}{Kube-bench}
+      \field{urlday}{27}
+      \field{urlmonth}{12}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Kube-bench:/Users/pedrolemos/Zotero/storage/FS7ZHDUY/v0.6.15.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://aquasecurity.github.io/kube-bench/v0.6.15/
+      \endverb
+      \verb{url}
+      \verb https://aquasecurity.github.io/kube-bench/v0.6.15/
       \endverb
     \endentry
   \enddatalist
