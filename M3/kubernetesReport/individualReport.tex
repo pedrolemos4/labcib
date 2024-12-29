@@ -636,7 +636,7 @@ When a request is made to the Kubernetes API server, it undergoes three steps. F
 
 		
 	%% =================================
-\chapter{Complementary Tooling}
+\chapter{Complementary Tooling}\label{chapt:comp}
 
 While Kubernetes provides robust built-in capabilities for container orchestration, there is a broad list of complementary tools that allow to extend these capabilities.  These tools enhance areas such as advanced security features and comprehensive monitoring to strengthen cluster security. This section highlights several tools that offer security-enhancing features and explains how each contributes to improving cluster security.
 
@@ -691,7 +691,7 @@ Using the example provided in \cite{bruner_better_2020}, the policy displayed in
 
 In this code \ref{code:opaPolicy}, in the first line is defined the name of the policy's namespace. Then, it is assgined to variable \texttt{name} the value of key \texttt{name} from the payload. In the thrid instruction, it is defined the default value of this policy to \texttt{false} and then, the rule is defined. In the final block, the \texttt{allow} statement acts like a function, if the validation is successfull, \texttt{allow} is automatically changed to true, otherwise the rule stops and \texttt{allow} is left unchanged.
 
-In this example \ref{code:opaPolicy}, if a request to OPA with payload \texttt{\{``name'': ``apple''\}} the request is allowed by OTA. Yet, if a request to OPA with payload \texttt{\{``name'': ``rice''\}} will not be allowed.
+In this example \ref{code:opaPolicy}, if a request to OPA with payload \texttt{\{``name'': ``apple''\}} the request is allowed by OPA. Yet, if a request to OPA with payload \texttt{\{``name'': ``rice''\}} will not be allowed.
 
 
 \section{Trivy}\label{sect:complementMonitor}
@@ -722,7 +722,7 @@ In \ref{fig:trivyResult}, it is presented the result of a Trivy scanning in summ
 \end{figure}
 
 
-\section{Vault (by HashiCorp)}\label{sect:complementMonitor}
+\section{Vault (by HashiCorp)}\label{sect:complementSecrets}
 
 Effective management of secrets in Kubernetes is crucial for maintaining the security and integrity of your applications. Although Kubernetes has built-in secrets management mechanisms, such as Kubernetes Secrets, it has some limitations \cite{muppeda_guide_vault_2024}.
 
@@ -745,7 +745,7 @@ Vault's core functionality revolves around the use of tokens, each linked to a s
 	\caption{Vault Flow \cite{vault_doc_introduction_nodate}}
 \end{figure}
 
-\section{Kube-bench}\label{sect:complementMonitor}
+\section{Kube-bench}\label{sect:complementCIS}
 
 Kube-bench is a tool that automates the validation of the security of the cluster against CIS Kubernetes Benchmark (set of the best security practices in Kubernetes). Helps to evaluate the cluster’s configuration and Kubernetes components. After the check is done, the tool provides the administrator a detailed report with misconfigurations and vulnerabilities. Another of the advantages of using this tool is that it can be integrated in CI/CD pipelines, enabling this validation to be made continuously \cite{benhassan_depth_2024} \cite{noauthor_aquasecurity_kube_bench_2024}.
 
@@ -771,8 +771,20 @@ Although not displayed in the previous picture, for each failed test, kube-bench
 
 	%% =================================
 	\chapter{Analysis and Best Practices}
- \textit{	[Description, for what under individual responsibility, that inform the goal, the questions related to architectural compliance, metrics used and their values, with partial response to questions, and goal achievement analysis. Explicitly mention the tool report(s).]}
-	
+
+Throughout this document we've highlighted several configurations, as well as external tools, which assist practitioners in hardening the security of their Kubernetes clusters. The objective of this chapter is to consolidate these findings, and provide cluster administrators a set of recommendations and best practices for their cluster management operations.
+
+Firstly, we highlight the importance of \texttt{etcd} encryption, notably through the usage of \texttt{EncryptionConfiguration} resources. Using \texttt{aescbc} is not recommended due to it being a weak provider. However, the \texttt{aesgcm} and \texttt{secretbox} providers are a security improvement from the default, clear-text way of storing secrets on \texttt{etcd}, with the downside of storing the encryption key in a local file-system. We note that this is the best option when using solely native configurations, but not the best solution altogether. As such, we urge practitioners to investigate the applicability of using an external KMS, and integrating it with the \texttt{kmsv2} encryption provider.
+
+When considering the Kubernetes API Server, we strongly encourage administrators to tightly control access to it, using mechanisms such as firewalls and VPNs. Besides that base environment, we recommend the implementation of authentication and authorization measures, according to the least-privilege principle. The method used for this will vary across organizations, however, we must acknowledge the limitations of Kubernetes-native methods. Thus, we urge practitioners to implement authentication via an OIDC provider. For organizations without external user federation systems, such as Google SSO, we recommend the implementation of a Keycloak instance to manage the users within the organization, as it can then be integrated with the Kubernetes API for authentication purposes. Having this system, where every user has their own account, is also relevant for the auditing of actions, as well as forensic investigation in the case of an incident.
+
+Having defined a method for authentication, we must now shift our focus towards authorization. This is where RBAC practices are relevant. We recommend that administrators define the necessary roles, according to the permissions necessary for each group in the organization. As organizational necessities shift with time, we encourage that a repeated procedure of auditing roles, as well as their \texttt{RoleBinding} and \texttt{ClusterRoleBinding} configurations, to ensure that they are up-to-date and only grant permissions which are strictly needed for a role.
+
+Through our exploration of the topic, it's clear that networking is an important component on Kubernetes. As with the encryption of Secrets, there are no network security mechanisms between Pods by default. Thus, practitioners must implement them through the usage of \texttt{NetworkPolicies}. We strongly encourage the definition of a default deny-all policy, followed by policies allowing necessary traffic between pods and/or namespaces.
+
+This study has highlighted that, although Kubernetes already has several security features, the usage of external tooling can complement these and further harden the security posture of a cluster. Practices such as runtime security, policy enforcement, vulnerability scanning and compliance benchmarks are paramount. In Chapter \ref{chapt:comp}, we've presented tools for each of these security components, and recommended their implementation. However, it's worth noting that there are several technologies for these - and other - functionalities. A very useful resource for this is the CNCF Landscape \footnote{Presented in: \href{https://landscape.cncf.io/}{\underline{this link}}}, which presents technologies grouped by their respective area of operation, such as Observability, Security and Compliance.
+
+Finally, we strongly encourage that cluster administrators consult the Kubernetes Security Checklist \footnote{\href{https://kubernetes.io/docs/concepts/security/security-checklist/}{\underline{https://kubernetes.io/docs/concepts/security/security-checklist/}}}, as well as the OWASP Kubernetes Cheat Sheet\footnote{\href{https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html}{\underline{https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes\_Security\_Cheat\_Sheet.html}}}. These resources provide further guidance on how to harden Kubernetes environments, and enable practitioners to establish a robust security posture aligned with best practices and industry standards.
 
 
 	%% =================================

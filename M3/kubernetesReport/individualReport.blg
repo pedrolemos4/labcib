@@ -1,19 +1,19 @@
-[0] Config.pm:307> INFO - This is Biber 2.19
-[0] Config.pm:310> INFO - Logfile is '/Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.blg'
-[30] biber-darwin:340> INFO - === Fri Dec 27, 2024, 22:13:52
-[105] Biber.pm:419> INFO - Reading '/Users/pedrolemos/Isep/Mestrado - Cibersegurança e Administração de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bcf'
-[147] Biber.pm:979> INFO - Found 36 citekeys in bib section 0
-[153] Biber.pm:4419> INFO - Processing section 0
-[158] Biber.pm:4610> INFO - Looking for bibtex file 'ref.bib' for section 0
-[160] bibtex.pm:1713> INFO - LaTeX decoding ...
-[179] bibtex.pm:1519> INFO - Found BibTeX data source 'ref.bib'
-[248] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[248] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[248] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[248] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
-[258] bbl.pm:660> INFO - Writing '/Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl' with encoding 'UTF-8'
-[263] bbl.pm:763> INFO - Output to /Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl
-[263] Biber.pm:131> WARN - ISBN '978-1-80512-322-4 978-1-80512-715-4' in entry 'gkatziouras_kubernetes_2024' is invalid - run biber with '--validate_datamodel' for details.
-[263] Biber.pm:131> WARN - ISBN '978-1-4920-8173-9 978-1-4920-8170-8' in entry 'martin_hacking_2021' is invalid - run biber with '--validate_datamodel' for details.
-[263] Biber.pm:131> WARN - ISBN '978-1-83921-125-6 978-1-83921-308-3' in entry 'sayfan_mastering_2020' is invalid - run biber with '--validate_datamodel' for details.
-[263] Biber.pm:133> INFO - WARNINGS: 3
+[0] Config.pm:307> INFO - This is Biber 2.17
+[0] Config.pm:310> INFO - Logfile is 'individualReport.blg'
+[57] biber:340> INFO - === dom dez 29, 2024, 11:02:47
+[69] Biber.pm:418> INFO - Reading 'individualReport.bcf'
+[114] Biber.pm:972> INFO - Found 36 citekeys in bib section 0
+[122] Biber.pm:4383> INFO - Processing section 0
+[131] Biber.pm:4574> INFO - Looking for bibtex file 'ref.bib' for section 0
+[133] bibtex.pm:1713> INFO - LaTeX decoding ...
+[161] bibtex.pm:1518> INFO - Found BibTeX data source 'ref.bib'
+[265] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[265] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[265] Biber.pm:4203> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[265] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
+[279] bbl.pm:654> INFO - Writing 'individualReport.bbl' with encoding 'UTF-8'
+[287] bbl.pm:757> INFO - Output to individualReport.bbl
+[287] Biber.pm:130> WARN - ISBN '978-1-80512-322-4 978-1-80512-715-4' in entry 'gkatziouras_kubernetes_2024' is invalid - run biber with '--validate_datamodel' for details.
+[287] Biber.pm:130> WARN - ISBN '978-1-4920-8173-9 978-1-4920-8170-8' in entry 'martin_hacking_2021' is invalid - run biber with '--validate_datamodel' for details.
+[287] Biber.pm:130> WARN - ISBN '978-1-83921-125-6 978-1-83921-308-3' in entry 'sayfan_mastering_2020' is invalid - run biber with '--validate_datamodel' for details.
+[287] Biber.pm:132> INFO - WARNINGS: 3
