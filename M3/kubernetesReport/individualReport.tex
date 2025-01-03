@@ -470,7 +470,9 @@ We can also see different values in the "level" key of each entry in the "rules"
 
 So, for the creation of namespaces, the policy in \ref{code:auditpol} will log both the request and response's metadata and body, whereas for the creation of pods, only the metadata will be recorded.
 
-Now that the \texttt{Policy} manifest has been created, it must be referenced in the API configuration so that it can be used by the cluster. This is done by using the \texttt{audit-policy-file} and \texttt{audit-log-path} fields when configuring the API, as shown in Figure \ref{fig:auditconf}. Bear in mind that, for this example, we're outputting the logs to the standard output, which is the logs of the \texttt{kube-apiserver} pod.
+\pagebreak
+
+Now that the \texttt{Policy} manifest has been created, it must be referenced in the API configuration so that it can be used by the cluster. This is done by using the \texttt{audit-policy-file} and \texttt{audit-log-path} fields when configuring the API, as shown in Figure \ref{fig:auditconf}. Bear in mind that, for this example, we're outputting the logs to the standard output, which is the logs of the \texttt{kube-apiserver} pod. In a production scenario, there might be other optimal approaches. One such approach is the usage of a webhook backend through the \texttt{--audit-webhook-config-file} configuration, which will send the "audit events to a remote web API" \cite{the_linux_foundation_auditing_2024}.
 
 \begin{figure}[h!]
 	\centering
@@ -481,16 +483,16 @@ Now that the \texttt{Policy} manifest has been created, it must be referenced in
 
 As an example, Figure \ref{fig:audit-namespace} demonstrates the audit log of a response to a request which creates the "demo" namespace.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.4]{figs/audit-namespace-create.png}
+	\includegraphics[scale=0.6]{figs/audit-namespace-create.png}
 	\caption{Audit logs of a namespace creation}
 	\label{fig:audit-namespace}
 \end{figure}
 
 In these logs, we can see some very useful information, such as the IP address from where the request originated, the username of who performed it and their RBAC groups. However, we can also infer that logging events with the \texttt{RequestReponse} level might not be appropriate for every case, as there's a lot of information to go through. For comparison, we present a \textit{Metadata}-level log of a pod created in the "demo" namespace - matching the audit rule - in Figure \ref{fig:audit-pod}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.4]{figs/audit-pod-create.png}
 	\caption{Audit logs of a pod creation}
@@ -500,6 +502,7 @@ In these logs, we can see some very useful information, such as the IP address f
 From this log, we can clearly extract that the \texttt{demo-audit} pod was successfully created in the \texttt{demo} namespace - due to the 201 response code. We can also see exactly when it was created, and by what user and IP address.
 
 The importance of these audit policies now becomes clear, as the data contained within them can assist practitioners in keeping track of the actions that take place in the cluster. Another factor which adds to the usability of this feature is the configurable granularity of the logs that are captured. With this, administrators can fine-tune audit policies based on their organizational requirements, thus ensuring that relevant actions are captured with the necessary detail.
+
 
 	\section{Network Policies}
 	
@@ -586,7 +589,7 @@ Ingress and Egress rules have a few different ways to be defined. As displayed i
 
 To maximize the security benefits of Network Policies, it is essential to adhere to established best practices. The following actions mentioned in \cite{amaechi_learn_2023} and \cite{de_tender_kubernetes_2022} must be implemented to ensure robust network isolation, prevent unauthorized access, and maintain secure communication within the Kubernetes cluster.
 
-Use a default \texttt{deny-all} network policy. This ensures that only explicitly defined resources can communicate with the Pod \ref{denyAllPolicy}.
+Use a default \texttt{deny-all} network policy, an example of which is presented in \ref{code:denyAllPolicy}. This ensures that only explicitly defined resources can communicate with the Pod.
 
 \begin{lstlisting}[style=yaml,caption={Deny All Default Policy example},label=code:denyAllPolicy]
 	apiVersion: networking.k8s.io/v1
@@ -728,9 +731,9 @@ In \ref{fig:trivyResult}, it is presented the result of a Trivy scanning in summ
 
 \begin{figure}[H]
 	\centering
-	\label{fig:trivyResult}
 	\includegraphics[scale=0.3]{figs/trivy-summary-output.png}
 	\caption{Trivy Summary Report \cite{trivy_doc_kubernetes_nodate}}
+	\label{fig:trivyResult}
 \end{figure}
 
 
@@ -752,9 +755,9 @@ Vault's core functionality revolves around the use of tokens, each linked to a s
 
 \begin{figure}[h!]
 	\centering
-	\label{fig:vaultFlow}
 	\includegraphics[scale=0.2]{figs/vault-flow.png}
 	\caption{Vault Flow \cite{vault_doc_introduction_nodate}}
+	\label{fig:vaultFlow}
 \end{figure}
 
 \section{Kube-bench}\label{sect:complementCIS}
@@ -765,9 +768,9 @@ One usual use case to use kube-bench is when there is a need to audit the securi
 
 \begin{figure}[h!]
 	\centering
-	\label{fig:kubeBenchOutput}
 	\includegraphics[scale=0.5]{figs/kube-bench-output.png}
 	\caption{kube-bench output example \cite{noauthor_kube_bench_nodate}}
+	\label{fig:kubeBenchOutput}
 \end{figure}
 
 In this output, it is possible to observe that several critical checks have failed, indicating misconfigurations that could compromise the cluster's security. For example, this container allows privileged containers and insecure port configurations.
@@ -776,9 +779,9 @@ Although not displayed in the previous picture, for each failed test, kube-bench
 
 \begin{figure}[h!]
 	\centering
-	\label{fig:kubeBenchRemediation}
 	\includegraphics[scale=0.45]{figs/kube-bench-remediation.png}
 	\caption{kube-bench remediation output \cite{benhassan_depth_2024}}
+	\label{fig:kubeBenchRemediation}
 \end{figure}
 
 	%% =================================
