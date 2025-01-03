@@ -1,19 +1,19 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is '/Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.blg'
-[30] biber-darwin:340> INFO - === Mon Dec 30, 2024, 16:21:51
-[112] Biber.pm:419> INFO - Reading '/Users/pedrolemos/Isep/Mestrado - Cibersegurança e Administração de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bcf'
-[154] Biber.pm:979> INFO - Found 36 citekeys in bib section 0
-[160] Biber.pm:4419> INFO - Processing section 0
-[164] Biber.pm:4610> INFO - Looking for bibtex file 'ref.bib' for section 0
-[166] bibtex.pm:1713> INFO - LaTeX decoding ...
-[185] bibtex.pm:1519> INFO - Found BibTeX data source 'ref.bib'
-[254] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[254] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[254] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[254] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
-[264] bbl.pm:660> INFO - Writing '/Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl' with encoding 'UTF-8'
-[269] bbl.pm:763> INFO - Output to /Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl
-[269] Biber.pm:131> WARN - ISBN '978-1-80512-322-4 978-1-80512-715-4' in entry 'gkatziouras_kubernetes_2024' is invalid - run biber with '--validate_datamodel' for details.
-[269] Biber.pm:131> WARN - ISBN '978-1-4920-8173-9 978-1-4920-8170-8' in entry 'martin_hacking_2021' is invalid - run biber with '--validate_datamodel' for details.
-[270] Biber.pm:131> WARN - ISBN '978-1-83921-125-6 978-1-83921-308-3' in entry 'sayfan_mastering_2020' is invalid - run biber with '--validate_datamodel' for details.
-[270] Biber.pm:133> INFO - WARNINGS: 3
+[29] biber-darwin:340> INFO - === Fri Jan  3, 2025, 15:50:28
+[105] Biber.pm:419> INFO - Reading '/Users/pedrolemos/Isep/Mestrado - Cibersegurança e Administração de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bcf'
+[147] Biber.pm:979> INFO - Found 36 citekeys in bib section 0
+[153] Biber.pm:4419> INFO - Processing section 0
+[158] Biber.pm:4610> INFO - Looking for bibtex file 'ref.bib' for section 0
+[159] bibtex.pm:1713> INFO - LaTeX decoding ...
+[179] bibtex.pm:1519> INFO - Found BibTeX data source 'ref.bib'
+[247] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[247] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[247] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[247] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[257] bbl.pm:660> INFO - Writing '/Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl' with encoding 'UTF-8'
+[263] bbl.pm:763> INFO - Output to /Users/pedrolemos/Isep/Mestrado - CiberseguranÃ§a e AdministraÃ§Ã£o de Sistemas/2 ano/1 semestre/LABCIB/labcib/M3/kubernetesReport/individualReport.bbl
+[263] Biber.pm:131> WARN - ISBN '978-1-80512-322-4 978-1-80512-715-4' in entry 'gkatziouras_kubernetes_2024' is invalid - run biber with '--validate_datamodel' for details.
+[263] Biber.pm:131> WARN - ISBN '978-1-4920-8173-9 978-1-4920-8170-8' in entry 'martin_hacking_2021' is invalid - run biber with '--validate_datamodel' for details.
+[263] Biber.pm:131> WARN - ISBN '978-1-83921-125-6 978-1-83921-308-3' in entry 'sayfan_mastering_2020' is invalid - run biber with '--validate_datamodel' for details.
+[263] Biber.pm:133> INFO - WARNINGS: 3

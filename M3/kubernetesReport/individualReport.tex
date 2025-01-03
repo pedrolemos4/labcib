@@ -128,7 +128,7 @@ The increasing reliance on Kubernetes in corporate environments underscores the 
 
 This work aims to provide an understanding on how to configure and manage Kubernetes cluster's securely. To provide this knowledge, this study seeks to identify and evaluate specific configurations from native features to plugins provided by third-party entites. Additionally, complementary tools are analyzed and best practices are listed.
 
-With this study, a clear understanding of security enhancing features must be provided, as well as tools and best practices to improve cluster security. The research will systematize the available knowledge to create a comprehensive framework, offering actionable insights for developers to implement secure Kubernetes clusters effectively.
+With this study, a clear understanding of security enhancing features must be provided, as well as tools and best practices to improve cluster security. The research will provide the knowledge to developers to make their Kubernetes clusters secure in an efficient way.
 
 	%% =================================	
 	\chapter{Methodology}
@@ -654,7 +654,7 @@ While Kubernetes provides robust built-in capabilities for container orchestrati
 
 \section{Falco}\label{sect:complementNetSec}
 
-Falco is an open-source security tool that can be used integrated with Kubernetes, focused on runtime security monitoring. It consumes Linux kernel syscalls, and applies pre-defined rules to these events and warns the developer when something unexpected happends \cite{falco_about_page}. Falco usually sits accross a distributed infrastructure, providing real-time security monitoring and auditing for Kubernetes clusters.
+Falco is an open-source security tool that can be integrat with Kubernetes, that its focus is on runtime security monitoring. It consumes Linux kernel syscalls, and applies pre-defined rules to these events and warns the developer when something unexpected happends \cite{falco_about_page}. Falco usually sits accross a distributed infrastructure, providing real-time security monitoring and auditing for Kubernetes clusters.
 
 By default, Falco includes a set of defined rules. However, these can be customized to align with the specific needs of the cluster and it typically address scenarios such as monitoring sensitive file access, detecting unauthorized privilege escalations, and more \cite{benhassan_advanced_2024}. They can be defined as follows in \ref{code:falcoRule}:
 
@@ -681,9 +681,9 @@ Falco excels in identifying unexpected behaviors in a runtime environment. This 
 
 \section{OPA (Open Policy Agent)}\label{sect:complmentRbac}
 
-OPA is a tool that enables the implementation of policies across the cluster. Policies are defined in the OPA engine, and whenever a service (e.g. a Pod) in the cluster queries OPA, it evaluates the request and provides a decision based on the defined policies \cite{bruner_better_2020}.
+OPA is a tool that enables the implementation of policies across the cluster. Policies are defined in the OPA engine, and whenever a service (e.g. a Pod) in the cluster queries OPA, this request is evaluated by OPA, providing a decision based on the defined policies \cite{bruner_better_2020}.
 
-It is important to note that OPA itself does not enforce policies, just a decision. This decision is made based on the policies defined before deploying OPA. These policies are written in a specific language called Rego \cite{barua_securing_2023}.
+It is important to note that OPA itself does not enforce policies, it just provides a decision. This decision is made based on the policies defined before deploying OPA that are written in a specific language called Rego \cite{barua_securing_2023}.
 
 Once the OPA is configured and deployed (usually in server mode on a container), the OPA engine intercepts the request and makes a decision based on the policies defined. After a decision is made, OPA returns the decision via API in a JSON format. With this decision, the Admission Controller acts on the decision, either blocking or accepting the request \cite{opa_doc_guides_nodate}.
 
@@ -708,7 +708,7 @@ In this example \ref{code:opaPolicy}, if a request to OPA with payload \texttt{\
 
 \section{Trivy}\label{sect:complementMonitor}
 
-When managing Kubernetes clusters, it is crucial to identify if the resources that are being use have any vulnerability. One of the best tools to solve this problem is Trivy. Trivy is a vulnerability scanner for containers and other resources that can detect vulnerabilities in the dependencies being used \cite{benhassan_deep_2024}.
+When managing Kubernetes clusters, it is crucial to identify if the resources that are being use have any vulnerability. One of the best tools to solve this problem is Trivy. Trivy is a vulnerability scanner for containers and other resources that can detect vulnerabilities in the dependencies that are being used \cite{benhassan_deep_2024}.
 
 Trivy differentiates between three elements when scanning a Kubernetes cluster and its associated resources \cite{trivy_doc_kubernetes_nodate}:
 
@@ -736,9 +736,9 @@ In \ref{fig:trivyResult}, it is presented the result of a Trivy scanning in summ
 
 \section{Vault (by HashiCorp)}\label{sect:complementSecrets}
 
-Effective management of secrets in Kubernetes is crucial for maintaining the security and integrity of your applications. Although Kubernetes has built-in secrets management mechanisms, such as Kubernetes Secrets, it has some limitations \cite{muppeda_guide_vault_2024}.
+Effective management of secrets in Kubernetes is crucial for maintaining the security and integrity of your applications. Although Kubernetes has built-in secrets management mechanisms, such as Kubernetes Secrets, this mechanism have limitations \cite{muppeda_guide_vault_2024}.
 
-Vault is a tool desgined to solve these problems. It provides a robust way to securely store and manage sensitive information \cite{muppeda_guide_vault_2024}. It provides multiple key features that ensure this security are \cite{vault_doc_introduction_nodate}:
+Vault is a tool desgined to provided a robust way to securely store and manage sensitive information \cite{muppeda_guide_vault_2024}. It provides multiple key features that ensure this security are \cite{vault_doc_introduction_nodate}:
 
 \begin{itemize}
 	\item Secure Secret Storage: Arbitrary key/value secrets can be stored in Vault. Before written them to persistent storage, these secrets are encrypted by Vault. If an attacker has access to the raw storage, it isn't enough to access your secrets.
@@ -748,7 +748,7 @@ Vault is a tool desgined to solve these problems. It provides a robust way to se
 	\item Revocation: Vault offers native support for secret revocation, allowing it to revoke not just individual secrets, but entire groups of secrets. For instance, it can revoke all secrets accessed by a specific user or all secrets of a particular type.
 \end{itemize}
 
-Vault's core functionality revolves around the use of tokens, each linked to a specific client policy. These policies are path-based, detailing the actions and access permissions for each client within specified paths. Tokens can either be generated manually and allocated to clients, or clients can authenticate with Vault to receive a token. The diagram in \ref{fig:vaultFlow} showcases Vault's fundamental workflow \cite{vault_doc_introduction_nodate}.
+Vault's core functionality revolves around the use of tokens, each linked to a specific client policy. These policies are path based, detailing the actions and access permissions for each client within specified paths. Tokens can either be generated manually and allocated to clients, or clients can authenticate with Vault to receive a token. The diagram in \ref{fig:vaultFlow} showcases Vault's fundamental workflow \cite{vault_doc_introduction_nodate}.
 
 \begin{figure}[h!]
 	\centering
