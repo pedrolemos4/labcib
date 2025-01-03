@@ -266,7 +266,7 @@ This ensures that each user has an account, and further ensures traceability and
 
 \subsubsection{Service Account Token}
 
-These are signed JSON Web Tokens (JWT) which Kubernetes generates so that entities can communicate with the API server \cite{the_linux_foundation_authenticating_2024}. These tokens are associated with ServiceAccount objects, which by default represent the identity of an application in Kubernetes \cite{martin_hacking_2021} - their function will be expanded upon in the RBAC section. It's unusual that these tokens are used for the authentication of users, as they are more frequently used by Pods which require to communicate with the Kubernetes API, or by processes that run outside of the cluster but frequently need to talk with its API.
+These are signed JSON Web Tokens (JWT) which Kubernetes generates so that entities can communicate with the API server \cite{the_linux_foundation_authenticating_2024}. These tokens are associated with ServiceAccount objects, which by default represent the identity of an application in Kubernetes \cite{martin_hacking_2021}. It's unusual that these tokens are used for the authentication of users, as they are more frequently used by Pods which require to communicate with the Kubernetes API, or by processes that run outside of the cluster but frequently need to talk with its API.
 
 \subsubsection{OpenID Connect (OIDC)}
 
